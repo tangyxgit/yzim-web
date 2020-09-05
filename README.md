@@ -29,24 +29,7 @@
 
 1. 准备好您的 `SDKAPPID` 和 `SECRETKEY`，获取方式参考：[密钥获取方法](https://cloud.tencent.com/document/product/269/36838#.E6.AD.A5.E9.AA.A41.EF.BC.9A.E5.88.9B.E5.BB.BA.E5.BA.94.E7.94.A8)
 
-2. 搭建 [nodejs 环境](https://nodejs.org/zh-cn/) （建议安装 8.0 版本以上的 nodejs），选择官网推荐的安装包，安装即可
-
-   安装完成后，打开命令行，输入以下命令：
-
-   ```shell
-   node -v
-   ```
-
-   如果上述命令输出相应的版本号，说明环境搭建完成。
-
 ### 启动流程
-
-1. 克隆本仓库到本地
-
-   ```shell
-   # 命令行执行
-   git clone https://github.com/tencentyun/TIMSDK.git
-
 3. 启动项目
 
    ```shell
