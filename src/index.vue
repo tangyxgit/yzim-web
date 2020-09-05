@@ -2,7 +2,6 @@
   <div class="container">
     <div id="wrapper" v-if="!isLogin" >
       <login/>
-      <qr-code-list/>
     </div>
     <div
       class="loading"
@@ -20,12 +19,6 @@
             <current-conversation />
           </el-col>
         </el-row>
-        <a
-          class="official-link"
-          href="https://cloud.tencent.com/product/im"
-          target="_blank"
-          @click="handleLinkClick"
-        >登录 即时通信IM 官网，了解更多体验方式</a>
       </div>
       <call-layer ref="callLayer" class="chat-wrapper"/>
       <image-previewer />

@@ -6,7 +6,7 @@
       :rules="rules"
       :model="form"
       label-width="0"
-      style="width:100%;"
+      style="width:100%"
       @keydown.enter.native="submit"
     >
       <!-- Github登录方式 -->
@@ -19,6 +19,9 @@
             :value="`user${index-1}`"
           ></el-option>
         </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-input placeholder="请输入密码"></el-input>
       </el-form-item>
       <!-- 线上版本登录方式 -->
       <!-- <el-form-item prop="userID">
@@ -40,6 +43,9 @@
       style="width:100%; margin-top: 6px;"
       :loading="loading"
     >登录</el-button>
+    <el-row style="width:100%">
+      <el-col :offset="18" style="margin-top: 10px;cursor: pointer"><div class="text-info" style="font-size: 10px">忘记密码？</div></el-col>
+    </el-row>
   </div>
 </template>
 
