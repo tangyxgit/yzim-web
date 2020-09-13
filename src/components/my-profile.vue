@@ -120,12 +120,16 @@ export default {
     width: 100%;
     height: 100%;
   .popover
+    top 15px
+    left 15px
+    width 50px
+    height 50px
     padding none 
     border none 
-    border-radius 30px
+    border-radius 20%
 .my-avatar
   cursor pointer
-  border-radius: 50%;
+  border-radius: 90%;
 
 .edit-my-profile
   position absolute

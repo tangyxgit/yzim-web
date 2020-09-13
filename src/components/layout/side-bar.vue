@@ -32,6 +32,12 @@
           :class="{ active: showBlackList }"
           title="黑名单列表"
         ></div>
+        <div
+            id="worktable-list"
+            class="iconfont icon-zidingyi"
+            :class="{ active: showWorktable }"
+            title="工具箱"
+        ></div>
       </div>
       <div class="bottom">
         <div class="iconfont icon-tuichu" @click="$store.dispatch('logout')" title="退出"></div>
@@ -42,6 +48,7 @@
       <group-list v-show="showGroupList" />
       <friend-list v-show="showFriendList" />
       <black-list v-show="showBlackList" />
+      <worktable-list v-show="showWorktable"></worktable-list>
     </div>
   </div>
 </template>
@@ -53,12 +60,14 @@ import ConversationList from '../conversation/conversation-list'
 import GroupList from '../group/group-list'
 import FriendList from '../friend/friend-list'
 import BlackList from '../blacklist/blacklist'
+import WorktableList from '../worktable/worktable'
 
 const activeName = {
   CONVERSATION_LIST: 'conversation-list',
   GROUP_LIST: 'group-list',
   FRIEND_LIST: 'friend-list',
-  BLACK_LIST: 'black-list'
+  BLACK_LIST: 'black-list',
+  WORKTABLE_LIST:'worktable-list',
 }
 export default {
   name: 'SideBar',
@@ -67,7 +76,8 @@ export default {
     ConversationList,
     GroupList,
     FriendList,
-    BlackList
+    BlackList,
+    WorktableList,
   },
   data() {
     return {
@@ -88,6 +98,9 @@ export default {
     },
     showBlackList() {
       return this.active === activeName.BLACK_LIST
+    },
+    showWorktable() {
+      return this.active === activeName.WORKTABLE_LIST
     },
     showAddButton() {
       return [activeName.CONVERSATION_LIST, activeName.GROUP_LIST].includes(
@@ -113,6 +126,8 @@ export default {
         case activeName.BLACK_LIST:
           this.checkoutActive(activeName.BLACK_LIST)
           break
+        case activeName.WORKTABLE_LIST:
+          this.checkoutActive(activeName.WORKTABLE_LIST)
       }
     },
     handleRefresh() {
@@ -201,7 +216,7 @@ export default {
         text-align: center;
         font-size: 30px;
         cursor: pointer;
-        color: $first;
+        color:#a5b5c1;
         user-select: none;
         -moz-user-select: none;
       }

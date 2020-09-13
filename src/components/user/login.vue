@@ -46,6 +46,7 @@
     <el-row style="width:100%">
       <el-col :offset="18" style="margin-top: 10px;cursor: pointer"><div class="text-dark" style="font-size: 10px">忘记密码？</div></el-col>
     </el-row>
+    <el-button type="primary" plain size="small" class="px-4 mt-4">立即注册</el-button>
   </div>
 </template>
 
@@ -89,7 +90,7 @@ export default {
     submit() {
       this.$refs['login'].validate(valid => {
         if (valid) {
-          this.login()
+          // this.login()
         }
       })
     },
@@ -133,7 +134,7 @@ export default {
   align-items: center;
   flex-direction: column;
   width: 400px;
-  padding: 20px 80px 50px;
+  padding: 20px 80px 20px;
   background: $white;
   color: $black;
   border-radius: 5px;

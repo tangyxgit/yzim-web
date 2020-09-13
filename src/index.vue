@@ -1,7 +1,8 @@
 <template>
   <div>
     <div id="wrapper" v-if="!isLogin" >
-      <login/>
+<!--      <login/>-->
+      <register/>
     </div>
     <div
       class="loading"
@@ -34,6 +35,7 @@ import { mapState } from 'vuex'
 import CurrentConversation from './components/conversation/current-conversation'
 import SideBar from './components/layout/side-bar'
 import Login from './components/user/login'
+import Register from './components/user/register'
 import ImagePreviewer from './components/message/image-previewer.vue'
 // import QrCodeList from './components/qr-code-list'
 import { translateGroupSystemNotice } from './utils/common'
@@ -46,6 +48,7 @@ export default {
   title: 'yzim',
   components: {
     Login,
+    Register,
     SideBar,
     CurrentConversation,
     ImagePreviewer,
