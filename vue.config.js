@@ -6,6 +6,20 @@ function resolve(dir) {
 module.exports = {
   publicPath: './',
   assetsDir: './',
+  devServer: {
+    proxy: {
+      '/api': {
+        // 此处的写法，目的是为了 将 /api 替换成 https://www.baidu.com/
+        target: 'http://118.31.108.13:8099',
+        // 允许跨域
+        changeOrigin: true,
+        ws: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    }
+  },
   productionSourceMap: false,
   chainWebpack: config => {
     config.resolve.alias

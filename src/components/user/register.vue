@@ -8,10 +8,10 @@
                 <i slot="prefix" class="el-icon-chat-dot-square el-input__icon"></i>
                 <el-button slot="append" @click="getCode">获取验证码</el-button>
             </el-input>
-            <el-input autocomplete="off" v-model="params.password" placeholder="请输入您的新密码" clearable class="mt-3">
+            <el-input autocomplete="off" v-model="params.password" type="password" placeholder="请输入您的新密码" clearable class="mt-3">
                 <i slot="prefix" class="el-icon-lock el-input__icon"></i>
             </el-input>
-            <el-input autocomplete="off" v-model="params.confirmPassword" placeholder="请再次输入您的新密码" clearable
+            <el-input autocomplete="off" v-model="params.confirmPassword" type="password" placeholder="请再次输入您的新密码" clearable
                       class="mt-3">
                 <i slot="prefix" class="el-icon-lock el-input__icon"></i>
             </el-input>

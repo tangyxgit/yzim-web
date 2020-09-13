@@ -31,19 +31,16 @@ Vue.component('avatar', Avatar)
 
 
 function baseUrl() {
-    return 'http://118.31.108.13:8099/'
+    return '/api'
 }
 
 //网络配置
 Axios.defaults.baseURL = baseUrl()
-Axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 Vue.prototype.requestPost = function (url, params, success, fail) {
     if (params) {
         // params.token = this.userToken()
     }
-    Axios.post(url, {
-        params: params,
-    }).then(res => {
+    Axios.post(url, params).then(res => {
         let code = res.data.code
         if (code === 200) {
             if (success) {
