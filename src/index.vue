@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <div id="wrapper" v-if="!isLogin" >
       <login/>
     </div>
@@ -35,7 +35,7 @@ import CurrentConversation from './components/conversation/current-conversation'
 import SideBar from './components/layout/side-bar'
 import Login from './components/user/login'
 import ImagePreviewer from './components/message/image-previewer.vue'
-import QrCodeList from './components/qr-code-list'
+// import QrCodeList from './components/qr-code-list'
 import { translateGroupSystemNotice } from './utils/common'
 import CallLayer from './components/message/call-layer'
 import { ACTION } from './utils/trtcCustomMessageMap'
@@ -43,14 +43,14 @@ import MTA from './utils/mta'
 
 
 export default {
-  title: 'TIMSDK DEMO',
+  title: 'yzim',
   components: {
     Login,
     SideBar,
     CurrentConversation,
     ImagePreviewer,
     CallLayer,
-    QrCodeList
+    // QrCodeList
   },
 
   computed: {
@@ -382,6 +382,7 @@ body {
 .container
   position relative
   height 100vh
+
 .container
   position relative
   height 100vh
