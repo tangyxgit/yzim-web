@@ -44,7 +44,7 @@
       :loading="loading"
     >登录</el-button>
     <el-row style="width:100%">
-      <el-col :offset="18" style="margin-top: 10px;cursor: pointer"><div class="text-info" style="font-size: 10px">忘记密码？</div></el-col>
+      <el-col :offset="18" style="margin-top: 10px;cursor: pointer"><div class="text-dark" style="font-size: 10px">忘记密码？</div></el-col>
     </el-row>
   </div>
 </template>
