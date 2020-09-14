@@ -10,18 +10,21 @@
       @keydown.enter.native="submit"
     >
       <!-- Github登录方式 -->
-      <el-form-item prop="userID">
-        <el-select v-model="form.userID" class="user-selector">
-          <el-option
-            v-for="index in 30"
-            :key="index"
-            :label="`user${index-1}`"
-            :value="`user${index-1}`"
-          ></el-option>
-        </el-select>
+<!--      <el-form-item prop="userID">-->
+<!--        <el-select v-model="form.userID" class="user-selector">-->
+<!--          <el-option-->
+<!--            v-for="index in 30"-->
+<!--            :key="index"-->
+<!--            :label="`user${index-1}`"-->
+<!--            :value="`user${index-1}`"-->
+<!--          ></el-option>-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
+      <el-form-item>
+        <el-input autocomplete="off" v-model="params.mobile" clearable placeholder="请输入用户名"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-input placeholder="请输入密码"></el-input>
+        <el-input autocomplete="off" v-model="params.password" type="password" clearable placeholder="请输入密码"></el-input>
       </el-form-item>
       <!-- 线上版本登录方式 -->
       <!-- <el-form-item prop="userID">
@@ -39,12 +42,13 @@
     </el-form>
     <el-button
       type="primary"
+      :disabled="!params.mobile || !params.password"
       @click="submit"
       style="width:100%; margin-top: 6px;"
       :loading="loading"
     >登录</el-button>
     <el-row style="width:100%">
-      <el-col :offset="18" style="margin-top: 10px;cursor: pointer"><div class="text-dark" style="font-size: 10px">忘记密码？</div></el-col>
+      <el-col :offset="18" style="margin-top: 10px;cursor: pointer"><div class="text-dark" style="font-size: 10px" @click="forgetPassword">忘记密码？</div></el-col>
     </el-row>
     <el-button type="primary" @click="register" plain size="small" class="px-4 mt-4">立即注册</el-button>
   </div>
@@ -58,8 +62,6 @@ export default {
   components: {
     ElForm: Form,
     ElFormItem: FormItem,
-    ElSelect: Select,
-    ElOption: Option,
   },
   data() {
     const checkUserID = (rule, value, callback) => {
@@ -70,6 +72,10 @@ export default {
       }
     }
     return {
+      params: {
+        mobile: '',
+        password: ''
+      },
       form: {
         userID: 'user0',
         password: ''
@@ -127,6 +133,9 @@ export default {
           })
         })
     },
+    forgetPassword() {
+      this.$store.commit('userFlag',-3)
+    }
   }
 }
 </script>

@@ -1,5 +1,7 @@
 <template>
     <div class="wrapper">
+        <el-page-header @back="backLogin" class="top" content="返回登录">
+        </el-page-header>
         <el-form label-position="left">
             <el-input autocomplete="off" v-model="params.mobile" placeholder="请输入手机号" clearable>
                 <i slot="prefix" class="el-icon-user el-input__icon"></i>
@@ -8,15 +10,19 @@
                 <i slot="prefix" class="el-icon-chat-dot-square el-input__icon"></i>
                 <el-button slot="append" @click="getCode">获取验证码</el-button>
             </el-input>
-            <el-input autocomplete="off" v-model="params.password" type="password" placeholder="请输入您的新密码" clearable class="mt-3">
+            <el-input autocomplete="off" v-model="params.password" type="password" placeholder="请输入您的新密码" clearable
+                      class="mt-3">
                 <i slot="prefix" class="el-icon-lock el-input__icon"></i>
             </el-input>
-            <el-input autocomplete="off" v-model="params.confirmPassword" type="password" placeholder="请再次输入您的新密码" clearable
+            <el-input autocomplete="off" v-model="params.confirmPassword" type="password" placeholder="请再次输入您的新密码"
+                      clearable
                       class="mt-3">
                 <i slot="prefix" class="el-icon-lock el-input__icon"></i>
             </el-input>
         </el-form>
         <el-button
+                :disabled="!params.mobile || !params.smsCode || !params.password || !params.confirmPassword"
+                @click="login"
                 class="mt-4"
                 type="primary"
                 style="width:100%; margin-top: 6px;"
@@ -26,12 +32,19 @@
 </template>
 
 <script>
-    import {Form,} from 'element-ui'
+    import {Form, PageHeader} from 'element-ui'
+    import {mapState} from 'vuex'
 
     export default {
         name: 'register',
         components: {
             ElForm: Form,
+            ElPageHeader: PageHeader
+        },
+        computed:{
+            ...mapState({
+                userFlag: state => state.user.userFlag,
+            }),
         },
         data() {
             return {
@@ -44,20 +57,44 @@
             }
         },
         methods: {
-            getCode() {
-                if (this.params.mobile) {
-                    this.requestPost('user/sendSms', this.params, res => {
-                        console.log(res)
-                    }, error => {
-                        console.log(error)
+            backLogin() {
+                this.$store.commit('userFlag', -1)
+            },
+            login() {
+                this.requestPost('user/register', this.params, () => {
+                    this.$store.commit('showMessage', {
+                        type: 'success',
+                        message: '注册成功'
                     })
-                }
+                    this.$store.commit('userFlag', -1)
+                }, error => {
+                    this.$store.commit('showMessage', {
+                        message: '注册失败：' + error.message,
+                        type: 'error'
+                    })
+                })
+            },
+            getCode() {
+                // if (this.params.mobile && userFlag === -2) {
+                //     this.requestPost('user/sendSms', this.params, res => {
+                //         console.log(res)
+                //     }, error => {
+                //         console.log(error)
+                //     })
+                // }else if(this.params.mobile && userFlag === -3){
+                //
+                // }
             }
         }
     }
 </script>
 
 <style lang="stylus" scoped>
+    .top {
+        /*top:0;*/
+        /*left:5px*/
+    }
+
     .wrapper {
         display: flex;
         align-items: center;
