@@ -1,7 +1,9 @@
 <template>
   <div>
-    <div id="wrapper" v-if="!isLogin" >
-<!--      <login/>-->
+    <div id="wrapper" v-if="userFlag===-1" >
+      <login/>
+    </div>
+    <div v-else-if="userFlag===-2 || userFlag===-3" >
       <register/>
     </div>
     <div
@@ -60,7 +62,7 @@ export default {
     ...mapState({
       currentUserProfile: state => state.user.currentUserProfile,
       currentConversation: state => state.conversation.currentConversation,
-      isLogin: state => state.user.isLogin,
+      userFlag: state => state.user.userFlag,
       isSDKReady: state => state.user.isSDKReady,
       isBusy: state => state.video.isBusy,
       userID: state => state.user.userID
@@ -174,7 +176,7 @@ export default {
         message: `${this.kickedOutReason(event.data.type)}被踢出，请重新登录。`,
         type: 'error'
       })
-      this.$store.commit('toggleIsLogin', false)
+      this.$store.commit('userFlag', -1)
       this.$store.commit('reset')
     },
     onUpdateConversationList(event) {

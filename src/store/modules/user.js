@@ -2,7 +2,7 @@ import tim from '../../tim'
 const user = {
   state: {
     currentUserProfile: {},
-    isLogin: false,
+    userFlag: -1,//-1未登录；-2注册；-3忘记密码；0登陆成功
     isSDKReady: false, // TIM SDK 是否 ready
     userID: 0,
     userSig: '',
@@ -12,8 +12,8 @@ const user = {
     updateCurrentUserProfile(state, userProfile) {
       state.currentUserProfile = userProfile
     },
-    toggleIsLogin(state, isLogin) {
-      state.isLogin = typeof isLogin === 'undefined' ? !state.isLogin : isLogin
+    userFlag(state, isLogin) {
+      state.userFlag = typeof isLogin === 'undefined' ? -1 : isLogin
     },
     toggleIsSDKReady(state, isSDKReady) {
       state.isSDKReady = typeof isSDKReady === 'undefined' ? !state.isSDKReady : isSDKReady
@@ -21,7 +21,7 @@ const user = {
     reset(state) {
       Object.assign(state, {
         currentUserProfile: {},
-        isLogin: false,
+        userFlag: -1,
         isSDKReady: false // TIM SDK 是否 ready
       })
     },
@@ -57,7 +57,7 @@ const user = {
         tim.setMessageRead({ conversationID: context.rootState.conversation.currentConversation.conversationID })
       }
       tim.logout().then(() => {
-        context.commit('toggleIsLogin')
+        context.commit('userFlag')
         context.commit('stopComputeCurrent')
         context.commit('reset')
       })

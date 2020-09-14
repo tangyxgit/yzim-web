@@ -46,7 +46,7 @@
     <el-row style="width:100%">
       <el-col :offset="18" style="margin-top: 10px;cursor: pointer"><div class="text-dark" style="font-size: 10px">忘记密码？</div></el-col>
     </el-row>
-    <el-button type="primary" plain size="small" class="px-4 mt-4">立即注册</el-button>
+    <el-button type="primary" @click="register" plain size="small" class="px-4 mt-4">立即注册</el-button>
   </div>
 </template>
 
@@ -87,10 +87,13 @@ export default {
     }
   },
   methods: {
+    register() {
+      this.$store.commit('userFlag',-2)
+    },
     submit() {
       this.$refs['login'].validate(valid => {
         if (valid) {
-          // this.login()
+          this.login()
         }
       })
     },
@@ -103,7 +106,7 @@ export default {
         })
         .then(() => {
           this.loading = false
-          this.$store.commit('toggleIsLogin', true)
+          this.$store.commit('userFlag', 0)
           this.$store.commit('startComputeCurrent')
           this.$store.commit({
             type: 'GET_USER_INFO',
