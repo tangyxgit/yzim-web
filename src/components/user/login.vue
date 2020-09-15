@@ -47,10 +47,11 @@
       style="width:100%; margin-top: 6px;"
       :loading="loading"
     >登录</el-button>
-    <el-row style="width:100%">
-      <el-col :offset="18" style="margin-top: 10px;cursor: pointer"><div class="text-dark" style="font-size: 10px" @click="forgetPassword">忘记密码？</div></el-col>
+    <el-row style="width:100%" class="mb-4">
+      <el-col :span="5" style="margin-top: 10px;cursor: pointer"><div class="text-primary" style="font-size: 10px" @click="register">立即注册</div></el-col>
+      <el-col :span="6" :offset="13" style="margin-top: 10px;cursor: pointer"><div class="text-dark" style="font-size: 10px" @click="forgetPassword">忘记密码？</div></el-col>
     </el-row>
-    <el-button type="primary" @click="register" plain size="small" class="px-4 mt-4">立即注册</el-button>
+<!--    <el-button type="primary" @click="register" plain size="small" class="px-4 mt-4">立即注册</el-button>-->
   </div>
 </template>
 
