@@ -68,7 +68,8 @@
                     mobile: '',
                     smsCode: '',
                     password: '',
-                    confirmPassword: ''
+                    confirmPassword: '',
+                    code: ''
                 }
             }
         },
@@ -108,22 +109,17 @@
             },
             getCode() {
                 if (this.params.mobile && this.userFlag === -2) {
-                    this.requestPost('user/sendSms', this.params, res => {
-                        console.log(res)
-                        this.sendSms = true
-                        this.time=60*1000
-                    }, error => {
-                        console.log(error)
-                    })
+                    this.params.code = 1
                 } else if (this.params.mobile && this.userFlag === -3) {
-                    this.requestPost('user/sendSmsReset', this.params, res => {
-                        console.log(res)
-                        this.sendSms = true
-                        this.time=60*1000
-                    }, error => {
-                        console.log(error)
-                    })
+                    this.params.code = 2
                 }
+                this.requestPost('user/sendSms', this.params, res => {
+                    console.log(res)
+                    this.sendSms = true
+                    this.time=60*1000
+                }, error => {
+                    console.log(error)
+                })
             }
         }
     }
