@@ -1,15 +1,17 @@
 <template>
     <div class="wrapper">
-        <div class="w-100 pl-2 pt-2"><span class="el-icon-arrow-left text-primary"></span><span @click="backLogin" class="text-primary">返回</span></div>
-        <div class="center ">
+        <el-page-header @back="backLogin" class="top w-100" content="">
+        </el-page-header>
+        <div class="center">
             <el-form label-position="left">
                 <el-input autocomplete="off" v-model="params.mobile" placeholder="请输入手机号" clearable>
                     <i slot="prefix" class="el-icon-user el-input__icon"></i>
                 </el-input>
                 <el-input autocomplete="off" v-model="params.smsCode" placeholder="请输入验证码" class="mt-3">
                     <i slot="prefix" class="el-icon-chat-dot-square el-input__icon"></i>
-                    <el-button :loading="sendSms" slot="append" @click="getCode" :disabled="time>0" loading-text="发送中...">
-                        <span v-if="time===0">获取验证码</span>
+                    <el-button :loading="sendSms" slot="append" @click="getCode" :disabled="time>0"
+                               loading-text="发送中..." style="width: 100px">
+                        <span v-if="time===0">{{sendSms?'发送中...':'获取验证码'}}</span>
                         <span v-else>
                             <van-count-down :time="time" @finish="time=0">
                                 <template v-slot="timeData">
@@ -52,75 +54,93 @@
         components: {
             ElForm: Form,
             ElPageHeader: PageHeader,
-            [CountDown.name]:CountDown
+            [CountDown.name]: CountDown
         },
         computed: {
             ...mapState({
                 userFlag: state => state.user.userFlag,
-            }),
-        },
-        data() {
-            return {
-                time: 0,
-                sendSms:false,
-                params: {
-                    mobile: '',
-                    smsCode: '',
-                    password: '',
-                    confirmPassword: '',
-                    code: ''
-                }
-            }
-        },
-        methods: {
-            backLogin() {
-                this.$store.commit('userFlag', -1)
-            },
-            login() {
-                if (this.userFlag === -2) {
-                    this.requestPost('user/register', this.params, () => {
-                        this.$store.commit('showMessage', {
-                            type: 'success',
-                            message: '注册成功'
-                        })
-                        this.$store.commit('userFlag', -1)
-                    }, error => {
-                        this.$store.commit('showMessage', {
-                            message: '注册失败：' + error.message,
-                            type: 'error'
-                        })
-                    })
-                } else if (this.userFlag === -3) {
-                    this.requestPost('user/resetPwd', this.params, () => {
-                        this.$store.commit('showMessage', {
-                            type: 'success',
-                            message: '重置成功'
-                        })
-                        this.$store.commit('userFlag', -1)
-                    }, error => {
-                        this.$store.commit('showMessage', {
-                            message: '重置失败：' + error.message,
-                            type: 'error'
-                        })
-                    })
-                }
-
-            },
-            getCode() {
-                if (this.params.mobile && this.userFlag === -2) {
-                    this.params.code = 1
-                } else if (this.params.mobile && this.userFlag === -3) {
-                    this.params.code = 2
-                }
-                this.requestPost('user/sendSms', this.params, res => {
-                    console.log(res)
-                    this.sendSms = true
-                    this.time=60*1000
-                }, error => {
-                    console.log(error)
-                })
+    }),
+    },
+    data() {
+        return {
+            time: 0,
+            sendSms: false,
+            params: {
+                mobile: '',
+                smsCode: '',
+                password: '',
+                confirmPassword: '',
+                code: ''
             }
         }
+    },
+    methods: {
+        backLogin() {
+            this.$store.commit('userFlag', -1)
+        },
+        login() {
+            if (this.params.password !== this.params.confirmPassword) {
+                this.$store.commit('showMessage', {
+                    type: 'error',
+                    message: '两次密码不一致'
+                })
+                return
+            }
+            if (this.userFlag === -2) {
+                this.requestPost('user/register', this.params, () => {
+                    this.$store.commit('showMessage', {
+                    type: 'success',
+                    message: '注册成功'
+                })
+                this.$store.commit('userFlag', -1)
+            }, error => {
+                    this.$store.commit('showMessage', {
+                        message: '注册失败：' + error.message,
+                        type: 'error'
+                    })
+                })
+            } else if (this.userFlag === -3) {
+                this.requestPost('user/resetPwd', this.params, () => {
+                    this.$store.commit('showMessage', {
+                    type: 'success',
+                    message: '重置成功'
+                })
+                this.$store.commit('userFlag', -1)
+            }, error => {
+                    this.$store.commit('showMessage', {
+                        message: '重置失败：' + error.message,
+                        type: 'error'
+                    })
+                })
+            }
+
+        },
+        getCode() {
+            if (!this.params.mobile) {
+                this.$store.commit('showMessage', {
+                    message: '请输入手机号',
+                    type: 'error'
+                })
+                return
+            }
+            if (this.userFlag === -2) {
+                this.params.code = 1
+            } else if (this.userFlag === -3) {
+                this.params.code = 2
+            }
+            this.sendSms = true
+            this.requestPost('user/sendSms', this.params, () => {
+                this.sendSms = false
+            this.time = 60 * 1000
+        }, error => {
+                this.sendSms = false
+                this.$store.commit('showMessage', {
+                    message: error.msg,
+                    type: 'error'
+                })
+            })
+        }
+    }
     }
 </script>
 

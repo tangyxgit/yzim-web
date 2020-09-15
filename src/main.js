@@ -29,6 +29,22 @@ Vue.use(DropdownMenu)
 Vue.use(DropdownItem)
 Vue.component('avatar', Avatar)
 
+Vue.prototype.setUserData = function (userData) {
+    if (userData) {
+        this.$root.userApi = userData
+        localStorage.setItem('userApi', JSON.stringify(userData))
+    }
+}
+
+Vue.prototype.userApi = function () {
+    if (!this.$root.userApi) {
+        let userData = localStorage.getItem('userApi')
+        if (userData) {
+            this.$root.userApi = JSON.parse(userData)
+        }
+    }
+    return this.$root.userApi
+}
 
 function baseUrl() {
     return '/api'
@@ -43,24 +59,32 @@ Vue.prototype.requestPost = function (url, params, success, fail) {
     Axios.post(url, params).then(res => {
         let code = res.data.code
         if (code === 200) {
-            if (success) {
-                success(res.data)
-            }
-        } else {
-            if (fail) {
-                fail(res.data)
-            }
+        if (success) {
+            success(res.data)
         }
-    }).catch(error => {
-        if (!error.msg) {
-            error.msg = '服务器繁忙，请稍后尝试！'
-        }
+    } else {
         if (fail) {
-            fail(error)
+            fail(res.data)
         }
-    })
+    }
+}).catch(error => {
+        if (!error.msg) {
+        error.msg = '服务器繁忙，请稍后尝试！'
+    }
+    if (fail) {
+        fail(error)
+    }
+})
 }
 
 new Vue({
-    render: h => h(Index)
+    render: h => h(Index),
+    data() {
+    return {
+        userApi: null
+    }
+},
+created() {
+
+}
 }).$mount('#app')
