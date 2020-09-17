@@ -1,7 +1,6 @@
 <template>
     <div class="wrapper">
-        <el-page-header @back="backLogin" class="top w-100" content="">
-        </el-page-header>
+        <div class="w-100 pl-2 pt-2"><span class="el-icon-arrow-left text-primary"></span><span @click="backLogin" class="text-primary">返回</span></div>
         <div class="center">
             <el-form label-position="left">
                 <el-input autocomplete="off" v-model="params.mobile" placeholder="请输入手机号" clearable>
