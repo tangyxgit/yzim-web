@@ -54,7 +54,7 @@ function baseUrl() {
 Axios.defaults.baseURL = baseUrl()
 Vue.prototype.requestPost = function (url, params, success, fail) {
     if (params) {
-        // params.token = this.userToken()
+        params.userId = this.userApi().userId;
     }
     Axios.post(url, params).then(res => {
         let code = res.data.code

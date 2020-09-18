@@ -6,25 +6,25 @@
                 <div class="col-9 offset-1">
                     <el-form v-model="form" label-width="60px" size="mini">
                         <el-form-item label="头像">
-                            <el-input v-model="form.avatar" placeholder="头像地址(URL)"/>
+                            <el-input v-model="form.userIcon" placeholder="头像地址(URL)"/>
                         </el-form-item>
                         <el-form-item label="昵称">
-                            <el-input v-model="form.nick" placeholder="昵称"/>
+                            <el-input v-model="form.nickName" placeholder="昵称"/>
                         </el-form-item>
                         <el-form-item label="手机号">
-                            <el-input placeholder="手机号码"/>
+                            <el-input v-model="form.mobile" placeholder="手机号码"/>
                         </el-form-item>
                         <el-form-item label="部门">
-                            <el-input placeholder="部门"/>
+                            <el-input v-model="form.departName" placeholder="部门"/>
                         </el-form-item>
                         <el-form-item label="职位">
-                            <el-input placeholder="职位"/>
+                            <el-input v-model="form.position" placeholder="职位"/>
                         </el-form-item>
                         <el-form-item label="工号">
-                            <el-input placeholder="工号"/>
+                            <el-input v-model="form.card" placeholder="工号"/>
                         </el-form-item>
                         <el-form-item label="邮箱">
-                            <el-input placeholder="邮箱"/>
+                            <el-input v-model="form.email" placeholder="邮箱"/>
                         </el-form-item>
                     </el-form>
                 </div>
@@ -39,8 +39,9 @@
 <!--                            :on-success="handleAvatarSuccess"-->
 <!--                            :before-upload="beforeAvatarUpload"-->
 <!--                        <img v-if="imageUrl" :src="imageUrl" class="avatar">-->
-                        <avatar :src="currentUserProfile.avatar" style="width:64px;height: 64px;border-radius: 10px"></avatar>
-                        <i class="el-icon-plus avatar-uploader-icon"></i>
+<!--                        <i class="el-icon-plus avatar-uploader-icon"></i>-->
+                        <avatar :src="currentUserProfile.avatar" class="avatar-uploader" style="width:64px;height: 64px;border-radius: 10px"></avatar>
+                        <i class="el-icon-plus avatar-uploader-icon" style="z-index:999"></i>
                     </el-upload>
                 </div>
             </div>
@@ -56,18 +57,6 @@
                     class="my-avatar"
             />
         </div>
-<!--        <el-dialog-->
-<!--                title="提示"-->
-<!--                :visible.sync="showEditMyProfile"-->
-<!--                width="30%"-->
-<!--                style="padding: 0px;margin: 0"-->
-<!--                center>-->
-<!--            <div class="bg-danger w-100 h-100">需要注意的是内容是默认不居中的</div>-->
-<!--            <span slot="footer" class="dialog-footer">-->
-<!--    <el-button @click="centerDialogVisible = false">取 消</el-button>-->
-<!--    <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>-->
-<!--  </span>-->
-<!--        </el-dialog>-->
     </div>
 </template>
 
@@ -92,8 +81,28 @@
             return {
                 showEditMyProfile: false,
                 centerDialogVisible: false,
-                form: {avatar: '', nick: '', gender: ''}
+                form: {
+                    userId: '',
+                    userIcon: '',
+                    nickName: '',
+                    card: '',
+                    position: '',
+                    email: '',
+                    password: '',
+                    departName:''
+                }
             }
+        },
+        created() {
+            this.requestPost('user/getUserByUserId',this.form, res=>{
+                this.form = res.data
+            },()=>{
+                this.$store.commit('showMessage', {
+                    type: 'error',
+                    message: '获取信息失败，请稍后重试'
+                })
+                this.showEditMyProfile = false
+            })
         },
         computed: {
             ...mapState({
@@ -113,41 +122,49 @@
         },
         methods: {
             editMyProfile() {
-                if (this.form.avatar && this.form.avatar.indexOf('http') === -1) {
+                // if (this.form.avatar && this.form.avatar.indexOf('http') === -1) {
+                //     this.$store.commit('showMessage', {
+                //         message: '头像应该是 Url 地址',
+                //         type: 'warning'
+                //     })
+                //     this.form.avatar = ''
+                //     return
+                // }
+                // const options = {}
+                // // 过滤空串
+                // Object.keys(this.form).forEach(key => {
+                //     if (this.form[key]) {
+                //         options[key] = this.form[key]
+                //     }
+                // })
+                // this.tim
+                //     .updateMyProfile(options)
+                //     .then(() => {
+                //         this.$store.commit('showMessage', {
+                //             message: '修改成功'
+                //         })
+                //         this.showEditMyProfile = false
+                //     })
+                //     .catch(imError => {
+                //         this.$store.commit('showMessage', {
+                //             message: imError.message,
+                //             type: 'error'
+                //         })
+                //     })
+                this.requestPost('user/update',this.form,res=>{
+                    console.log(res)
                     this.$store.commit('showMessage', {
-                        message: '头像应该是 Url 地址',
-                        type: 'warning'
+                        type: 'success',
+                        message: '保存成功'
                     })
-                    this.form.avatar = ''
-                    return
-                }
-                const options = {}
-                // 过滤空串
-                Object.keys(this.form).forEach(key => {
-                    if (this.form[key]) {
-                        options[key] = this.form[key]
-                    }
+                    this.showEditMyProfile = false
+                },()=>{
+                    this.$store.commit('showMessage', {
+                        type: 'error',
+                        message: '保存失败，请稍后重试'
+                    })
                 })
-                this.tim
-                    .updateMyProfile(options)
-                    .then(() => {
-                        this.$store.commit('showMessage', {
-                            message: '修改成功'
-                        })
-                        this.showEditMyProfile = false
-                    })
-                    .catch(imError => {
-                        this.$store.commit('showMessage', {
-                            message: imError.message,
-                            type: 'error'
-                        })
-                    })
             },
-            handleEdit() {
-                const {avatar, nick, gender} = this.currentUserProfile
-                Object.assign(this.form, {avatar, nick, gender})
-                this.showEditMyProfile = true
-            }
         }
     }
 </script>
@@ -166,11 +183,12 @@
 
     .avatar-uploader-icon {
         font-size: 20px;
-        color: white;
+        color: black;
         width: 15px;
         height: 15px;
         line-height: 60px;
-        padding-left:20px
+        padding-left:20px;
+        z-index:999
     }
 
     .my-profile-wrapper
