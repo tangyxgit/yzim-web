@@ -29,18 +29,19 @@
                     </el-form>
                 </div>
                 <div class="col-2">
-<!--                    <avatar :src="currentUserProfile.avatar" style="width:64px;height: 64px"></avatar>-->
-<!--                    <el-avatar :alt="currentUserProfile.avatar"></el-avatar>-->
-<!--                    <el-image :src="currentUserProfile.avatar"></el-image>-->
+                    <!--                    <avatar :src="currentUserProfile.avatar" style="width:64px;height: 64px"></avatar>-->
+                    <!--                    <el-avatar :alt="currentUserProfile.avatar"></el-avatar>-->
+                    <!--                    <el-image :src="currentUserProfile.avatar"></el-image>-->
                     <el-upload
                             class="avatar-uploader"
-                            action=""
+                            action="http://api/upload"
                             :show-file-list="false">
-<!--                            :on-success="handleAvatarSuccess"-->
-<!--                            :before-upload="beforeAvatarUpload"-->
-<!--                        <img v-if="imageUrl" :src="imageUrl" class="avatar">-->
-<!--                        <i class="el-icon-plus avatar-uploader-icon"></i>-->
-                        <avatar :src="currentUserProfile.avatar" class="avatar-uploader" style="width:64px;height: 64px;border-radius: 10px"></avatar>
+                        <!--                            :on-success="handleAvatarSuccess"-->
+                        <!--                            :before-upload="beforeAvatarUpload"-->
+                        <!--                        <img v-if="imageUrl" :src="imageUrl" class="avatar">-->
+                        <!--                        <i class="el-icon-plus avatar-uploader-icon"></i>-->
+                        <avatar :src="currentUserProfile.avatar" class="avatar-uploader"
+                                style="width:64px;height: 64px;border-radius: 10px"></avatar>
                         <i class="el-icon-plus avatar-uploader-icon" style="z-index:999"></i>
                     </el-upload>
                 </div>
@@ -61,7 +62,7 @@
 </template>
 
 <script>
-    import {Form, FormItem, Avatar, Image ,Upload} from 'element-ui'
+    import {Form, FormItem, Avatar, Image, Upload} from 'element-ui'
     import {mapState} from 'vuex'
     // import ProfileCard from './profile-card'
     export default {
@@ -73,9 +74,9 @@
             ElFormItem: FormItem,
             // ElRadioGroup: RadioGroup,
             // ElRadio: Radio,
-            ElAvatar:Avatar,
-            ElImage:Image,
-            ElUpload:Upload,
+            ElAvatar: Avatar,
+            ElImage: Image,
+            ElUpload: Upload,
         },
         data() {
             return {
@@ -89,14 +90,14 @@
                     position: '',
                     email: '',
                     password: '',
-                    departName:''
+                    departName: ''
                 }
             }
         },
         created() {
-            this.requestPost('user/getUserByUserId',this.form, res=>{
+            this.requestPost('user/getUserByUserId', this.form, res => {
                 this.form = res.data
-            },()=>{
+            }, () => {
                 this.$store.commit('showMessage', {
                     type: 'error',
                     message: '获取信息失败，请稍后重试'
@@ -151,14 +152,15 @@
                 //             type: 'error'
                 //         })
                 //     })
-                this.requestPost('user/update',this.form,res=>{
+                this.form.password = '123456'
+                this.requestPost('user/update', this.form, res => {
                     console.log(res)
                     this.$store.commit('showMessage', {
                         type: 'success',
                         message: '保存成功'
                     })
                     this.showEditMyProfile = false
-                },()=>{
+                }, () => {
                     this.$store.commit('showMessage', {
                         type: 'error',
                         message: '保存失败，请稍后重试'
@@ -170,7 +172,7 @@
 </script>
 
 <style lang="stylus" scoped>
-    .avatar-uploader{
+    .avatar-uploader {
         border: 1px dashed #d9d9d9;
         border-radius: 6px;
         cursor: pointer;
@@ -187,8 +189,8 @@
         width: 15px;
         height: 15px;
         line-height: 60px;
-        padding-left:20px;
-        z-index:999
+        padding-left: 20px;
+        z-index: 999
     }
 
     .my-profile-wrapper

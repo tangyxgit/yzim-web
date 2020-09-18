@@ -1,64 +1,46 @@
 <template>
-  <div class="login-wrapper">
-    <img class="logo" :src="logo"/>
-    <el-form
-            ref="login"
-            :rules="rules"
-            :model="form"
-            label-width="0"
-            style="width:100%"
-            @keydown.enter.native="submit"
-    >
-      <!-- Github登录方式 -->
-      <!--      <el-form-item prop="userID">-->
-      <!--        <el-select v-model="form.userID" class="user-selector">-->
-      <!--          <el-option-->
-      <!--            v-for="index in 30"-->
-      <!--            :key="index"-->
-      <!--            :label="`user${index-1}`"-->
-      <!--            :value="`user${index-1}`"-->
-      <!--          ></el-option>-->
-      <!--        </el-select>-->
-      <!--      </el-form-item>-->
-      <el-form-item>
-        <el-input autocomplete="off" v-model="params.mobile" clearable placeholder="请输入用户名"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-input autocomplete="off" v-model="params.password" type="password" clearable
-                  placeholder="请输入密码"></el-input>
-      </el-form-item>
-      <!-- 线上版本登录方式 -->
-      <!-- <el-form-item prop="userID">
-        <el-input v-model="form.userID" placeholder="请输入用户名" type="text" clearable></el-input>
-      </el-form-item>
-      <el-form-item prop="password">
-        <el-input
-          v-model="form.password"
-          placeholder="请输入密码"
-          type="password"
-          show-password
-          clearable
-        ></el-input>
-      </el-form-item>-->
-    </el-form>
-    <el-button
-            type="primary"
-            :disabled="!params.mobile || !params.password"
-            @click="submit"
-            style="width:100%; margin-top: 6px;"
-            :loading="loading"
-    >登录
-    </el-button>
-    <el-row style="width:100%" class="mb-4">
-      <el-col :span="5" style="margin-top: 10px;cursor: pointer">
-        <div class="text-primary" style="font-size: 10px" @click="register">立即注册</div>
-      </el-col>
-      <el-col :span="6" :offset="13" style="margin-top: 10px;cursor: pointer">
-        <div class="text-dark" style="font-size: 10px" @click="forgetPassword">忘记密码？</div>
-      </el-col>
-    </el-row>
-    <!--    <el-button type="primary" @click="register" plain size="small" class="px-4 mt-4">立即注册</el-button>-->
-  </div>
+    <div class="login-wrapper" v-if="showLogin">
+        <div class="text-left w-100 row align-items-center">
+            <img class="logo" :src="logo"/>
+            <strong class="h3">元信</strong>
+        </div>
+        <el-form
+                ref="login"
+                :rules="rules"
+                :model="form"
+                label-width="0"
+                style="width:100%"
+                @keydown.enter.native="submit"
+        >
+            <el-form-item>
+                <el-input autocomplete="off" v-model="params.mobile" clearable placeholder="请输入手机号"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-input autocomplete="off" v-model="params.password" type="password" clearable
+                          placeholder="请输入密码"></el-input>
+            </el-form-item>
+        </el-form>
+        <el-button
+                type="primary"
+                :disabled="!params.mobile || !params.password"
+                @click="submit"
+                style="width:100%;"
+                :loading="loading"
+        >登录
+        </el-button>
+        <el-row class="w-100 mt-2">
+            <el-col :span="12">
+                <div class="text-primary" style="font-size: 10px;cursor:pointer;"
+                     @click="$store.commit('userFlag', -2)">还没有账号？立即注册
+                </div>
+            </el-col>
+            <el-col :span="12" class="text-right">
+                <div class="text-dark" style="font-size: 10px;cursor: pointer" @click="$store.commit('userFlag', -3)">
+                    忘记密码？
+                </div>
+            </el-col>
+        </el-row>
+    </div>
 </template>
 
 <script>
@@ -97,21 +79,29 @@
                 },
                 logo: logo,
                 registerVisible: false,
-                loading: false
+                loading: false,
+                showLogin: false,
+            }
+        },
+        created() {
+            this.$store.commit('fullUserLoading', true)
+            const userApi = this.userApi()
+            if (userApi && userApi.userId) {
+                this.login(true)
+            } else {
+                this.$store.commit('fullUserLoading', false)
+                this.showLogin = true
             }
         },
         methods: {
-            register() {
-                this.$store.commit('userFlag', -2)
-            },
             submit() {
                 this.$refs['login'].validate(valid => {
                     if (valid) {
                         // this.login()
                         this.requestPost('user/login', this.params, res => {
                             this.setUserData(res.data)
-                        this.login()
-                    }, error => {
+                            this.login()
+                        }, error => {
                             this.$store.commit('showMessage', {
                                 type: 'error',
                                 message: error.msg
@@ -120,8 +110,7 @@
                     }
                 })
             },
-            login() {
-                console.log(this.userApi());
+            login(autoLogin) {
                 this.loading = true
                 this.tim
                     .login({
@@ -129,59 +118,62 @@
                         userSig: this.userApi().userSign
                     })
                     .then(() => {
-                    this.loading = false
-                this.$store.commit('userFlag', 0)
-                this.$store.commit('startComputeCurrent')
-                this.$store.commit({
-                    type: 'GET_USER_INFO',
-                    userID: this.form.userID,
-                    userSig: window.genTestUserSig(this.form.userID).userSig,
-                    sdkAppID: window.genTestUserSig('').SDKAppID
-                })
-                this.$store.commit('showMessage', {
-                    type: 'success',
-                    message: '登录成功'
-                })
-            })
-            .catch(error => {
-                    this.loading = false
-                this.$store.commit('showMessage', {
-                    message: '登录失败：' + error.message,
-                    type: 'error'
-                })
-            })
+                        this.loading = false
+                        this.$store.commit('userFlag', 0)
+                        this.$store.commit('startComputeCurrent')
+                        this.$store.commit({
+                            type: 'GET_USER_INFO',
+                            userID: this.userApi().userId,
+                            userSig: this.userApi().userSign,
+                            sdkAppID: window.genTestUserSig('').SDKAppID
+                        })
+                        this.$store.commit('fullUserLoading', false)
+                        if (!autoLogin) {
+                            this.$store.commit('showMessage', {
+                                type: 'success',
+                                message: '登录成功'
+                            })
+                        }
+                        this.showLogin = true
+                    })
+                    .catch(error => {
+                        this.$store.commit('fullUserLoading', false)
+                        this.loading = false
+                        this.$store.commit('showMessage', {
+                            message: '登录失败：' + error.message,
+                            type: 'error'
+                        })
+                        this.showLogin = true
+                    })
             },
-            forgetPassword() {
-                this.$store.commit('userFlag', -3)
-            }
         }
     }
 </script>
 
 <style lang="stylus" scoped>
-  .login-wrapper {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    width: 400px;
-    padding: 20px 80px 20px;
-    background: $white;
-    color: $black;
-    border-radius: 5px;
-    box-shadow: 0 11px 20px 0 rgba(0, 0, 0, 0.3);
+    .login-wrapper {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width: 400px;
+        padding: 20px 20px;
+        background: $white;
+        color: $black;
+        border-radius: 5px;
+        box-shadow: 0 11px 20px 0 rgba(0, 0, 0, 0.3);
 
-    .logo {
-      width: 130px;
-      height: 130px;
-    }
+        .logo {
+            width: 64px;
+            height: 64px;
+        }
 
-    .register-button {
-      width: 100%;
-      margin: 6px 0 0 0;
-    }
+        .register-button {
+            width: 100%;
+            margin: 6px 0 0 0;
+        }
 
-    .user-selector {
-      width: 100%;
+        .user-selector {
+            width: 100%;
+        }
     }
-  }
 </style>

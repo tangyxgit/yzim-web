@@ -45,6 +45,10 @@ Vue.prototype.userApi = function () {
     }
     return this.$root.userApi
 }
+Vue.prototype.userLogout = function () {
+    localStorage.removeItem('userApi')
+    this.$root.userApi = null
+}
 
 function baseUrl() {
     return '/api'
@@ -53,38 +57,38 @@ function baseUrl() {
 //网络配置
 Axios.defaults.baseURL = baseUrl()
 Vue.prototype.requestPost = function (url, params, success, fail) {
-    if (params) {
-        params.userId = this.userApi().userId;
+    if (params && this.userApi() && this.userApi().userId) {
+        params.userId = this.userApi().userId
     }
     Axios.post(url, params).then(res => {
         let code = res.data.code
         if (code === 200) {
-        if (success) {
-            success(res.data)
+            if (success) {
+                success(res.data)
+            }
+        } else {
+            if (fail) {
+                fail(res.data)
+            }
         }
-    } else {
-        if (fail) {
-            fail(res.data)
-        }
-    }
-}).catch(error => {
+    }).catch(error => {
         if (!error.msg) {
-        error.msg = '服务器繁忙，请稍后尝试！'
-    }
-    if (fail) {
-        fail(error)
-    }
-})
+            error.msg = '服务器繁忙，请稍后尝试！'
+        }
+        if (fail) {
+            fail(error)
+        }
+    })
 }
 
 new Vue({
     render: h => h(Index),
     data() {
-    return {
-        userApi: null
-    }
-},
-created() {
+        return {
+            userApi: null
+        }
+    },
+    created() {
 
-}
+    }
 }).$mount('#app')

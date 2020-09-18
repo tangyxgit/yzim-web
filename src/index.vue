@@ -1,9 +1,12 @@
 <template>
     <div>
-        <div id="wrapper" v-if="userFlag===-1">
+        <div class="wrapper" v-if="userFlag===-1"
+             element-loading-text="正在加载..."
+             element-loading-background="rgba(0, 0, 0, 0.8)"
+             v-loading="fullUserLoading">
             <login/>
         </div>
-        <div class="center" v-else-if="userFlag===-2 || userFlag===-3">
+        <div class="wrapper" v-else-if="userFlag===-2 || userFlag===-3">
             <register/>
         </div>
         <div
@@ -64,12 +67,16 @@
                 currentConversation: state => state.conversation.currentConversation,
                 userFlag: state => state.user.userFlag,
                 isSDKReady: state => state.user.isSDKReady,
+                fullLoading: state => state.user.fullLoading,
                 isBusy: state => state.video.isBusy,
                 userID: state => state.user.userID
             }),
             // 是否显示 Loading 状态
             showLoading() {
                 return !this.isSDKReady
+            },
+            fullUserLoading() {
+                return this.fullLoading
             }
         },
 
@@ -126,7 +133,7 @@
 
             },
             onReadyStateUpdate({name}) {
-                const isSDKReady = name === this.TIM.EVENT.SDK_READY ? true : false
+                const isSDKReady = name === this.TIM.EVENT.SDK_READY
                 this.$store.commit('toggleIsSDKReady', isSDKReady)
 
                 if (isSDKReady) {
@@ -376,12 +383,13 @@
         }
     }
 
-    #wrapper {
+    .wrapper {
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
         padding-top: 100px;
+        height: 100vh
     }
 
     .center {
