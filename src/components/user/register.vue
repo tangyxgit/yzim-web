@@ -49,7 +49,7 @@
                 style="width:100%; margin-top: 6px;"
         >完成
         </el-button>
-        <div class="text-primary mt-2" style="font-size: 10px;cursor:pointer;" @click="$store.commit('userFlag', -1)">已有账号，去登陆 ></div>
+        <div class="text-primary mt-2" style="font-size: 10px;cursor:pointer;" @click="$store.commit('userFlag', -1)">已有账号，去登录 ></div>
     </div>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
-  <div class="base" :class="[ isMine ? 'right' : 'left']">
+  <div class="base" :class="[ isMine ? 'right' : 'left']" style="width:120px">
     <!-- <div class="name text-ellipsis">{{ from }}</div> -->
-    <div class="date">{{ date }}</div>
+    <div class="date  ">{{ date }}</div>
   </div>
 </template>
 

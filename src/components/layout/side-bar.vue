@@ -39,10 +39,38 @@
                         title="工具箱"
                 ></div>
             </div>
-            <div class="bottom">
-                <div class="iconfont icon-tuichu" @click="logout" title="退出"></div>
-            </div>
+            <el-row class="bottom " type="flex" justify="center" align="middle">
+<!--                <div class="iconfont el-icon-setting" @click="logout" title="退出"></div>-->
+<!--                <div class="el-icon-setting setting"></div>-->
+                <el-popover placement="right" width="300px"  trigger="click" class="p-0" >
+                    <span style="cursor:pointer" @click="change">修改密码</span>
+                    <el-divider direction="vertical" class="text-dark" width="120px"></el-divider>
+                    <span style="cursor:pointer" @click="logout">退出登录</span>
+<!--                    <el-button slot="reference">click 激活</el-button>-->
+                    <div slot="reference" class="el-icon-setting setting"></div>
+                </el-popover>
+            </el-row>
         </div>
+        <el-dialog :visible.sync="changePassword" class="p-0" width="32%" center>
+            <div slot="title" class="text-center w-100" style="font-size: 15px">修改密码</div>
+            <div class="p-2">
+                <el-form v-model="params" label-width="100px" size="mini">
+                    <el-form-item label="旧密码">
+                        <el-input type="password" v-model="params.oldPassword" placeholder="请输入旧密码" autocomplete="off" clearable></el-input>
+                    </el-form-item>
+                    <el-form-item label="新密码">
+                        <el-input type="password" v-model="params.newPassword" placeholder="请输入新密码" autocomplete="off" clearable></el-input>
+                    </el-form-item>
+                    <el-form-item label="新密码">
+                        <el-input type="password" v-model="params.confirmPassword" placeholder="请重复新密码" autocomplete="off" clearable></el-input>
+                    </el-form-item>
+                </el-form>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button size="medium" @click="cancelPassword">取 消</el-button>
+                <el-button :disabled="!params.oldPassword || !params.newPassword || !params.confirmPassword" size="medium" type="primary" @click="commitPassword">确定</el-button>
+            </span>
+        </el-dialog>
         <div class="bar-right">
             <conversation-list v-show="showConversationList"/>
             <group-list v-show="showGroupList"/>
@@ -61,6 +89,7 @@
     import FriendList from '../friend/friend-list'
     import BlackList from '../blacklist/blacklist'
     import WorktableList from '../worktable/worktable'
+    import {Popover, Divider, Dialog, Form, FormItem} from 'element-ui'
 
     const activeName = {
         CONVERSATION_LIST: 'conversation-list',
@@ -78,11 +107,22 @@
             FriendList,
             BlackList,
             WorktableList,
+            ElPopover:Popover,
+            ElDivider:Divider,
+            ElDialog:Dialog,
+            ElForm: Form,
+            ElFormItem: FormItem,
         },
         data() {
             return {
                 active: activeName.CONVERSATION_LIST,
-                activeName: activeName
+                activeName: activeName,
+                changePassword:false,
+                params: {
+                    userId: '',
+                    newPassword: '',
+                    oldPassword: ''
+                }
             }
         },
         computed: {
@@ -111,6 +151,37 @@
         methods: {
             checkoutActive(name) {
                 this.active = name
+            },
+            change() {
+                this.changePassword = true
+            },
+            commitPassword() {
+                if(this.params.newPassword !== this.params.confirmPassword) {
+                    this.$store.commit('showMessage',{
+                        type: 'error',
+                        message: '两次密码不一致'
+                    })
+                    return
+                }
+                this.params.userId = this.userApi().userId;
+                this.requestPost('user/updatePwd',this.params,()=>{
+                    this.$store.commit('showMessage', {
+                        type: 'success',
+                        message: '修改成功'
+                    })
+                    this.changePassword = false
+                },error=>{
+                    this.$store.commit('showMessage', {
+                        message: '修改失败：' + error.msg,
+                        type: 'error'
+                    })
+                })
+            },
+            cancelPassword() {
+                this.changePassword = false
+                this.params.oldPassword = ''
+                this.params.newPassword = ''
+                this.params.confirmPassword = ''
             },
             handleClick(event) {
                 switch (event.target.id) {
@@ -282,12 +353,27 @@
                     text-align: center;
                     font-size: 30px;
                     cursor: pointer;
-                    color: $first;
+                    color: white;
                     user-select: none;
                     -moz-user-select: none;
                 }
 
                 .iconfont:hover {
+                    color: white;
+                }
+
+                .setting {
+                    height: 70px;
+                    line-height: 70px;
+                    text-align: center;
+                    font-size: 30px;
+                    cursor: pointer;
+                    color: darkgrey;
+                    user-select: none;
+                    -moz-user-select: none;
+                }
+
+                .setting:hover {
                     color: white;
                 }
             }

@@ -388,7 +388,6 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        padding-top: 100px;
         height: 100vh
     }
 
