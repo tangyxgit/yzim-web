@@ -157,6 +157,9 @@
                 this.active = name
             },
             change() {
+                this.params.oldPassword = ''
+                this.params.newPassword = ''
+                this.params.confirmPassword = ''
                 this.changePassword = true
             },
             commitPassword() {
@@ -183,9 +186,6 @@
             },
             cancelPassword() {
                 this.changePassword = false
-                this.params.oldPassword = ''
-                this.params.newPassword = ''
-                this.params.confirmPassword = ''
             },
             handleClick(event) {
                 switch (event.target.id) {
