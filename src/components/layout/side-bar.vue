@@ -53,8 +53,8 @@
         </div>
         <el-dialog :visible.sync="changePassword" class="p-0" width="32%" center>
             <div slot="title" class="text-center w-100" style="font-size: 15px">修改密码</div>
-            <div class="p-2">
-                <el-form v-model="params" label-width="100px" size="mini">
+            <div class="p-2 ">
+                <el-form v-model="params" label-width="70px" size="mini">
                     <el-form-item label="旧密码">
                         <el-input type="password" v-model="params.oldPassword" placeholder="请输入旧密码" autocomplete="off" clearable></el-input>
                     </el-form-item>
@@ -124,6 +124,10 @@
                     oldPassword: ''
                 }
             }
+        },
+        created() {
+                this.getFriendList()
+                console.log(334)
         },
         computed: {
             ...mapGetters(['totalUnreadCount']),
@@ -239,6 +243,7 @@
                 this.tim
                     .getFriendList()
                     .then(({data: friendList}) => {
+                        console.log(friendList)
                         this.$store.commit('upadteFriendList', friendList)
                     })
                     .catch(error => {

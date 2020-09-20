@@ -92,9 +92,9 @@
         content="按Enter发送消息，Ctrl+Enter换行"
         placement="left-start"
       >
-        <div class="btn-send" @click="sendTextMessage">
-          <div class="tim-icon-send"></div>
-        </div>
+<!--        <div class="btn-send" @click="sendTextMessage">-->
+<!--          <div class="tim-icon-send"></div>-->
+<!--        </div>-->
       </el-tooltip>
     </div>
     <input

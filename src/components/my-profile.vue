@@ -2,38 +2,37 @@
     <div class="my-profile-wrapper">
         <el-dialog :visible.sync="showEditMyProfile" class="p-0 m-0" width="32%" center>
             <div slot="title" class="text-center w-100" style="font-size: 15px">编辑个人信息</div>
-            <div slot="" class=" w-100 row">
-                <div class="col-9 offset-1">
-                    <el-form v-model="form" label-width="60px" size="mini">
-                        <el-form-item label="头像">
-                            <el-input v-model="form.userIcon" placeholder="头像地址(URL)"/>
-                        </el-form-item>
-                        <el-form-item label="昵称">
-                            <el-input v-model="form.nickName" placeholder="昵称"/>
-                        </el-form-item>
-                        <el-form-item label="手机">
-                            <el-input @focus="changePhone = true" v-model="form.mobile" placeholder="手机号码"/>
-                        </el-form-item>
-                        <el-form-item label="部门">
-                            <el-input v-model="form.departName" placeholder="部门"/>
-                        </el-form-item>
-                        <el-form-item label="职位">
-                            <el-input v-model="form.position" placeholder="职位"/>
-                        </el-form-item>
-                        <el-form-item label="工号">
-                            <el-input v-model="form.card" placeholder="工号"/>
-                        </el-form-item>
-                        <el-form-item label="邮箱">
-                            <el-input v-model="form.email" placeholder="邮箱"/>
-                        </el-form-item>
-                    </el-form>
-                </div>
-                <div class="col-2">
-                    <!--                    <avatar :src="currentUserProfile.avatar" style="width:64px;height: 64px"></avatar>-->
-                    <!--                    <el-avatar :alt="currentUserProfile.avatar"></el-avatar>-->
-                    <!--                    <el-image :src="currentUserProfile.avatar"></el-image>-->
+            <el-row>
+                <el-col :span="18">
+                    <div class="offset-1" >
+                        <el-form v-model="form" label-width="60px" size="mini">
+                            <el-form-item label="头像">
+                                <el-input v-model="form.userIcon" placeholder="头像地址(URL)"/>
+                            </el-form-item>
+                            <el-form-item label="昵称">
+                                <el-input v-model="form.nickName" placeholder="昵称"/>
+                            </el-form-item>
+                            <el-form-item label="手机">
+                                <el-input @focus="changePhone = true" v-model="form.mobile" placeholder="手机号码"/>
+                            </el-form-item>
+                            <el-form-item label="部门">
+                                <el-input v-model="form.departName" placeholder="部门"/>
+                            </el-form-item>
+                            <el-form-item label="职位">
+                                <el-input v-model="form.position" placeholder="职位"/>
+                            </el-form-item>
+                            <el-form-item label="工号">
+                                <el-input v-model="form.card" placeholder="工号"/>
+                            </el-form-item>
+                            <el-form-item label="邮箱">
+                                <el-input v-model="form.email" placeholder="邮箱"/>
+                            </el-form-item>
+                        </el-form>
+                    </div>
+                </el-col>
+                <el-col :span="6" class="row justify-content-center pl-4">
                     <el-upload
-                            class="avatar-uploader"
+                            class="avatar-uploader "
                             action="http://api/upload"
                             :show-file-list="false">
                         <!--                        <img v-if="imageUrl" :src="imageUrl" class="avatar">-->
@@ -41,8 +40,17 @@
                                 style="width:64px;height: 64px;border-radius: 10px"></avatar>
                         <i class="el-icon-plus avatar-uploader-icon" style="z-index:999"></i>
                     </el-upload>
-                </div>
-            </div>
+                </el-col>
+            </el-row>
+<!--            <div slot="" class="bg-info w-100 row">-->
+<!--                -->
+<!--                <div class="bg-success text-center pl-3" style="width:100px">-->
+<!--                    &lt;!&ndash;                    <avatar :src="currentUserProfile.avatar" style="width:64px;height: 64px"></avatar>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    <el-avatar :alt="currentUserProfile.avatar"></el-avatar>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    <el-image :src="currentUserProfile.avatar"></el-image>&ndash;&gt;-->
+<!--                   -->
+<!--                </div>-->
+<!--            </div>-->
             <span slot="footer" class="dialog-footer">
                 <el-button @click="showEditMyProfile = false">取 消</el-button>
                 <el-button type="primary" @click="editMyProfile">确 定</el-button>
@@ -296,7 +304,7 @@
 
     .my-avatar
         cursor pointer
-        border-radius: 90%;
+        border-radius: 3px;
 
     .edit-my-profile
         position absolute

@@ -8,8 +8,8 @@ import TIM from 'tim-js-sdk'
 import Axios from 'axios'
 import './assets/icon/iconfont.css'
 import './assets/icon/tim.css'
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
-
+import './assets/css/yzmw.css'
+// import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 window.tim = tim
 window.TIM = TIM
 window.store = store
