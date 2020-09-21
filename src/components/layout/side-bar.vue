@@ -25,6 +25,7 @@
                         class="iconfont icon-contact"
                         :class="{ active: showFriendList }"
                         title="好友列表"
+                        @click="showFriend"
                 ></div>
                 <div
                         id="black-list"
@@ -125,9 +126,8 @@
                 }
             }
         },
-        created() {
-                this.getFriendList()
-                console.log(334)
+        mounted() {
+
         },
         computed: {
             ...mapGetters(['totalUnreadCount']),
@@ -155,6 +155,9 @@
         methods: {
             checkoutActive(name) {
                 this.active = name
+            },
+            showFriend() {
+                this.getFriendList()
             },
             change() {
                 this.params.oldPassword = ''
@@ -244,6 +247,7 @@
                     .getFriendList()
                     .then(({data: friendList}) => {
                         console.log(friendList)
+                        console.log(friendList.profile)
                         this.$store.commit('upadteFriendList', friendList)
                     })
                     .catch(error => {
