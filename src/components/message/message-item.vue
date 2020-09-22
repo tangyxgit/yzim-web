@@ -7,7 +7,7 @@
     >
       <div class="col-1" v-if="showAvatar">
         <!-- 头像 -->
-        <avatar :src="avatar" />
+        <avatar :src="avatar" style="border-radius: 5%;width:40px;height:40px"/>
       </div>
       <div class="col-2">
         <!-- 消息主体 -->
