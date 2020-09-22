@@ -116,6 +116,7 @@
 
             },
             onReceiveMessage({data: messageList}) {
+                console.error('收到推送的单聊、群聊、群提示、群系统通知的新消息：',messageList)
                 this.handleVideoMessage(messageList)
                 this.handleAt(messageList)
                 this.handleQuitGroupTip(messageList)
@@ -137,6 +138,9 @@
                 this.$store.commit('toggleIsSDKReady', isSDKReady)
 
                 if (isSDKReady) {
+                    this.tim.updateMyProfile({
+                        allowType: this.TIM.TYPES.ALLOW_TYPE_NEED_CONFIRM
+                    })
                     this.tim
                         .getMyProfile()
                         .then(({data}) => {

@@ -4,7 +4,7 @@
             <div slot="title" class="text-center w-100" style="font-size: 15px">编辑个人信息</div>
             <el-row>
                 <el-col :span="18">
-                    <div class="offset-1" >
+                    <div class="offset-1">
                         <el-form v-model="form" label-width="60px" size="mini">
                             <el-form-item label="头像">
                                 <el-input v-model="form.userIcon" placeholder="头像地址(URL)"/>
@@ -42,15 +42,15 @@
                     </el-upload>
                 </el-col>
             </el-row>
-<!--            <div slot="" class="bg-info w-100 row">-->
-<!--                -->
-<!--                <div class="bg-success text-center pl-3" style="width:100px">-->
-<!--                    &lt;!&ndash;                    <avatar :src="currentUserProfile.avatar" style="width:64px;height: 64px"></avatar>&ndash;&gt;-->
-<!--                    &lt;!&ndash;                    <el-avatar :alt="currentUserProfile.avatar"></el-avatar>&ndash;&gt;-->
-<!--                    &lt;!&ndash;                    <el-image :src="currentUserProfile.avatar"></el-image>&ndash;&gt;-->
-<!--                   -->
-<!--                </div>-->
-<!--            </div>-->
+            <!--            <div slot="" class="bg-info w-100 row">-->
+            <!--                -->
+            <!--                <div class="bg-success text-center pl-3" style="width:100px">-->
+            <!--                    &lt;!&ndash;                    <avatar :src="currentUserProfile.avatar" style="width:64px;height: 64px"></avatar>&ndash;&gt;-->
+            <!--                    &lt;!&ndash;                    <el-avatar :alt="currentUserProfile.avatar"></el-avatar>&ndash;&gt;-->
+            <!--                    &lt;!&ndash;                    <el-image :src="currentUserProfile.avatar"></el-image>&ndash;&gt;-->
+            <!--                   -->
+            <!--                </div>-->
+            <!--            </div>-->
             <span slot="footer" class="dialog-footer">
                 <el-button @click="showEditMyProfile = false">取 消</el-button>
                 <el-button type="primary" @click="editMyProfile">确 定</el-button>
@@ -65,7 +65,8 @@
                     </el-form-item>
                     <el-form-item label="验证码">
                         <el-input v-model="params.smsCode" autocomplete="off">
-                            <el-button :loading="sendSms" @click="getCode" type="primary" slot="append" :disabled="time>0"
+                            <el-button :loading="sendSms" @click="getCode" type="primary" slot="append"
+                                       :disabled="time>0"
                                        placeholder="请输入验证码" style="width: 100px">
                                 <span v-if="time === 0">{{sendSms?'发送中...':'获取验证码'}}</span>
                                 <span v-if="time>0">
@@ -96,7 +97,7 @@
 </template>
 
 <script>
-    import {Form, FormItem, Avatar, Image, Upload} from 'element-ui'
+    import {Form, FormItem, Upload} from 'element-ui'
     import {CountDown} from 'vant'
     import {mapState} from 'vuex'
     // import ProfileCard from './profile-card'
@@ -109,16 +110,14 @@
             ElFormItem: FormItem,
             // ElRadioGroup: RadioGroup,
             // ElRadio: Radio,
-            ElAvatar: Avatar,
-            ElImage: Image,
             ElUpload: Upload,
-            [CountDown.name]:CountDown,
+            [CountDown.name]: CountDown,
         },
         data() {
             return {
                 showEditMyProfile: false,
                 changePhone: false,
-                time : 0,
+                time: 0,
                 sendSms: false,
                 form: {
                     userId: '',
@@ -159,7 +158,6 @@
             openProfile() {
                 this.requestPost('user/getUserByUserId', this.form, res => {
                     this.form = res.data
-                    console.log(res.data)
                     this.showEditMyProfile = true
                 }, () => {
                     this.$store.commit('showMessage', {
@@ -199,10 +197,13 @@
                 //             type: 'error'
                 //         })
                 //     })
-                this.requestPost('user/update', this.form, res => {
+                this.requestPost('user/update', this.form, () => {
                     this.$store.commit('showMessage', {
                         type: 'success',
                         message: '保存成功'
+                    })
+                    this.tim.updateMyProfile({
+                        nick:this.form.nickName
                     })
                     this.showEditMyProfile = false
                 }, () => {
@@ -213,19 +214,19 @@
                 })
             },
             getCode() {
-                if(!this.params.mobile) {
-                    this.$store.commit('showMessage',{
-                        message:'请输入新的手机号',
-                        type:'error'
+                if (!this.params.mobile) {
+                    this.$store.commit('showMessage', {
+                        message: '请输入新的手机号',
+                        type: 'error'
                     })
                     return
                 }
-                this.sendSms = true;
-                this.requestPost('user/sendSms',this.params,res=>{
+                this.sendSms = true
+                this.requestPost('user/sendSms', this.params, res => {
                     console.log(res)
                     this.sendSms = false
-                    this.time = 60*1000
-                },error=>{
+                    this.time = 60 * 1000
+                }, error => {
                     this.sendSms = false
                     this.$store.commit('showMessage', {
                         message: error.msg,
@@ -235,16 +236,16 @@
 
             },
             commitPhone() {
-                this.params.userId = this.userApi().userId;
-                this.params.oldMobile = this.form.mobile;
-                this.requestPost('user/updateMobile',this.params,()=>{
+                this.params.userId = this.userApi().userId
+                this.params.oldMobile = this.form.mobile
+                this.requestPost('user/updateMobile', this.params, () => {
                     this.form.mobile = this.params.mobile
                     this.$store.commit('showMessage', {
                         type: 'success',
                         message: '修改成功'
                     })
                     this.changePhone = false
-                },error=>{
+                }, error => {
                     this.$store.commit('showMessage', {
                         message: '修改失败：' + error.msg,
                         type: 'error'
@@ -253,7 +254,7 @@
             },
             cancelCommit() {
                 this.changePhone = false
-                this.params.mobile =''
+                this.params.mobile = ''
                 this.params.smsCode = ''
                 this.time = 0
             },
