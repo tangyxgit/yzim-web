@@ -221,7 +221,6 @@ export default {
     width 40px
     height 40px
     margin-right 10px
-    border-radius 50%
     flex-shrink 0
   .content
     flex 1
