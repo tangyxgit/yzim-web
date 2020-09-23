@@ -6,9 +6,6 @@
                 <el-col :span="18">
                     <div class="offset-1">
                         <el-form v-model="form" label-width="60px" size="mini">
-                            <el-form-item label="头像">
-                                <el-input v-model="form.userIcon" placeholder="头像地址(URL)"/>
-                            </el-form-item>
                             <el-form-item label="昵称">
                                 <el-input v-model="form.nickName" placeholder="昵称"/>
                             </el-form-item>
@@ -33,24 +30,17 @@
                 <el-col :span="6" class="row justify-content-center pl-4">
                     <el-upload
                             class="avatar-uploader "
-                            action="http://api/upload"
+                            action="/api/api/upload/"
+                            :on-success="avatarSuccess"
+                            :on-error="avatarError"
                             :show-file-list="false">
                         <!--                        <img v-if="imageUrl" :src="imageUrl" class="avatar">-->
-                        <avatar :src="currentUserProfile.avatar" class="avatar-uploader"
+                        <avatar :src="form.userIcon?form.userIcon:currentUserProfile.avatar" class="avatar-uploader"
                                 style="width:64px;height: 64px;border-radius: 10px"></avatar>
                         <i class="el-icon-plus avatar-uploader-icon" style="z-index:999"></i>
                     </el-upload>
                 </el-col>
             </el-row>
-            <!--            <div slot="" class="bg-info w-100 row">-->
-            <!--                -->
-            <!--                <div class="bg-success text-center pl-3" style="width:100px">-->
-            <!--                    &lt;!&ndash;                    <avatar :src="currentUserProfile.avatar" style="width:64px;height: 64px"></avatar>&ndash;&gt;-->
-            <!--                    &lt;!&ndash;                    <el-avatar :alt="currentUserProfile.avatar"></el-avatar>&ndash;&gt;-->
-            <!--                    &lt;!&ndash;                    <el-image :src="currentUserProfile.avatar"></el-image>&ndash;&gt;-->
-            <!--                   -->
-            <!--                </div>-->
-            <!--            </div>-->
             <span slot="footer" class="dialog-footer">
                 <el-button @click="showEditMyProfile = false">取 消</el-button>
                 <el-button type="primary" @click="editMyProfile">确 定</el-button>
@@ -167,44 +157,30 @@
                     this.showEditMyProfile = false
                 })
             },
+            avatarSuccess(response, file, fileList) {
+                // console.log("avatar success",response,file,fileList)
+                if(response.code===200) {
+                    this.form.userIcon = response.data.userIcon;
+                    this.editMyProfile()
+                }
+            },
+            avatarError(err, file, fileList){
+                // console.log("avatar err",response,file,fileList)
+
+            },
             editMyProfile() {
-                // if (this.form.avatar && this.form.avatar.indexOf('http') === -1) {
-                //     this.$store.commit('showMessage', {
-                //         message: '头像应该是 Url 地址',
-                //         type: 'warning'
-                //     })
-                //     this.form.avatar = ''
-                //     return
-                // }
-                // const options = {}
-                // // 过滤空串
-                // Object.keys(this.form).forEach(key => {
-                //     if (this.form[key]) {
-                //         options[key] = this.form[key]
-                //     }
-                // })
-                // this.tim
-                //     .updateMyProfile(options)
-                //     .then(() => {
-                //         this.$store.commit('showMessage', {
-                //             message: '修改成功'
-                //         })
-                //         this.showEditMyProfile = false
-                //     })
-                //     .catch(imError => {
-                //         this.$store.commit('showMessage', {
-                //             message: imError.message,
-                //             type: 'error'
-                //         })
-                //     })
                 this.requestPost('user/update', this.form, () => {
                     this.$store.commit('showMessage', {
                         type: 'success',
                         message: '保存成功'
                     })
-                    this.tim.updateMyProfile({
-                        nick:this.form.nickName
-                    })
+                    let option = {
+                        nick:this.form.nickName,
+                    }
+                    if(this.form.userIcon) {
+                        option.avatar = this.form.userIcon
+                    }
+                    this.tim.updateMyProfile(option)
                     this.showEditMyProfile = false
                 }, () => {
                     this.$store.commit('showMessage', {
@@ -223,7 +199,6 @@
                 }
                 this.sendSms = true
                 this.requestPost('user/sendSms', this.params, res => {
-                    console.log(res)
                     this.sendSms = false
                     this.time = 60 * 1000
                 }, error => {
