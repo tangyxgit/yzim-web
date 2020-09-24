@@ -187,7 +187,7 @@
                     message: `${this.kickedOutReason(event.data.type)}被踢出，请重新登录。`,
                     type: 'error'
                 })
-                this.userLogout();
+                this.userLogout()
                 this.$store.commit('userFlag', -1)
                 this.$store.commit('reset')
             },
