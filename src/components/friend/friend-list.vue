@@ -1,5 +1,5 @@
 <template>
-  <div class="friend-list-container" :class="{'default': !hasFriend}">
+  <div class="friend-list-container" :class="{'default': !hasFriend}" >
     <div class="header-bar">
       <el-autocomplete
               :value-key="''"
