@@ -63,7 +63,7 @@
             }
             return {
                 params: {
-                    mobile: '18511991125',
+                    mobile: '18310458251',
                     password: '123456'
                 },
                 form: {
@@ -87,7 +87,12 @@
             this.$store.commit('fullUserLoading', true)
             const userApi = this.userApi()
             if (userApi && userApi.userId) {
-                this.login(true)
+                this.requestPost('user/getUserByUserId', userApi, () => {//检查token是否失效
+                    this.login(true)
+                }, () => {
+                    this.$store.commit('fullUserLoading', false)
+                    this.showLogin = true
+                })
             } else {
                 this.$store.commit('fullUserLoading', false)
                 this.showLogin = true
@@ -144,6 +149,7 @@
                             message: '登录失败：' + error.message,
                             type: 'error'
                         })
+                        this.userLogout()
                         this.showLogin = true
                     })
             },

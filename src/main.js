@@ -52,12 +52,11 @@ Vue.prototype.token = function () {
     }
     return this.$root.token
 }
-
 Vue.prototype.userApi = function () {
     if (!this.$root.userApi) {
         let userData = localStorage.getItem('userApi')
         if (userData) {
-            this.$root.token = JSON.parse(userData)
+            this.$root.userApi = JSON.parse(userData)
         }
     }
     return this.$root.userApi
@@ -80,19 +79,24 @@ Vue.prototype.requestPost = function (url, params, success, fail) {
         params.userId = this.userApi().userId
     }
     //加上headers
-    var headersval = {token: this.$root.token, platform: 'web'}
+    var headersval = {token: this.token(), platform: 'web'}
     Axios.post(url, params,{headers:headersval}).then(res => {
         let code = res.data.code
         if (code === 200) {
             if (success) {
                 success(res.data)
             }
-        } else {
+        } else if(code===501){
+            console.log('token 已经失效。')
+            this.userLogout()
+            this.$store.dispatch('logout')
+        }else {
             if (fail) {
                 fail(res.data)
             }
         }
     }).catch(error => {
+
         if (!error.msg) {
             error.msg = '服务器繁忙，请稍后尝试！'
         }
@@ -106,7 +110,8 @@ new Vue({
     render: h => h(Index),
     data() {
         return {
-            userApi: null
+            userApi: null,
+            token:null
         }
     },
     created() {
