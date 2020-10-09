@@ -63,7 +63,7 @@
             }
             return {
                 params: {
-                    mobile: '17774942285',
+                    mobile: '18511991125',
                     password: '123456'
                 },
                 form: {
@@ -100,6 +100,7 @@
                         // this.login()
                         this.requestPost('user/login', this.params, res => {
                             this.setUserData(res.data)
+                            this.setUserToken(res.token)
                             this.login()
                         }, error => {
                             this.$store.commit('showMessage', {

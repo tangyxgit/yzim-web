@@ -36,18 +36,37 @@ Vue.prototype.setUserData = function (userData) {
     }
 }
 
+Vue.prototype.setUserToken = function (token) {
+    if (token) {
+        this.$root.token = token
+        localStorage.setItem('token', token)
+    }
+}
+
+Vue.prototype.token = function () {
+    if (!this.$root.token) {
+        let token = localStorage.getItem('token')
+        if (token) {
+            this.$root.token = token
+        }
+    }
+    return this.$root.token
+}
+
 Vue.prototype.userApi = function () {
     if (!this.$root.userApi) {
         let userData = localStorage.getItem('userApi')
         if (userData) {
-            this.$root.userApi = JSON.parse(userData)
+            this.$root.token = JSON.parse(userData)
         }
     }
     return this.$root.userApi
 }
 Vue.prototype.userLogout = function () {
     localStorage.removeItem('userApi')
+    localStorage.removeItem('token')
     this.$root.userApi = null
+    this.$root.token = null
 }
 
 function baseUrl() {
@@ -60,7 +79,9 @@ Vue.prototype.requestPost = function (url, params, success, fail) {
     if (params && this.userApi() && this.userApi().userId) {
         params.userId = this.userApi().userId
     }
-    Axios.post(url, params).then(res => {
+    //加上headers
+    var headersval = {token: this.$root.token, platform: 'web'}
+    Axios.post(url, params,{headers:headersval}).then(res => {
         let code = res.data.code
         if (code === 200) {
             if (success) {
