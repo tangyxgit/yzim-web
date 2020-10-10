@@ -38,9 +38,9 @@ export default {
 
 <style lang="stylus" scoped>
 .item {
-  padding-left: 20px;
+  padding-left: 10px;
   width: 100%;
-  color: $white;
+  color: $font-dark;
   box-sizing: border-box;
   word-wrap: break-word;
   overflow: hidden;
@@ -55,8 +55,8 @@ export default {
 }
 
 .avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
 }
 </style>

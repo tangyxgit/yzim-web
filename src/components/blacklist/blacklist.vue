@@ -1,5 +1,5 @@
 <template>
-  <div class="blacklist-wrapper" :class="{'default': !hasBlacklist}">
+  <div class="blacklist-wrapper" style="height: 100%" :class="{'default': !hasBlacklist}">
     <div v-if="hasBlacklist">
       <blacklist-item
         v-for="item in blacklist"
@@ -34,7 +34,7 @@ export default {
 .blacklist-wrapper {
   padding: 12px;
   overflow-y: scroll;
-  background white
+  background white;
 }
 .default {
   display: flex;
