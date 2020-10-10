@@ -40,26 +40,29 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.scroll-container
-  overflow-y scroll
-  flex 1
+  .scroll-container
+    overflow-y scroll
+    flex 1
   .group-item
     display flex
-    padding 10px 20px
+    padding 15px 20px
     cursor pointer
     position relative
     overflow hidden
     transition .2s
     &:hover
-      background-color $background
+      background-color $dark-primary
     .avatar
-      width 30px
-      height 30px
-      border-radius 50%
+      width 50px
+      height 50px
+      border-radius 100%
       margin-right 10px
       flex-shrink 0
     .group-name
       flex 1
-      color $font-light
-      line-height 30px
+      color $font-dark
+      line-height 50px
+  .group-name:hover{
+    color white
+  }
 </style>

@@ -9,7 +9,7 @@
               class="group-seach-bar"
               prefix-icon="el-icon-search"
       ></el-autocomplete>
-      <button title="创建群组" >
+      <button title="添加好友" >
         <i class="tim-icon-add"></i>
       </button>
     </div>
@@ -41,6 +41,9 @@ export default {
 </script>
 
 <style lang="stylus" scpoed>
+  .friend-list-container
+    background white
+    height 100%
   .header-bar
     display: flex;
     flex-shrink 0
@@ -50,12 +53,12 @@ export default {
     .group-seach-bar
       width 100%
       margin-right 10px
-      >>> .el-input
+      .el-input
         input
           color $first
           border none
           border-radius 30px
-          background-color $deep-background !important
+          background-color $light-background !important
           &::placeholder
             color $font-dark
         .el-icon-search

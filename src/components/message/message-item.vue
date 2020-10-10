@@ -7,7 +7,7 @@
     >
       <div class="col-1" v-if="showAvatar">
         <!-- 头像 -->
-        <avatar :src="avatar" style="border-radius: 5%;width:40px;height:40px"/>
+        <avatar :src="avatar" style="border-radius: 100%;width:32px;height:32px"/>
       </div>
       <div class="col-2">
         <!-- 消息主体 -->
@@ -87,7 +87,7 @@
     >
       <!-- 头像 群组没有获取单个头像的接口，暂时无法显示头像-->
       <div class="col-1" v-if="showAvatar" >
-        <avatar class="group-member-avatar" :src="avatar" @click.native="showGroupMemberProfile"/>
+        <avatar class="group-member-avatar" style="width: 32px;height: 32px" :src="avatar" @click.native="showGroupMemberProfile"/>
       </div>
       <div class="col-2">
         <!-- 消息主体 -->
@@ -318,6 +318,9 @@ export default {
 
   .group-member-avatar {
     cursor: pointer;
+    width 32px;
+    height 32px;
+
   }
 
   .col-2 {

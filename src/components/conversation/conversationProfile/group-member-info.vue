@@ -1,8 +1,8 @@
 <template>
   <div>
     <div>
-      <span class="label">userID:</span>
-      {{ member.userID }}
+<!--      <span class="label">userID:</span>-->
+<!--      {{ member.userID }}-->
       <el-button v-if="showCancelBan" type="text" @click="cancelMute">取消禁言</el-button>
       <el-popover title="禁言" v-model="popoverVisible" v-show="showBan">
         <el-input
@@ -14,11 +14,11 @@
       </el-popover>
     </div>
     <div>
-      <span class="label">nick:</span>
+      <span class="label">昵称:</span>
       {{ member.nick || '暂无' }}
     </div>
     <div>
-      <span class="label">nameCard:</span>
+      <span class="label">备注:</span>
       {{ member.nameCard || '暂无' }}
       <el-popover title="修改群名片" v-model="nameCardPopoverVisible" v-show="showEditNameCard">
         <el-input
@@ -34,10 +34,10 @@
         ></i>
       </el-popover>
     </div>
-    <div>
-      <span class="label">role:</span>
-      <span class="content role" :title="changeRoleTitle">{{ member.role }}</span>
-    </div>
+<!--    <div>-->
+<!--      <span class="label">role:</span>-->
+<!--      <span class="content role" :title="changeRoleTitle">{{ member.role }}</span>-->
+<!--    </div>-->
     <div v-if="showMuteUntil">
       <span class="label">禁言至:</span>
       <span class="content">{{ muteUntil }}</span>

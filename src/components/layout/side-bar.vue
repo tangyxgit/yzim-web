@@ -306,8 +306,8 @@
                 }
 
                 .active {
-                    color: $white;
-                    background-color: $background-dark;
+                    color: $dark-primary;
+                    background-color: $background-light;
 
                     &::after {
                         content: ' ';
@@ -317,7 +317,7 @@
                         z-index: 0;
                         height: 70px;
                         // border-left 4px solid $border-highlight
-                        border-left: 4px solid $light-primary;
+                        //border-left: 4px solid $light-primary;
                     }
                 }
 

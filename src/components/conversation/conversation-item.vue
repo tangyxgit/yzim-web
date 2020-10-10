@@ -8,11 +8,11 @@
         <span class="tim-icon-close" title="删除会话" @click="deleteConversation"></span>
       </div>
       <div class="warp">
-        <avatar :src="avatar" :type="conversation.type" style="border-radius: 5%;width:40px;height:40px"/>
+        <avatar :src="avatar" :type="conversation.type" style="border-radius: 100%;width:50px;height:50px"/>
         <div class="content">
           <div class="row-1">
-            <div class="name">
-              <div class="text-ellipsis">
+            <div class="name" >
+              <div class="text-ellipsis" :class="{'chooseName':conversation.conversationID === currentConversation.conversationID}">
                 <span :title="conversation.userProfile.nick || conversation.userProfile.userID"
                   v-if="conversation.type ===  TIM.TYPES.CONV_C2C"
                   >{{conversation.userProfile.nick || conversation.userProfile.userID}}
@@ -37,13 +37,13 @@
             <div class="summary">
               <div v-if="conversation.lastMessage" class="text-ellipsis">
                 <span class="remind" style="color:red;" v-if="hasMessageAtMe">[有人提到我]</span>
-                <span class="text" :title="conversation.lastMessage.messageForShow">
+                <span class="text" :class="{'chooseName':conversation.conversationID === currentConversation.conversationID}" :title="conversation.lastMessage.messageForShow">
                   {{messageForShow}}
                 </span>
               </div>
             </div>
-            <div class="date">
-              {{date}}
+            <div class="date" >
+              <span :class="{'chooseName':conversation.conversationID === currentConversation.conversationID}">{{date}}</span>
             </div>
           </div>
         </div>
@@ -204,7 +204,7 @@ export default {
   // &:first-child
   //   padding-top 30px
   &:hover
-    background-color $background
+    background-color $dark-primary
     .close-btn
       right 3px
   .close-btn
@@ -230,9 +230,9 @@ export default {
       display flex
       line-height 21px
       .name
-        color $font-light
+        color $font-dark
         flex 1
-        min-width 0px
+        min-width 0
       .unread-count
         padding-left 10px
         flex-shrink 0
@@ -268,8 +268,11 @@ export default {
         text-align right
         color $font-dark
 .choose {
-  background-color: $background;
+  background-color: $dark-primary;
 }
+  .chooseName {
+    color white
+  }
 .context-menu-button {
   padding: 10px
   border: 2px solid $primary;

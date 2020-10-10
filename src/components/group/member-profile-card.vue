@@ -7,10 +7,10 @@
       :style="{top: y + 'px', left: x + 'px'}"
     >
       <div class="profile">
-        <avatar :src="member.avatar" class="avatar" />
+        <avatar :src="member.avatar" class="avatar"/>
         <div class="basic">
-          <span>ID：{{member.userID}}</span>
-          <span>昵称：{{member.nick||"暂无"}}</span>
+<!--          <span>ID：{{member.userID}}</span>-->
+          <span>{{member.nick||"暂无"}}</span>
         </div>
       </div>
       <el-divider class="divider" />
@@ -126,16 +126,17 @@ export default {
 
   .profile {
     display: flex;
+    align-items center
 
     .avatar {
-      width: 60px;
-      height: 60px;
+      width: 32px;
+      height: 32px;
       margin-right: 12px;
     }
 
     .basic {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       flex-direction: column;
     }
   }

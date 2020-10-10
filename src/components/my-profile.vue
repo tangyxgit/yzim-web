@@ -36,7 +36,7 @@
                             :show-file-list="false">
                         <!--                        <img v-if="imageUrl" :src="imageUrl" class="avatar">-->
                         <avatar :src="form.userIcon?form.userIcon:currentUserProfile.avatar" class="avatar-uploader"
-                                style="width:64px;height: 64px;border-radius: 10px"></avatar>
+                                style="width:64px;height: 64px;border-radius: 100%"></avatar>
                         <i class="el-icon-plus avatar-uploader-icon" style="z-index:999"></i>
                     </el-upload>
                 </el-col>
@@ -280,7 +280,9 @@
 
     .my-avatar
         cursor pointer
-        border-radius: 3px;
+        width 50px;
+        height 50px;
+        border-radius 100%
 
     .edit-my-profile
         position absolute

@@ -148,6 +148,7 @@ export default {
   height 100%
   width 100%
   display flex
+  background white
   flex-direction column // -reverse
   .header-bar
     flex-shrink 0

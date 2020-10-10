@@ -264,6 +264,7 @@
                 }
             },
             handleVideoMessage(messageList) {
+                console.log(">>>>handleVideoMessage>>>")
                 const videoMessageList = messageList.filter(
                     message => message.type === this.TIM.TYPES.MSG_CUSTOM && this.isJsonStr(message.payload.data)
                 )
@@ -420,7 +421,7 @@
         top: 0;
         left: 0;
         z-index: -1;
-        background: url('~@/./assets/image/bg.jpg') no-repeat 0 0;
+        /*background: url('~@/./assets/image/bg.jpg') no-repeat 0 0;*/
         background-size: cover;
         // filter blur(67px)
     }

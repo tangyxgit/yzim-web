@@ -34,6 +34,7 @@ export default {
 .blacklist-wrapper {
   padding: 12px;
   overflow-y: scroll;
+  background white
 }
 .default {
   display: flex;

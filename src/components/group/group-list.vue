@@ -130,8 +130,9 @@ export default {
   height 100%
   width 100%
   display flex
+  background white
   flex-direction column
-  .group-container 
+  .group-container
     overflow-y scroll
   .header-bar
     display: flex;
@@ -142,12 +143,12 @@ export default {
     .group-seach-bar
       width 100%
       margin-right 10px
-      >>> .el-input
+      .el-input
         input
           color $first
           border none
           border-radius 30px
-          background-color $deep-background !important
+          background-color $light-background !important
           &::placeholder
             color $font-dark
         .el-icon-search
