@@ -10,10 +10,13 @@
             <el-popover
                     placement="bottom"
                     width="100"
-                    class="p-0"
                     trigger="click">
-                <p>添加好友</p>
-                <p @click="handleAddButtonClick">发起群聊</p>
+                <div>
+                    <el-button type="text">添加好友</el-button>
+                </div>
+                <div>
+                    <el-button type="text" @click="handleAddButtonClick">发起群聊</el-button>
+                </div>
                 <el-button slot="reference" ><i class="tim-icon-add"></i></el-button>
             </el-popover>
         </div>
@@ -24,14 +27,14 @@
                     :key="item.conversationID"
             />
         </div>
-        <el-dialog title="快速发起会话" :visible.sync="showDialog" width="600px" >
+        <el-dialog title="选择成员" :visible.sync="showDialog" width="600px" >
             <div v-if="hasFriend">
-                <GroupChatFriend v-for="friend in friendList" :key="friend.userID" :friend="friend" />
+                <GroupChatFriend v-for="friend in friendList" :key="friend.userID" :friend="friend"/>
             </div>
             <div style="color:gray;" v-else>暂无好友</div>
             <span slot="footer" class="dialog-footer">
-        <el-button @click="showDialog = false">取 消</el-button>
-        <el-button type="primary" @click="handleConfirm">确 定</el-button>
+        <el-button @click="showDialog = false" size="small">取 消</el-button>
+        <el-button type="primary" @click="handleConfirm" size="small">确 定</el-button>
       </span>
         </el-dialog>
     </div>
@@ -40,7 +43,7 @@
 <script>
     import ConversationItem from './conversation-item'
     import GroupChatFriend from '../friend/GroupChatfriend'
-    import {Popover, CheckboxGroup, Checkbox} from 'element-ui'
+    import {Popover} from 'element-ui'
     import {mapState} from 'vuex'
 
     export default {
@@ -49,8 +52,6 @@
             GroupChatFriend,
             ConversationItem,
             ElPopover: Popover,
-            ElCheckboxGroup:CheckboxGroup,
-            ElCheckbox:Checkbox
         },
         data() {
             return {
@@ -101,24 +102,46 @@
                 this.showDialog = true
             },
             handleConfirm() {
-                if (this.userID !== '@TIM#SYSTEM') {
-                    this.$store
-                        .dispatch('checkoutConversation', `C2C${this.userID}`)
-                        .then(() => {
-                            this.showDialog = false
-                        }).catch(() => {
-                        this.$store.commit('showMessage', {
-                            message: '没有找到该用户',
-                            type: 'warning'
+                console.log(this.friendList);
+                let Name = this.userApi().nickName,MemberList=[]
+                this.friendList.forEach(item=>{
+                    if(item.isChecked) {//选中的
+                        item.isChecked = false
+                        MemberList.push({
+                            Member_Account:item.profile.userID
                         })
+                        if(Name.length<=9) {
+                            Name+=item.profile.nick
+                        }
+                    }
+                })
+                if(MemberList.length===0) {
+                    this.$store.commit('showMessage',{
+                        type:'error',
+                        message:'请选择成员'
                     })
-                } else {
-                    this.$store.commit('showMessage', {
-                        message: '没有找到该用户',
-                        type: 'warning'
-                    })
+                    return
                 }
-                this.userID = ''
+                if(Name.length>=9) {
+                    Name = Name.substring(0,8)+'...'
+                }
+                this.showDialog = false
+                this.requestPost('group/createGroup',{
+                    Name:Name,
+                    Type:'Private',
+                    MemberList:MemberList,
+                    Owner_Account:this.userApi().userId
+                },()=>{
+                    this.$store.commit('showMessage', {
+                        message: '创建成功',
+                        type: 'success'
+                    })
+                },error=>{
+                    this.$store.commit('showMessage', {
+                        message: '创建失败：' + error.message,
+                        type: 'error'
+                    })
+                })
             },
             handleKeydown(event) {
                 if (event.keyCode !== 38 && event.keyCode !== 40 || this.isCheckouting) {
