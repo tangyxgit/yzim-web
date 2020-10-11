@@ -398,10 +398,6 @@
                     user-select: none;
                     -moz-user-select: none;
                 }
-
-                .setting:hover {
-                    color: white;
-                }
             }
 
             .btn-more:hover {

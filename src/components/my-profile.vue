@@ -1,7 +1,7 @@
 <template>
     <div class="my-profile-wrapper">
-        <el-dialog :visible.sync="showEditMyProfile" class="p-0 m-0" width="32%" center>
-            <div slot="title" class="text-center w-100" style="font-size: 15px">编辑个人信息</div>
+        <el-dialog :visible.sync="showEditMyProfile" width="600px" >
+            <div slot="title" class="text-center w-100" style="font-size: 15px;">编辑个人信息</div>
             <el-row>
                 <el-col :span="18">
                     <div class="offset-1">
@@ -31,20 +31,29 @@
                     <el-upload
                             class="avatar-uploader "
                             action="/api/api/upload/"
-                            style="border-radius: 100%"
+                            style="border-radius: 100%;position: relative"
                             :on-success="avatarSuccess"
                             :on-error="avatarError"
                             :show-file-list="false">
                         <!--                        <img v-if="imageUrl" :src="imageUrl" class="avatar">-->
                         <avatar :src="form.userIcon?form.userIcon:currentUserProfile.avatar" class="avatar-uploader"
-                                style="width:64px;height: 64px;border-radius: 100%"></avatar>
-                        <i class="el-icon-plus avatar-uploader-icon" style="z-index:999"></i>
+                                style="width:64px;height: 64px;border-radius: 100%;z-index: 0"></avatar>
+                        <div style="z-index:99999;
+                           position: absolute;
+                           top: 0;
+                           left: 0;
+                           text-align: center;
+                           background: rgba(0,0,0,.4);
+                           width: 100%;
+                           height: 100%;display: flex;align-items: center;justify-content: center">
+                            <i class="el-icon-camera" style="color: white;font-size: 20px"></i>
+                        </div>
                     </el-upload>
                 </el-col>
             </el-row>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="showEditMyProfile = false">取 消</el-button>
-                <el-button type="primary" @click="editMyProfile">确 定</el-button>
+                <el-button @click="showEditMyProfile = false" size="small">取 消</el-button>
+                <el-button type="primary" @click="editMyProfile" size="small">确 定</el-button>
             </span>
         </el-dialog>
         <el-dialog :visible.sync="changePhone" class="p-0" width="32%" center>
@@ -290,4 +299,5 @@
         top 10px
         right 10px
         cursor pointer
+
 </style>
