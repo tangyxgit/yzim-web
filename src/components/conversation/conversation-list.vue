@@ -12,15 +12,12 @@
                     width="100"
                     trigger="click">
                 <div>
-                    <el-button type="text">添加好友</el-button>
+                    <el-button type="text" @click="handleAddFriend">添加好友</el-button>
                 </div>
                 <div>
-                    <el-button type="text" @click="handleAddButtonClick">发起群聊</el-button>
+                    <el-button type="text"  @click="handleAddButtonClick">发起群聊</el-button>
                 </div>
                 <el-button slot="reference" ><i class="tim-icon-add"></i></el-button>
-                <p @click="handleAddFriend">添加好友</p>
-                <p @click="handleAddButtonClick">发起群聊</p>
-                <el-button slot="reference"><i class="tim-icon-add"></i></el-button>
             </el-popover>
         </div>
         <div class="scroll-container">
