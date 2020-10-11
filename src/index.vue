@@ -264,7 +264,6 @@
                 }
             },
             handleVideoMessage(messageList) {
-                console.log(">>>>handleVideoMessage>>>")
                 const videoMessageList = messageList.filter(
                     message => message.type === this.TIM.TYPES.MSG_CUSTOM && this.isJsonStr(message.payload.data)
                 )

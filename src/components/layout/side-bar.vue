@@ -5,10 +5,13 @@
             <div class="tab-items" @click="handleClick">
                 <div
                         id="conversation-list"
-                        class="iconfont icon-conversation"
+                        class="text-center"
                         :class="{ active: showConversationList }"
+                        style="cursor:pointer;position: relative"
                         title="会话列表"
                 >
+                    <img v-if="showConversationList" src='../../assets/image/icon_chat_fill_24.svg' style="background: #DBEBFE;border-radius: 4px" class="p-2" />
+                    <img v-else src='../../assets/image/icon_chat_stroke_24.svg' style="pointer-events: none" class="p-2"/>
                     <sup class="unread" v-if="totalUnreadCount !== 0">
                         <template v-if="totalUnreadCount > 99">99+</template>
                         <template v-else>{{totalUnreadCount}}</template>
@@ -16,29 +19,45 @@
                 </div>
                 <div
                         id="group-list"
-                        class="iconfont icon-group"
+                        class="text-center"
                         :class="{ active: showGroupList }"
+                        style="cursor:pointer;position: relative;margin-top: 24px"
                         title="群组列表"
-                ></div>
+                >
+                    <img v-if="showGroupList" src='../../assets/image/icon_position_fill_24.svg' style="background: #DBEBFE;border-radius: 4px" class="p-2" />
+                    <img v-else src='../../assets/image/icon_chat_group_stroke_24.svg' style="pointer-events: none" class="p-2"/>
+                </div>
                 <div
                         id="friend-list"
-                        class="iconfont icon-contact"
+                        class="text-center"
                         :class="{ active: showFriendList }"
                         title="好友列表"
+                        style="cursor:pointer;position: relative;margin-top: 24px"
                         @click="showFriend"
-                ></div>
+                >
+                    <img v-if="showFriendList" src='../../assets/image/icon_contact_fill_24.svg' style="background: #DBEBFE;border-radius: 4px" class="p-2" />
+                    <img v-else src='../../assets/image/icon_contact_stroke_24.svg' style="pointer-events: none" class="p-2"/>
+                </div>
                 <div
                         id="black-list"
-                        class="iconfont icon-blacklist"
+                        class="text-center"
                         :class="{ active: showBlackList }"
+                        style="cursor:pointer;position: relative;margin-top: 24px"
                         title="黑名单列表"
-                ></div>
+                >
+                    <img v-if="showBlackList" src='../../assets/image/icon_block_stroke_24.svg' style="background: #DBEBFE;border-radius: 4px" class="p-2" />
+                    <img v-else src='../../assets/image/icon_block_stroke_24.svg' style="pointer-events: none" class="p-2"/>
+                </div>
                 <div
                         id="worktable-list"
-                        class="iconfont icon-zidingyi"
+                        class="text-center"
                         :class="{ active: showWorktable }"
                         title="工具箱"
-                ></div>
+                        style="cursor:pointer;position: relative;margin-top: 24px"
+                >
+                    <img v-if="showWorktable" src='../../assets/image/icon_tools_fill_24.svg' style="background: #DBEBFE;border-radius: 4px" class="p-2" />
+                    <img v-else src='../../assets/image/icon_tools_stroke_24.svg' style="pointer-events: none" class="p-2"/>
+                </div>
             </div>
             <el-row class="bottom " type="flex" justify="center" align="middle">
 <!--                <div class="iconfont el-icon-setting" @click="logout" title="退出"></div>-->
@@ -173,7 +192,7 @@
                     })
                     return
                 }
-                this.params.userId = this.userApi().userId;
+                this.params.userId = this.userApi().userId
                 this.requestPost('user/updatePwd',this.params,()=>{
                     this.$store.commit('showMessage', {
                         type: 'success',
@@ -246,8 +265,6 @@
                 this.tim
                     .getFriendList()
                     .then(({data: friendList}) => {
-                        console.log(friendList)
-                        console.log(friendList.profile)
                         this.$store.commit('upadteFriendList', friendList)
                     })
                     .catch(error => {
@@ -323,7 +340,7 @@
 
                 .unread {
                     position: absolute;
-                    top: 10px;
+                    top: 0;
                     right: 10px;
                     z-index: 999;
                     display: inline-block;

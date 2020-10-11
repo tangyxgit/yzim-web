@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon_contact_fill_24 copy</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="图标-for-iOS" transform="translate(-388.000000, -172.000000)">
+            <g id="编组" transform="translate(332.000000, 172.000000)">
+                <g id="编组-8" transform="translate(56.000000, 0.000000)">
+                    <rect id="矩形" fill="#3a89f0" opacity="0" x="0" y="0" width="24" height="24"></rect>
+                    <g id="编组">
+                        <rect id="矩形" fill="#3a89f0" opacity="0" x="0" y="0" width="24" height="24"></rect>
+                        <path d="M17,2.25 C18.5187831,2.25 19.75,3.48121694 19.75,5 L19.75,5 L19.75,19 C19.75,20.5187831 18.5187831,21.75 17,21.75 L17,21.75 L7,21.75 C6.03350169,21.75 5.25,20.9664983 5.25,20 L5.25,20 L5.25,4 C5.25,3.03350169 6.03350169,2.25 7,2.25 L7,2.25 Z M16.5,6 L15,6 L15,18 L16.5,18 L16.5,6 Z" id="形状结合" fill="#3a89f0"></path>
+                        <line x1="4" y1="14.75" x2="7" y2="14.75" id="路径-17" stroke="#3a89f0" stroke-width="1.5"></line>
+                        <line x1="4" y1="8.75" x2="7" y2="8.75" id="路径-18" stroke="#3a89f0" stroke-width="1.5"></line>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
