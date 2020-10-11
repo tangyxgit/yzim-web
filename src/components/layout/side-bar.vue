@@ -8,7 +8,7 @@
                         class="text-center"
                         :class="{ active: showConversationList }"
                         style="cursor:pointer;position: relative"
-                        title="会话列表"
+                        title="消息"
                 >
                     <img v-if="showConversationList" src='../../assets/image/icon_chat_fill_24.svg' style="background: #DBEBFE;border-radius: 4px" class="p-2" />
                     <img v-else src='../../assets/image/icon_chat_stroke_24.svg' style="pointer-events: none" class="p-2"/>
@@ -22,7 +22,7 @@
                         class="text-center"
                         :class="{ active: showGroupList }"
                         style="cursor:pointer;position: relative;margin-top: 24px"
-                        title="群组列表"
+                        title="我的群组"
                 >
                     <img v-if="showGroupList" src='../../assets/image/icon_position_fill_24.svg' style="background: #DBEBFE;border-radius: 4px" class="p-2" />
                     <img v-else src='../../assets/image/icon_chat_group_stroke_24.svg' style="pointer-events: none" class="p-2"/>
@@ -31,7 +31,7 @@
                         id="friend-list"
                         class="text-center"
                         :class="{ active: showFriendList }"
-                        title="好友列表"
+                        title="我的好友"
                         style="cursor:pointer;position: relative;margin-top: 24px"
                         @click="showFriend"
                 >
@@ -43,7 +43,7 @@
                         class="text-center"
                         :class="{ active: showBlackList }"
                         style="cursor:pointer;position: relative;margin-top: 24px"
-                        title="黑名单列表"
+                        title="黑名单"
                 >
                     <img v-if="showBlackList" src='../../assets/image/icon_block_stroke_24.svg' style="background: #DBEBFE;border-radius: 4px" class="p-2" />
                     <img v-else src='../../assets/image/icon_block_stroke_24.svg' style="pointer-events: none" class="p-2"/>
@@ -52,7 +52,7 @@
                         id="worktable-list"
                         class="text-center"
                         :class="{ active: showWorktable }"
-                        title="工具箱"
+                        title="应用中心"
                         style="cursor:pointer;position: relative;margin-top: 24px"
                 >
                     <img v-if="showWorktable" src='../../assets/image/icon_tools_fill_24.svg' style="background: #DBEBFE;border-radius: 4px" class="p-2" />
