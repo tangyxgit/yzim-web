@@ -1,7 +1,7 @@
 <template>
   <div class="friend-list-container" style="height: 100%">
     <div class="header-bar">
-      <strong>我的群聊</strong>
+      <strong @click="createGroup">我的群聊</strong>
     </div>
     <div class="group-container">
       <group-item v-for="group in groupList" :key="group.groupID" :group="group" />
@@ -43,7 +43,9 @@ export default {
     onGroupUpdated(groupList) {
       this.$store.dispatch('updateGroupList', groupList)
     },
-    createGroup() {},
+    createGroup() {
+          this.$store.commit('updateCreateGroupModelVisible', true)
+      },
     closeCreateGroupModel() {
       this.$store.commit('updateCreateGroupModelVisible', false)
     },

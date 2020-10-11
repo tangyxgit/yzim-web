@@ -29,13 +29,13 @@ export default {
         case this.TIM.TYPES.GRP_TIP_MBR_QUIT:
           return `群成员：${userName} 退出群组`
         case this.TIM.TYPES.GRP_TIP_MBR_KICKED_OUT:
-          return `群成员：${userName} 被${message.payload.operatorID}踢出群组`
+          return `群成员：${userName} 被踢出群组`
         case this.TIM.TYPES.GRP_TIP_MBR_SET_ADMIN:
           return `群成员：${userName} 成为管理员`
         case this.TIM.TYPES.GRP_TIP_MBR_CANCELED_ADMIN:
           return `群成员：${userName} 被撤销管理员`
         case this.TIM.TYPES.GRP_TIP_GRP_PROFILE_UPDATED:
-          return '群资料修改'
+          return '群公告：'+message.payload.newGroupProfile.notification
         case this.TIM.TYPES.GRP_TIP_MBR_PROFILE_UPDATED:
           for (let member of message.payload.memberList) {
             if (member.muteTime > 0) {

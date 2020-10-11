@@ -27,9 +27,8 @@
                     :key="item.conversationID"
             />
         </div>
-        <el-dialog title="选择成员" :visible.sync="showDialog" width="600px" >
         <Friend-dialog :show="show" @closeSearch="closeSearch"></Friend-dialog>
-        <el-dialog title="快速发起会话" :visible.sync="showDialog" width="600px">
+        <el-dialog title="选择成员" :visible.sync="showDialog" width="600px">
             <div v-if="hasFriend">
                 <GroupChatFriend v-for="friend in friendList" :key="friend.userID" :friend="friend"/>
             </div>
@@ -113,6 +112,7 @@
             },
             handleAddButtonClick() {
                 this.showDialog = true
+
             },
             handleConfirm() {
                 console.log(this.friendList);

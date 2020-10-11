@@ -10,7 +10,7 @@ export function translateGroupSystemNotice(message) {
     case 4:
       return `你被管理员${message.payload.operatorID}踢出群组：${groupName}`
     case 5:
-      return `群：${groupName} 已被${message.payload.operatorID}解散`
+      return `群：${groupName} 已解散`
     case 6:
       return `${message.payload.operatorID}创建群：${groupName}`
     case 7:
