@@ -2,7 +2,7 @@
     <div>
         <div @click="handleFriendClick" class="scroll-container">
             <div class="item">
-                <el-checkbox class="mt-3 mr-3"></el-checkbox>
+                <el-checkbox v-model="friend.isChecked" :checked="friend.isChecked" style="pointer-events: none" class="mt-3 mr-3"></el-checkbox>
                 <avatar :src="friend.profile.avatar" />
                 <div class="group-name text-ellipsis">{{ friend.profile.nick||friend.userID }}</div>
             </div>
@@ -25,7 +25,8 @@
         },
         methods: {
             handleFriendClick() {
-                console.log(this.friend.profile.nick)
+                this.friend.isChecked = !this.friend.isChecked
+                this.$forceUpdate()
             }
         }
     }

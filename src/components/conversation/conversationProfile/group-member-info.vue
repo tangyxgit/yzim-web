@@ -4,14 +4,14 @@
 <!--      <span class="label">userID:</span>-->
 <!--      {{ member.userID }}-->
       <el-button v-if="showCancelBan" type="text" @click="cancelMute">取消禁言</el-button>
-      <el-popover title="禁言" v-model="popoverVisible" v-show="showBan">
-        <el-input
-          v-model="muteTime"
-          placeholder="请输入禁言时间"
-          @keydown.enter.native="setGroupMemberMuteTime"
-        />
-        <el-button slot="reference" type="text" style="color:red;">禁言</el-button>
-      </el-popover>
+<!--      <el-popover title="禁言" v-model="popoverVisible" v-show="showBan">-->
+<!--        <el-input-->
+<!--          v-model="muteTime"-->
+<!--          placeholder="请输入禁言时间"-->
+<!--          @keydown.enter.native="setGroupMemberMuteTime"-->
+<!--        />-->
+<!--        <el-button slot="reference" type="text" style="color:red;">禁言</el-button>-->
+<!--      </el-popover>-->
     </div>
     <div>
       <span class="label">昵称:</span>
