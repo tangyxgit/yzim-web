@@ -4,17 +4,17 @@
             <button title="刷新列表" @click="handleRefresh">
                 <i class="tim-icon-refresh"></i>
             </button>
-<!--                  <button title="创建会话" @click="handleAddButtonClick">-->
-<!--                    <i class="tim-icon-add"></i>-->
-<!--                  </button>-->
+            <!--                  <button title="创建会话" @click="handleAddButtonClick">-->
+            <!--                    <i class="tim-icon-add"></i>-->
+            <!--                  </button>-->
             <el-popover
                     placement="bottom"
                     width="100"
                     class="p-0"
                     trigger="click">
-                <p>添加好友</p>
+                <p @click="handleAddFriend">添加好友</p>
                 <p @click="handleAddButtonClick">发起群聊</p>
-                <el-button slot="reference" ><i class="tim-icon-add"></i></el-button>
+                <el-button slot="reference"><i class="tim-icon-add"></i></el-button>
             </el-popover>
         </div>
         <div class="scroll-container">
@@ -24,9 +24,10 @@
                     :key="item.conversationID"
             />
         </div>
-        <el-dialog title="快速发起会话" :visible.sync="showDialog" width="600px" >
+        <Friend-dialog :show="show" @closeSearch="closeSearch"></Friend-dialog>
+        <el-dialog title="快速发起会话" :visible.sync="showDialog" width="600px">
             <div v-if="hasFriend">
-                <GroupChatFriend v-for="friend in friendList" :key="friend.userID" :friend="friend" />
+                <GroupChatFriend v-for="friend in friendList" :key="friend.userID" :friend="friend"/>
             </div>
             <div style="color:gray;" v-else>暂无好友</div>
             <span slot="footer" class="dialog-footer">
@@ -40,21 +41,24 @@
 <script>
     import ConversationItem from './conversation-item'
     import GroupChatFriend from '../friend/GroupChatfriend'
-    import {Popover, CheckboxGroup, Checkbox} from 'element-ui'
+    import {Popover,} from 'element-ui'
     import {mapState} from 'vuex'
+    import FriendDialog from '../friend/addFriend'
 
     export default {
         name: 'ConversationList',
         components: {
             GroupChatFriend,
             ConversationItem,
+            FriendDialog,
             ElPopover: Popover,
-            ElCheckboxGroup:CheckboxGroup,
-            ElCheckbox:Checkbox
+            // ElCheckboxGroup:CheckboxGroup,
+            // ElCheckbox:Checkbox
         },
         data() {
             return {
-                checkedFriends:'',
+                show: false,
+                checkedFriends: '',
                 showDialog: false,
                 userID: '',
                 isCheckouting: false, // 是否正在切换会话
@@ -78,6 +82,12 @@
             window.removeEventListener('keydown', this.handleKeydown)
         },
         methods: {
+            handleAddFriend() {
+                this.show = true
+            },
+            closeSearch() {
+                this.show = false
+            },
             handleRefresh() {
                 this.refreshConversation()()
             },
