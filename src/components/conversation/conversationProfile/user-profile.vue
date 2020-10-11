@@ -52,11 +52,22 @@
         <div class="info-item">
             <div class="label text-left">
                 设置备注
-                <i class="el-icon-edit" style="font-size:16px"></i>
+                <i class="el-icon-edit" @click="
+                showEditRemark = true
+                inputFocus('editRemark')" style="cursor:pointer;font-size:16px"></i>
             </div>
-            <div class="content text-left">
-                {{form.email}}
+            <div class="content text-left" v-if="!showEditRemark">
+                {{form.friendRemark}}
             </div>
+            <el-input
+                    ref="editRemark"
+                    v-else
+                    autofocus
+                    v-model="form.friendRemark"
+                    size="mini"
+                    @blur="showEditRemark = false"
+                    @keydown.enter.native="editRemark"
+            />
         </div>
 
 
@@ -91,8 +102,11 @@
                     departName: '待完善',
                     dimension: '待完善',
                     departmentId: '待完善',
-                    email: '待完善'
-                }
+                    email: '待完善',
+                    friendRemark: this.userProfile.nick
+                },
+                showEditRemark: false,
+
             }
         },
         computed: {
@@ -128,6 +142,11 @@
             this.getDetail()
         },
         methods: {
+            inputFocus(ref) {
+                this.$nextTick(() => {
+                    this.$refs[ref].focus()
+                })
+            },
             addToBlackList() {
                 this.tim
                     .addToBlacklist({userIDList: [this.userProfile.userID]})
@@ -156,6 +175,7 @@
                 this.requestPost('user/getUserByUserId', {
                         userId: this.userProfile.userID
                     }, res => {
+                        console.log(res.data)
                         if (res.data.departName) {
                             this.form.departName = res.data.departName
                         }
@@ -173,6 +193,21 @@
                         this.$store.commit('showMessage', {
                             type: 'error',
                             message: error.msg
+                        })
+                    })
+            },
+            editRemark() {
+                this.tim
+                    .setFriendInfo({
+                        friendRemark: this.form.friendRemark,
+                    })
+                    .then(() => {
+                        this.showEditRemark = false
+                    })
+                    .catch(error => {
+                        this.$store.commit('showMessage', {
+                            type: 'error',
+                            message: error.message
                         })
                     })
             }
