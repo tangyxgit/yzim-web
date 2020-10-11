@@ -31,6 +31,7 @@
                     <el-upload
                             class="avatar-uploader "
                             action="/api/api/upload/"
+                            style="border-radius: 100%"
                             :on-success="avatarSuccess"
                             :on-error="avatarError"
                             :show-file-list="false">
