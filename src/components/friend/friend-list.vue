@@ -1,20 +1,21 @@
 <template>
   <div class="friend-list-container" >
     <div class="header-bar">
-      <el-autocomplete
-              :value-key="''"
-              :debounce="500"
+      <el-input
               size="mini"
-              placeholder="输入好友搜索"
+              v-model="keyword"
+              placeholder="请输入昵称"
               class="group-seach-bar"
               prefix-icon="el-icon-search"
-      ></el-autocomplete>
+      ></el-input>
       <button title="添加好友" >
         <i class="tim-icon-add"></i>
       </button>
     </div>
     <div>
-      <friend-item v-for="friend in friendList" :key="friend.userID" :friend="friend" />
+      <div v-for="friend in friendList" :key="friend.userID">
+        <friend-item v-if="filterKeyword(friend)"  :friend="friend" />
+      </div>
     </div>
   </div>
 </template>
@@ -22,11 +23,9 @@
 <script>
 import { mapState } from 'vuex'
 import FriendItem from './friend-item.vue'
-import { Autocomplete } from 'element-ui'
 export default {
   components: {
     FriendItem,
-    ElAutocomplete: Autocomplete
   },
   computed: {
     ...mapState({
@@ -34,6 +33,17 @@ export default {
     }),
     hasFriend() {
       return this.friendList.length > 0
+    },
+
+  },
+  data() {
+    return {
+      keyword:''
+    }
+  },
+  methods:{
+    filterKeyword(item) {
+      return item.profile.nick.indexOf(this.keyword)>=0
     }
   }
 }
