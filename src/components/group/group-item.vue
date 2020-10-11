@@ -1,9 +1,12 @@
 <template>
-  <div @click="handleGroupClick" class="scroll-container">
-    <div class="group-item">
-      <avatar :src="group.avatar" />
-      <div class="group-name text-ellipsis">{{ group.name }}</div>
+  <div>
+    <div @click="handleGroupClick" class="scroll-container">
+      <div class="group-item">
+        <avatar :src="group.avatar" />
+        <div class="group-name text-ellipsis">{{ group.name }}</div>
+      </div>
     </div>
+    <div style="width: 100%;height: 0.5px;background: #E9EBEC;margin-left: 80px"></div>
   </div>
 </template>
 

@@ -1,11 +1,15 @@
 <template>
-  <div class="blacklist-item-wrapper">
-    <img
-      class="avatar"
-      :src="profile.avatar ? profile.avatar : 'http://imgcache.qq.com/open/qcloud/video/act/webim-avatar/avatar-2.png'"
-    />
-    <div class="item">{{profile.nick||profile.userID}}</div>
-    <el-button type="text" @click="removeFromBlacklist">取消拉黑</el-button>
+  <div>
+    <div class="blacklist-item-wrapper">
+      <img
+              class="avatar"
+              :src="profile.avatar ? profile.avatar : 'http://imgcache.qq.com/open/qcloud/video/act/webim-avatar/avatar-2.png'"
+      />
+      <div class="item">{{profile.nick||profile.userID}}</div>
+      <el-button type="text" @click="removeFromBlacklist">取消拉黑</el-button>
+
+    </div>
+    <div style="width: 100%;height: 0.5px;background: #E9EBEC;margin-left: 80px"></div>
   </div>
 </template>
 
@@ -48,7 +52,7 @@ export default {
 }
 
 .blacklist-item-wrapper {
-  padding-bottom: 15px;
+  padding 15px;
   display: flex;
   align-items: center;
   justify-content: flex-start;

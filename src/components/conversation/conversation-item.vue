@@ -1,53 +1,54 @@
 <template>
     <div
-        class="conversation-item-container"
-        :class="{ 'choose': conversation.conversationID === currentConversation.conversationID }"
         @click="selectConversation"
     >
-      <div class="close-btn">
-        <span class="tim-icon-close" title="删除会话" @click="deleteConversation"></span>
-      </div>
-      <div class="warp">
-        <avatar :src="avatar" :type="conversation.type" style="border-radius: 100%;width:50px;height:50px"/>
-        <div class="content">
-          <div class="row-1">
-            <div class="name" >
-              <div class="text-ellipsis" :class="{'chooseName':conversation.conversationID === currentConversation.conversationID}">
+      <div class="conversation-item-container" :class="{ 'choose': conversation.conversationID === currentConversation.conversationID }">
+        <div class="close-btn">
+          <span class="tim-icon-close" title="删除会话" @click="deleteConversation"></span>
+        </div>
+        <div class="warp">
+          <avatar :src="avatar" :type="conversation.type" style="border-radius: 100%;width:50px;height:50px"/>
+          <div class="content">
+            <div class="row-1">
+              <div class="name" >
+                <div class="text-ellipsis" :class="{'chooseName':conversation.conversationID === currentConversation.conversationID}">
                 <span :title="conversation.userProfile.nick || conversation.userProfile.userID"
-                  v-if="conversation.type ===  TIM.TYPES.CONV_C2C"
-                  >{{conversation.userProfile.nick || conversation.userProfile.userID}}
+                      v-if="conversation.type ===  TIM.TYPES.CONV_C2C"
+                >{{conversation.userProfile.nick || conversation.userProfile.userID}}
                 </span>
-                <span :title="conversation.groupProfile.name || conversation.groupProfile.groupID"
-                  v-else-if="conversation.type ===  TIM.TYPES.CONV_GROUP"
+                  <span :title="conversation.groupProfile.name || conversation.groupProfile.groupID"
+                        v-else-if="conversation.type ===  TIM.TYPES.CONV_GROUP"
                   >{{conversation.groupProfile.name || conversation.groupProfile.groupID}}
                 </span>
-                <span
-                  v-else-if="conversation.type === TIM.TYPES.CONV_SYSTEM"
+                  <span
+                          v-else-if="conversation.type === TIM.TYPES.CONV_SYSTEM"
                   >系统通知
                 </span>
+                </div>
               </div>
-            </div>
-            <div class="unread-count">
+              <div class="unread-count">
               <span class="badge" v-if="showUnreadCount">
                 {{conversation.unreadCount > 99 ? '99+' : conversation.unreadCount}}
               </span>
-            </div>
-          </div>
-          <div class="row-2">
-            <div class="summary">
-              <div v-if="conversation.lastMessage" class="text-ellipsis">
-                <span class="remind" style="color:red;" v-if="hasMessageAtMe">[有人提到我]</span>
-                <span class="text" :class="{'chooseName':conversation.conversationID === currentConversation.conversationID}" :title="conversation.lastMessage.messageForShow">
-                  {{messageForShow}}
-                </span>
               </div>
             </div>
-            <div class="date" >
-              <span :class="{'chooseName':conversation.conversationID === currentConversation.conversationID}">{{date}}</span>
+            <div class="row-2">
+              <div class="summary">
+                <div v-if="conversation.lastMessage" class="text-ellipsis">
+                  <span class="remind" style="color:red;" v-if="hasMessageAtMe">[有人提到我]</span>
+                  <span class="text" :class="{'chooseName':conversation.conversationID === currentConversation.conversationID}" :title="conversation.lastMessage.messageForShow">
+                  {{messageForShow}}
+                </span>
+                </div>
+              </div>
+              <div class="date" >
+                <span :class="{'chooseName':conversation.conversationID === currentConversation.conversationID}">{{date}}</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div style="width: 100%;height: 0.5px;background: #E9EBEC;margin-left: 80px"></div>
     </div>
 
 </template>

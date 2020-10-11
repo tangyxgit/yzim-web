@@ -1,22 +1,7 @@
 <template>
-  <div class="list-container">
+  <div class="friend-list-container" style="height: 100%">
     <div class="header-bar">
-      <el-autocomplete
-        :value-key="'groupID'"
-        :debounce="500"
-        size="mini"
-        v-model="groupID"
-        placeholder="输入群ID搜索"
-        :fetch-suggestions="searchGroupByID"
-        class="group-seach-bar"
-        prefix-icon="el-icon-search"
-        :hide-loading="hideSearchLoading"
-        @input="hideSearchLoading = false"
-        @select="applyJoinGroup"
-      ></el-autocomplete>
-      <button title="创建群组" @click="showCreateGroupModel">
-        <i class="tim-icon-add"></i>
-      </button>
+      <strong>我的群组</strong>
     </div>
     <div class="group-container">
       <group-item v-for="group in groupList" :key="group.groupID" :group="group" />
@@ -29,7 +14,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { Dialog, Autocomplete } from 'element-ui'
+import { Dialog } from 'element-ui'
 import CreateGroup from './create-group.vue'
 import GroupItem from './group-item.vue'
 export default {
@@ -43,7 +28,6 @@ export default {
     GroupItem,
     ElDialog: Dialog,
     CreateGroup,
-    ElAutocomplete: Autocomplete
   },
   computed: {
     groupList: function() {
@@ -125,21 +109,16 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-.list-container
-  height 100%
-  width 100%
-  display flex
-  background white
-  flex-direction column
-  .group-container
-    overflow-y scroll
+<style lang="stylus" scpoed>
+  .friend-list-container
+    background white
+    height 100%
   .header-bar
     display: flex;
     flex-shrink 0
     height 50px
     border-bottom 1px solid $background-deep-dark
-    padding 10px 10px 10px 20px
+    align-items center
     .group-seach-bar
       width 100%
       margin-right 10px
@@ -179,8 +158,11 @@ export default {
       &:hover
         transform: rotate(360deg);
         color $light-primary
-  .scroll-container
-    overflow-y scroll
-    flex 1
-
+  .default {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    overflow-y: scroll;
+  }
 </style>
