@@ -75,7 +75,9 @@ function baseUrl() {
 //网络配置
 Axios.defaults.baseURL = baseUrl()
 Vue.prototype.requestPost = function (url, params, success, fail) {
-    if (params && this.userApi() && this.userApi().userId) {
+    if (params && this.userApi() && this.userApi().userId
+        && url!=='user/updateFriend'
+        && url!=='user/addFriend') {
         params.userId = this.userApi().userId
     }
     //加上headers
@@ -86,8 +88,7 @@ Vue.prototype.requestPost = function (url, params, success, fail) {
             if (success) {
                 success(res.data)
             }
-        } else if(code===501){
-            console.log('token 已经失效。')
+        } else if(code===501) {
             this.userLogout()
             this.$store.dispatch('logout')
         }else {

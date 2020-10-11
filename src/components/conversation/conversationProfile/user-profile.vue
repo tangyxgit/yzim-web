@@ -49,26 +49,26 @@
             </div>
         </div>
 
-<!--        <div class="info-item">-->
-<!--            <div class="label text-left">-->
-<!--                设置备注-->
-<!--                <i class="el-icon-edit" @click="-->
-<!--                showEditRemark = true-->
-<!--                inputFocus('editRemark')" style="cursor:pointer;font-size:16px"></i>-->
-<!--            </div>-->
-<!--            <div class="content text-left" v-if="!showEditRemark">-->
-<!--                {{form.friendRemark}}-->
-<!--            </div>-->
-<!--            <el-input-->
-<!--                    ref="editRemark"-->
-<!--                    v-else-->
-<!--                    autofocus-->
-<!--                    v-model="form.friendRemark"-->
-<!--                    size="mini"-->
-<!--                    @blur="showEditRemark = false"-->
-<!--                    @keydown.enter.native="editRemark"-->
-<!--            />-->
-<!--        </div>-->
+        <div class="info-item">
+            <div class="label text-left">
+                设置备注
+                <i class="el-icon-edit"
+                   @click="showEditRemark = true
+                inputFocus('editRemark')" style="cursor:pointer;font-size:16px"></i>
+            </div>
+            <div class="content text-left" v-if="!showEditRemark">
+                {{form.friendRemark}}
+            </div>
+            <el-input
+                    ref="editRemark"
+                    v-else
+                    autofocus
+                    v-model="form.friendRemark"
+                    size="mini"
+                    @blur="showEditRemark = false"
+                    @keydown.enter.native="editRemark"
+            />
+        </div>
 
 
         <el-button
@@ -196,19 +196,30 @@
                     })
             },
             editRemark() {
-                this.tim
-                    .setFriendInfo({
-                        friendRemark: this.form.friendRemark,
+                this.requestPost('user/updateFriend',{
+                    'From_Account':this.userApi().userId,//当前用户id
+                    'UpdateItem':
+                        [
+                            {
+                                'To_Account':this.userProfile.userID,//好友的 UserID
+                                'SnsItem':
+                                    [
+                                        {
+                                            'Tag':'Tag_SNS_IM_Remark',
+                                            'Value':this.form.friendRemark
+                                        },
+                                        {
+                                            'Tag':'Tag_SNS_Custom_Remark',
+                                            'Value':this.form.friendRemark
+                                        }
+                                    ]
+                            }
+                        ]
+                },()=>{
+                    this.showEditRemark = false
+                    this.tim.getConversationList().then(() => {
                     })
-                    .then(() => {
-                        this.showEditRemark = false
-                    })
-                    .catch(error => {
-                        this.$store.commit('showMessage', {
-                            type: 'error',
-                            message: error.message
-                        })
-                    })
+                },)
             }
         }
     }

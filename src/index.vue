@@ -192,6 +192,7 @@
                 this.$store.commit('reset')
             },
             onUpdateConversationList(event) {
+                // console.log("onUpdateConversationList",event.data)
                 this.$store.commit('updateConversationList', event.data)
             },
             onUpdateGroupList(event) {

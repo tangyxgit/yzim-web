@@ -1,5 +1,5 @@
 <template>
-  <div class="friend-list-container" :class="{'default': !hasFriend}" >
+  <div class="friend-list-container" >
     <div class="header-bar">
       <el-autocomplete
               :value-key="''"
@@ -13,10 +13,9 @@
         <i class="tim-icon-add"></i>
       </button>
     </div>
-    <div v-if="hasFriend">
+    <div>
       <friend-item v-for="friend in friendList" :key="friend.userID" :friend="friend" />
     </div>
-    <div style="color:gray;" v-else>暂无好友</div>
   </div>
 </template>
 
