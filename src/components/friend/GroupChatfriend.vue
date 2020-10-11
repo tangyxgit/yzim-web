@@ -1,18 +1,21 @@
 <template>
     <div>
         <div @click="handleFriendClick" class="scroll-container">
-            <div class="group-item">
+            <div class="item">
+                <el-checkbox class="mt-3 mr-3"></el-checkbox>
                 <avatar :src="friend.profile.avatar" />
                 <div class="group-name text-ellipsis">{{ friend.profile.nick||friend.userID }}</div>
             </div>
         </div>
-        <div style="width: 90%;height: 0.5px;background: #E9EBEC;margin-left: 80px"></div>
+        <div style="width: 80%;height: 0.5px;background: #E9EBEC;margin-left: 80px"></div>
     </div>
 </template>
 
 <script>
+    import {Checkbox} from 'element-ui'
     export default {
         components:{
+            ElCheckbox: Checkbox,
         },
         props: {
             friend: {
@@ -22,15 +25,7 @@
         },
         methods: {
             handleFriendClick() {
-                this.tim.getConversationProfile(`C2C${this.friend.userID}`).then(({data}) => {
-                    this.$store.commit('updateCurrentConversation', data.conversation)
-                })
-                    .catch(error => {
-                        this.$store.commit('showMessage', {
-                            type: 'error',
-                            message: error.message
-                        })
-                    })
+                console.log(this.friend.profile.nick)
             }
         }
     }
@@ -40,15 +35,13 @@
     .scroll-container
         overflow-y scroll
         flex 1
-    .group-item
+    .item
         display flex
         padding 15px 20px
         cursor pointer
         position relative
         overflow hidden
         transition .2s
-        &:hover
-            background-color $dark-primary
         .avatar
             width 50px
             height 50px
@@ -59,7 +52,4 @@
             flex 1
             color $font-dark
             line-height 50px
-    .group-name:hover{
-        color white
-    }
 </style>
