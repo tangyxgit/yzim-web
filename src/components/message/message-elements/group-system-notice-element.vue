@@ -66,7 +66,7 @@ export default {
   },
   computed: {
     text() {
-      return translateGroupSystemNotice(this.message)
+      return translateGroupSystemNotice(this.message,this.tim)
     },
     title() {
       if (this.message.type === this.TIM.TYPES.MSG_GRP_SYS_NOTICE) {

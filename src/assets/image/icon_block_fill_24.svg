@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>icon_contact_fill_24 copy</title>
+<g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="图标-for-iOS" transform="translate(-388.000000, -172.000000)">
+        <g id="编组" transform="translate(332.000000, 172.000000)">
+            <g id="编组-8" transform="translate(56.000000, 0.000000)">
+                <rect id="矩形" fill="#3a89f0" opacity="0" x="0" y="0" width="24" height="24"></rect>
+                <g id="编组">
+                    <rect id="矩形" fill="#E4E6E9" opacity="0" x="0" y="0" width="24" height="24"></rect>
+                    <path d="M15.636,13.9995826 L14.7875857,14.8482459 C14.3972629,15.2388906 14.3973093,15.8719756 14.7876894,16.2625631 L16.0251263,17.5 L16.0251263,17.5 L14.7876894,18.7374369 C14.3970791,19.1278751 14.3970791,19.7610401 14.7876034,20.1515644 C14.7876321,20.1515931 14.7876607,20.1516218 14.7877754,20.1515644 L15.636,20.9995826 L15.636,20.9995826 L3.75,21 L3.75,18 C3.75,15.790861 5.540861,14 7.75,14 L15.636,13.9995826 Z" id="形状" fill="#3a89f0"></path>
+                    <circle id="椭圆形" fill="#3a89f0" cx="12" cy="7.5" r="4.5"></circle>
+                    <path d="M19.25,14 L19.25,16.75 L22,16.75 L22,18.25 L19.25,18.25 L19.25,21 L17.75,21 L17.75,18.25 L15,18.25 L15,16.75 L17.75,16.75 L17.75,14 L19.25,14 Z" id="形状结合" fill="#3a89f0" fill-rule="nonzero" transform="translate(18.500000, 17.500000) rotate(45.000000) translate(-18.500000, -17.500000) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</g>
+</svg>
+

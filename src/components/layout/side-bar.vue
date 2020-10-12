@@ -45,7 +45,7 @@
                         style="cursor:pointer;position: relative;margin-top: 24px"
                         title="黑名单"
                 >
-                    <img v-if="showBlackList" src='../../assets/image/icon_block_stroke_24.svg' style="background: #DBEBFE;border-radius: 4px" class="p-2" />
+                    <img v-if="showBlackList" src='../../assets/image/icon_block_fill_24.svg' style="background: #DBEBFE;border-radius: 4px" class="p-2" />
                     <img v-else src='../../assets/image/icon_block_stroke_24.svg' style="pointer-events: none" class="p-2"/>
                 </div>
                 <div

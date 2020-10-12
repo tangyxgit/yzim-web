@@ -49,26 +49,26 @@
             </div>
         </div>
 
-        <div class="info-item">
-            <div class="label text-left">
-                设置备注
-                <i class="el-icon-edit"
-                   @click="showEditRemark = true
-                inputFocus('editRemark')" style="cursor:pointer;font-size:16px"></i>
-            </div>
-            <div class="content text-left" v-if="!showEditRemark">
-                {{form.friendRemark}}
-            </div>
-            <el-input
-                    ref="editRemark"
-                    v-else
-                    autofocus
-                    v-model="form.friendRemark"
-                    size="mini"
-                    @blur="showEditRemark = false"
-                    @keydown.enter.native="editRemark"
-            />
-        </div>
+<!--        <div class="info-item">-->
+<!--            <div class="label text-left">-->
+<!--                设置备注-->
+<!--                <i class="el-icon-edit"-->
+<!--                   @click="showEditRemark = true-->
+<!--                inputFocus('editRemark')" style="cursor:pointer;font-size:16px"></i>-->
+<!--            </div>-->
+<!--            <div class="content text-left" v-if="!showEditRemark">-->
+<!--                {{form.friendRemark}}-->
+<!--            </div>-->
+<!--            <el-input-->
+<!--                    ref="editRemark"-->
+<!--                    v-else-->
+<!--                    autofocus-->
+<!--                    v-model="form.friendRemark"-->
+<!--                    size="mini"-->
+<!--                    @blur="showEditRemark = false"-->
+<!--                    @keydown.enter.native="editRemark"-->
+<!--            />-->
+<!--        </div>-->
 
 
         <el-button
