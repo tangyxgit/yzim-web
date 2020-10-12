@@ -1,6 +1,15 @@
 <template>
     <div class="list-container">
         <div class="header-bar justify-content-between">
+            <el-input
+                    @focus="startFilter"
+                    @blur="endFilter"
+                    size="mini"
+                    v-model="keyword"
+                    placeholder="请输入群昵称"
+                    class="group-search-bar"
+                    prefix-icon="el-icon-search"
+            ></el-input>
             <button title="刷新列表" @click="handleRefresh">
                 <i class="tim-icon-refresh"></i>
             </button>
@@ -15,17 +24,21 @@
                     <el-button type="text" @click="handleAddFriend">添加好友</el-button>
                 </div>
                 <div>
-                    <el-button type="text"  @click="handleAddButtonClick">发起群聊</el-button>
+                    <el-button type="text" @click="handleAddButtonClick">发起群聊</el-button>
                 </div>
-                <el-button slot="reference" ><i class="tim-icon-add"></i></el-button>
+                <el-button slot="reference"><i class="tim-icon-add"></i></el-button>
             </el-popover>
         </div>
         <div class="scroll-container">
-            <conversation-item
-                    :conversation="item"
-                    v-for="item in conversationList"
-                    :key="item.conversationID"
-            />
+            <div v-if="!start">
+                <conversation-item v-for="item in conversationList" :key="item.conversationID" :conversation="item"/>
+            </div>
+            <div v-if="start">
+                <div v-for="item in conversationList" :key="item.conversationID">
+                    <conversation-item v-if="filterKeyword(item)" :conversation="item"/>
+                </div>
+            </div>
+
         </div>
         <Friend-dialog :show="show" @closeSearch="closeSearch"></Friend-dialog>
         <el-dialog title="选择成员" :visible.sync="showDialog" width="600px">
@@ -66,6 +79,8 @@
                 userID: '',
                 isCheckouting: false, // 是否正在切换会话
                 timeout: null,
+                keyword: '',
+                start:false
             }
         },
         computed: {
@@ -85,6 +100,21 @@
             window.removeEventListener('keydown', this.handleKeydown)
         },
         methods: {
+            startFilter() {
+                this.start = true
+            },
+            endFilter() {
+                this.keyword = ''
+                this.start = false
+            },
+            filterKeyword(item) {
+                if (item.groupProfile) {
+                    return item.groupProfile.name.indexOf(this.keyword) >= 0
+                }
+                if (item.userProfile) {
+                    return item.userProfile.nick.indexOf(this.keyword) >= 0
+                }
+            },
             handleAddFriend() {
                 this.show = true
             },
@@ -131,30 +161,30 @@
                 this.showDialog = true
             },
             handleConfirm() {
-                let Name = this.userApi().nickName,MemberList=[]
-                this.friendList.forEach(item=>{
-                    if(item.isChecked) {//选中的
+                let Name = this.userApi().nickName, MemberList = []
+                this.friendList.forEach(item => {
+                    if (item.isChecked) {//选中的
                         item.isChecked = false
                         MemberList.push({
-                            userID:item.profile.userID
+                            userID: item.profile.userID
                         })
-                        if(Name.length<=9) {
-                            if(Name) {
-                                Name+='、'
+                        if (Name.length <= 9) {
+                            if (Name) {
+                                Name += '、'
                             }
-                            Name+=item.profile.nick
+                            Name += item.profile.nick
                         }
                     }
                 })
-                if(MemberList.length===0) {
-                    this.$store.commit('showMessage',{
-                        type:'error',
-                        message:'请选择成员'
+                if (MemberList.length === 0) {
+                    this.$store.commit('showMessage', {
+                        type: 'error',
+                        message: '请选择成员'
                     })
                     return
                 }
-                if(Name.length>=9) {
-                    Name = Name.substring(0,8)+'...'
+                if (Name.length >= 9) {
+                    Name = Name.substring(0, 8) + '...'
                 }
                 this.showDialog = false
                 // this.requestPost('group/createGroup',{
@@ -174,21 +204,21 @@
                 //     })
                 // })
                 this.tim.createGroup({
-                    name:Name,
-                    type:this.TIM.TYPES.GRP_WORK,
-                    memberList:MemberList
+                    name: Name,
+                    type: this.TIM.TYPES.GRP_WORK,
+                    memberList: MemberList
                 }).then((imResponse) => {
                     this.$store.commit('showMessage', {
                         message: `群聊：【${imResponse.data.group.name}】发起成功`,
                         type: 'success'
                     })
                 })
-                .catch(error => {
-                    this.$store.commit('showMessage', {
-                        type: 'error',
-                        message: error.message
+                    .catch(error => {
+                        this.$store.commit('showMessage', {
+                            type: 'error',
+                            message: error.message
+                        })
                     })
-                })
             },
             handleKeydown(event) {
                 if (event.keyCode !== 38 && event.keyCode !== 40 || this.isCheckouting) {
@@ -252,6 +282,10 @@
             height 50px
             border-bottom 1px solid $background-deep-dark
             padding 10px 10px 10px 20px
+
+            .group-search-bar
+                width 100%
+                margin-right 10px
 
             button
                 float right
