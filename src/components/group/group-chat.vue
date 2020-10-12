@@ -1,7 +1,7 @@
 <template>
-    <el-dialog title="选择成员" :visible.sync="showDialog" width="600px" @close="close">
+    <el-dialog title="选择成员" :visible="showDialog" :before-close="close" width="600px">
         <div v-if="hasFriend">
-            <GroupChatFriend v-for="friend in friendList" :key="friend.userID" :friend="friend"/>
+            <group-chat-friend v-for="friend in friendList" :key="friend.userID" :friend="friend"/>
         </div>
         <div style="color:gray;" v-else>暂无好友</div>
         <span slot="footer" class="dialog-footer">
@@ -61,23 +61,7 @@
                 if (Name.length >= 9) {
                     Name = Name.substring(0, 8) + '...'
                 }
-                this.$emit('closeGroup')
-                // this.requestPost('group/createGroup',{
-                //     Name:Name,
-                //     Type:'Private',
-                //     MemberList:MemberList,
-                //     Owner_Account:this.userApi().userId
-                // },()=>{
-                //     this.$store.commit('showMessage', {
-                //         message: '创建成功',
-                //         type: 'success'
-                //     })
-                // },error=>{
-                //     this.$store.commit('showMessage', {
-                //         message: '创建失败：' + error.message,
-                //         type: 'error'
-                //     })
-                // })
+                this.$emit('closeGroup');
                 this.tim.createGroup({
                     name: Name,
                     type: this.TIM.TYPES.GRP_WORK,

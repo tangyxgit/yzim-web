@@ -13,9 +13,6 @@
             <button title="刷新列表" @click="handleRefresh">
                 <i class="tim-icon-refresh"></i>
             </button>
-<!--                              <button title="创建会话" @click="handleAddButtonClick">-->
-<!--                                <i class="tim-icon-add"></i>-->
-<!--                              </button>-->
             <el-popover
                     placement="bottom"
                     width="100"
@@ -40,7 +37,7 @@
             </div>
 
         </div>
-        <Friend-dialog :show="show" @closeSearch="closeSearch"></Friend-dialog>
+        <friend-dialog :show="show" @closeSearch="closeSearch"></friend-dialog>
 <!--        <el-dialog title="选择成员" :visible.sync="showDialog" width="600px">-->
 <!--            <div v-if="hasFriend">-->
 <!--                <GroupChatFriend v-for="friend in friendList" :key="friend.userID" :friend="friend"/>-->
@@ -51,7 +48,7 @@
 <!--        <el-button type="primary" @click="handleConfirm" size="small">确 定</el-button>-->
 <!--      </span>-->
 <!--        </el-dialog>-->
-        <group-dialog :showDialog="showDialog" @closeGroup="closeGroup"></group-dialog>
+        <group-dialog :showDialog="showAddGroup" @closeGroup="closeGroup"></group-dialog>
     </div>
 </template>
 
@@ -76,7 +73,7 @@
             return {
                 show: false,
                 checkedFriends: '',
-                showDialog: false,
+                showAddGroup: false,
                 userID: '',
                 isCheckouting: false, // 是否正在切换会话
                 timeout: null,
@@ -123,7 +120,7 @@
                 this.show = false
             },
             closeGroup() {
-                this.showDialog= false
+                this.showAddGroup= false
             },
             handleRefresh() {
                 let that = this
@@ -162,67 +159,10 @@
             },
             handleAddButtonClick() {
                 this.getFriendList()
-                this.showDialog = true
+                this.showAddGroup = true
             },
-            handleConfirm() {
-                let Name = this.userApi().nickName, MemberList = []
-                this.friendList.forEach(item => {
-                    if (item.isChecked) {//选中的
-                        item.isChecked = false
-                        MemberList.push({
-                            userID: item.profile.userID
-                        })
-                        if (Name.length <= 9) {
-                            if (Name) {
-                                Name += '、'
-                            }
-                            Name += item.profile.nick
-                        }
-                    }
-                })
-                if (MemberList.length === 0) {
-                    this.$store.commit('showMessage', {
-                        type: 'error',
-                        message: '请选择成员'
-                    })
-                    return
-                }
-                if (Name.length >= 9) {
-                    Name = Name.substring(0, 8) + '...'
-                }
-                this.showDialog = false
-                // this.requestPost('group/createGroup',{
-                //     Name:Name,
-                //     Type:'Private',
-                //     MemberList:MemberList,
-                //     Owner_Account:this.userApi().userId
-                // },()=>{
-                //     this.$store.commit('showMessage', {
-                //         message: '创建成功',
-                //         type: 'success'
-                //     })
-                // },error=>{
-                //     this.$store.commit('showMessage', {
-                //         message: '创建失败：' + error.message,
-                //         type: 'error'
-                //     })
-                // })
-                this.tim.createGroup({
-                    name: Name,
-                    type: this.TIM.TYPES.GRP_WORK,
-                    memberList: MemberList
-                }).then((imResponse) => {
-                    this.$store.commit('showMessage', {
-                        message: `群聊：【${imResponse.data.group.name}】发起成功`,
-                        type: 'success'
-                    })
-                })
-                    .catch(error => {
-                        this.$store.commit('showMessage', {
-                            type: 'error',
-                            message: error.message
-                        })
-                    })
+            closeGroup(){
+                this.showAddGroup = false
             },
             handleKeydown(event) {
                 if (event.keyCode !== 38 && event.keyCode !== 40 || this.isCheckouting) {
