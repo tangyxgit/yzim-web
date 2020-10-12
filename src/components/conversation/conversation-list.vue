@@ -115,15 +115,17 @@
 
             },
             handleConfirm() {
-                console.log(this.friendList);
                 let Name = this.userApi().nickName,MemberList=[]
                 this.friendList.forEach(item=>{
                     if(item.isChecked) {//选中的
                         item.isChecked = false
                         MemberList.push({
-                            Member_Account:item.profile.userID
+                            userID:item.profile.userID
                         })
                         if(Name.length<=9) {
+                            if(Name) {
+                                Name+='、'
+                            }
                             Name+=item.profile.nick
                         }
                     }
@@ -139,20 +141,36 @@
                     Name = Name.substring(0,8)+'...'
                 }
                 this.showDialog = false
-                this.requestPost('group/createGroup',{
-                    Name:Name,
-                    Type:'Private',
-                    MemberList:MemberList,
-                    Owner_Account:this.userApi().userId
-                },()=>{
+                // this.requestPost('group/createGroup',{
+                //     Name:Name,
+                //     Type:'Private',
+                //     MemberList:MemberList,
+                //     Owner_Account:this.userApi().userId
+                // },()=>{
+                //     this.$store.commit('showMessage', {
+                //         message: '创建成功',
+                //         type: 'success'
+                //     })
+                // },error=>{
+                //     this.$store.commit('showMessage', {
+                //         message: '创建失败：' + error.message,
+                //         type: 'error'
+                //     })
+                // })
+                this.tim.createGroup({
+                    name:Name,
+                    type:this.TIM.TYPES.GRP_WORK,
+                    memberList:MemberList
+                }).then((imResponse) => {
                     this.$store.commit('showMessage', {
-                        message: '创建成功',
+                        message: `群聊：【${imResponse.data.group.name}】发起成功`,
                         type: 'success'
                     })
-                },error=>{
+                })
+                .catch(error => {
                     this.$store.commit('showMessage', {
-                        message: '创建失败：' + error.message,
-                        type: 'error'
+                        type: 'error',
+                        message: error.message
                     })
                 })
             },

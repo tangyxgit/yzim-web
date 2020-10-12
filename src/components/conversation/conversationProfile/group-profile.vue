@@ -205,7 +205,7 @@
 <!--        </el-switch>-->
 <!--      </div>-->
       <div v-if="isOwner">
-        <el-button type="text" @click="showChangeGroupOwner = true">转让群组</el-button>
+        <el-button type="text" @click="showChangeGroupOwner = true">转让群主</el-button>
         <el-input
             v-if="showChangeGroupOwner"
             v-model="newOwnerUserID"
@@ -215,11 +215,19 @@
             @keydown.enter.native="changeOwner"
         />
       </div>
-      <div>
-        <el-button type="text" style="color:red;" @click="quitGroup">退出群组</el-button>
+      <div v-if="!isOwner">
+          <el-popconfirm
+                  title="确认退出该群吗？"
+                  @onConfirm="quitGroup">
+              <el-button slot="reference" type="text" style="color:red;">退出群聊</el-button>
+          </el-popconfirm>
       </div>
       <div v-if="showDissmissGroup">
-        <el-button type="text" style="color:red;" @click="dismissGroup">解散群组</el-button>
+        <el-popconfirm
+                title="确认解散该群吗？"
+                @onConfirm="dismissGroup">
+            <el-button slot="reference" type="text" style="color:red;">解散该群</el-button>
+        </el-popconfirm>
       </div>
     </div>
   </div>
@@ -227,7 +235,7 @@
 
 <script>
 import GroupMemberList from './group-member-list.vue'
-import { Select, Option, Switch } from 'element-ui'
+import { Select, Option, Switch,Popconfirm } from 'element-ui'
 export default {
   props: ['groupProfile'],
   components: {
@@ -235,6 +243,7 @@ export default {
     ElSelect: Select,
     ElOption: Option,
     ElSwitch: Switch,
+    ElPopconfirm:Popconfirm
   },
   data() {
     return {
@@ -283,7 +292,8 @@ export default {
     },
     showDissmissGroup() {
       // 好友工作群不能解散
-      return this.isOwner && this.groupProfile.type !== this.TIM.TYPES.GRP_WORK
+      // return this.isOwner && this.groupProfile.type !== this.TIM.TYPES.GRP_WORK
+        return this.isOwner
     },
     groupType() {
       switch (this.groupProfile.type) {
@@ -479,20 +489,34 @@ export default {
         })
     },
     dismissGroup() {
-      this.tim.dismissGroup(this.groupProfile.groupID).then(({ data: { groupID } }) => {
-        this.$store.commit('showMessage', {
-          message: `群：${this.groupProfile.name || this.groupProfile.groupID}解散成功！`,
-          type: 'success'
-        })
-        if (groupID === this.groupProfile.groupID) {
-          this.$store.commit('resetCurrentConversation')
-        }
-      })
-      .catch(error => {
-          this.$store.commit('showMessage', {
-            type: 'error',
-            message: error.message
-          })
+      // this.tim.dismissGroup(this.groupProfile.groupID).then(({ data: { groupID } }) => {
+      //   this.$store.commit('showMessage', {
+      //     message: `群：${this.groupProfile.name || this.groupProfile.groupID}解散成功！`,
+      //     type: 'success'
+      //   })
+      //   if (groupID === this.groupProfile.groupID) {
+      //     this.$store.commit('resetCurrentConversation')
+      //   }
+      // })
+      // .catch(error => {
+      //     this.$store.commit('showMessage', {
+      //       type: 'error',
+      //       message: error.message
+      //     })
+      //   })
+        this.requestPost('group/destroyGroup',{
+            GroupId:this.groupProfile.groupID
+        },()=>{
+              this.$store.commit('showMessage', {
+                message: `群：${this.groupProfile.name || this.groupProfile.groupID}解散成功！`,
+                type: 'success'
+              })
+            this.$store.commit('resetCurrentConversation')
+        },error=>{
+            this.$store.commit('showMessage', {
+              type: 'error',
+              message: error
+            })
         })
     },
     editMessageRemindType() {

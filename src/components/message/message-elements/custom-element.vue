@@ -59,7 +59,29 @@ export default {
         videoPayload = {}
       }
       if (payload.data === 'group_create') {
+        const extension = payload.extension
+        if(extension) {
+          const id = extension.substring(0,extension.indexOf('创建群组'))
+          if(id) {
+            this.tim.getUserProfile({
+              userIDList:[id]
+            }).then(imResponse=>{
+              let userData = imResponse.data
+              let msgNick = ''
+              userData.forEach(item=>{
+                if(msgNick) {
+                  msgNick+=','
+                }
+                msgNick += item.nick
+              })
+              payload.extension = msgNick+' 发起了群聊'
+            }).catch((imError) => {
+              console.warn('translateCustomMessage getUserProfile error:', imError)// 获取其他用户资料失败的相关信息
+            })
+          }
+        }
         return `${payload.extension}`
+        // return '发起群聊'
       }
       switch (videoPayload.action) {
         case ACTION.VIDEO_CALL_ACTION_DIALING:

@@ -1,13 +1,13 @@
 <template>
   <div class="friend-list-container" style="height: 100%">
     <div class="header-bar">
-      <strong @click="createGroup">我的群聊</strong>
+      <strong>我的群聊</strong>
     </div>
     <div class="group-container">
       <group-item v-for="group in groupList" :key="group.groupID" :group="group" />
-      <el-dialog title="创建群聊" :visible="createGroupModelVisible" @close="closeCreateGroupModel" width="30%">
-        <create-group></create-group>
-      </el-dialog>
+<!--      <el-dialog title="创建群聊" :visible="createGroupModelVisible" @close="closeCreateGroupModel" width="30%">-->
+<!--        <create-group></create-group>-->
+<!--      </el-dialog>-->
     </div>
   </div>
 </template>
