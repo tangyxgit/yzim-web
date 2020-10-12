@@ -41,16 +41,17 @@
 
         </div>
         <Friend-dialog :show="show" @closeSearch="closeSearch"></Friend-dialog>
-        <el-dialog title="选择成员" :visible.sync="showDialog" width="600px">
-            <div v-if="hasFriend">
-                <GroupChatFriend v-for="friend in friendList" :key="friend.userID" :friend="friend"/>
-            </div>
-            <div style="color:gray;" v-else>暂无好友</div>
-            <span slot="footer" class="dialog-footer">
-        <el-button @click="showDialog = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="handleConfirm" size="small">确 定</el-button>
-      </span>
-        </el-dialog>
+<!--        <el-dialog title="选择成员" :visible.sync="showDialog" width="600px">-->
+<!--            <div v-if="hasFriend">-->
+<!--                <GroupChatFriend v-for="friend in friendList" :key="friend.userID" :friend="friend"/>-->
+<!--            </div>-->
+<!--            <div style="color:gray;" v-else>暂无好友</div>-->
+<!--            <span slot="footer" class="dialog-footer">-->
+<!--        <el-button @click="showDialog = false" size="small">取 消</el-button>-->
+<!--        <el-button type="primary" @click="handleConfirm" size="small">确 定</el-button>-->
+<!--      </span>-->
+<!--        </el-dialog>-->
+        <group-dialog :showDialog="showDialog" @closeGroup="closeGroup"></group-dialog>
     </div>
 </template>
 
@@ -60,11 +61,12 @@
     import {Popover} from 'element-ui'
     import {mapState} from 'vuex'
     import FriendDialog from '../friend/addFriend'
+    import GroupDialog from '../group/group-chat'
 
     export default {
         name: 'ConversationList',
         components: {
-            GroupChatFriend,
+            GroupDialog,
             ConversationItem,
             FriendDialog,
             ElPopover: Popover,
@@ -120,6 +122,9 @@
             },
             closeSearch() {
                 this.show = false
+            },
+            closeGroup() {
+                this.showDialog= false
             },
             handleRefresh() {
                 let that = this
