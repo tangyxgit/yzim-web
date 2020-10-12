@@ -13,9 +13,9 @@
             <button title="刷新列表" @click="handleRefresh">
                 <i class="tim-icon-refresh"></i>
             </button>
-            <!--                  <button title="创建会话" @click="handleAddButtonClick">-->
-            <!--                    <i class="tim-icon-add"></i>-->
-            <!--                  </button>-->
+<!--                              <button title="创建会话" @click="handleAddButtonClick">-->
+<!--                                <i class="tim-icon-add"></i>-->
+<!--                              </button>-->
             <el-popover
                     placement="bottom"
                     width="100"
@@ -57,7 +57,6 @@
 
 <script>
     import ConversationItem from './conversation-item'
-    import GroupChatFriend from '../friend/GroupChatfriend'
     import {Popover} from 'element-ui'
     import {mapState} from 'vuex'
     import FriendDialog from '../friend/addFriend'

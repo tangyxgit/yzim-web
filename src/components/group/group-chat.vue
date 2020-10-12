@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="选择成员" :visible.sync="showDialog" width="600px">
+    <el-dialog title="选择成员" :visible.sync="showDialog" width="600px" @close="close">
         <div v-if="hasFriend">
             <GroupChatFriend v-for="friend in friendList" :key="friend.userID" :friend="friend"/>
         </div>

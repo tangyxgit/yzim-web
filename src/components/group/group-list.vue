@@ -1,7 +1,10 @@
 <template>
   <div class="friend-list-container" style="height: 100%">
-    <div class="header-bar">
+    <div class="header-bar justify-content-between">
       <strong>我的群聊</strong>
+      <button title="创建群聊" @click="AddGroupChat">
+        <i class="tim-icon-add"></i>
+      </button>
     </div>
     <div class="group-container">
       <group-item v-for="group in groupList" :key="group.groupID" :group="group" />
@@ -9,6 +12,7 @@
 <!--        <create-group></create-group>-->
 <!--      </el-dialog>-->
     </div>
+    <group-dialog :showDialog="showDialog" @closeGroup="closeGroup"></group-dialog>
   </div>
 </template>
 
@@ -17,16 +21,18 @@ import { mapState } from 'vuex'
 import { Dialog } from 'element-ui'
 import CreateGroup from './create-group.vue'
 import GroupItem from './group-item.vue'
+import GroupDialog from '../group/group-chat'
 export default {
   data() {
     return {
       groupID: '',
-      hideSearchLoading: true
+      hideSearchLoading: true,
+      showDialog:false
     }
   },
   components: {
+    GroupDialog,
     GroupItem,
-    ElDialog: Dialog,
     CreateGroup,
   },
   computed: {
@@ -40,6 +46,12 @@ export default {
     })
   },
   methods: {
+    AddGroupChat(){
+      this.showDialog=true
+    },
+    closeGroup(){
+      this.showDialog=false
+    },
     onGroupUpdated(groupList) {
       this.$store.dispatch('updateGroupList', groupList)
     },
