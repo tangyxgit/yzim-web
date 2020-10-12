@@ -5,7 +5,7 @@
         </div>
         <div v-for="item in dataArray">
             <h5 class="ml-4" style="color: #666">{{item.toolCategory}}</h5>
-            <div v-for="app in item.toolDataList" class="ml-4 row align-items-center">
+            <div v-for="app in item.toolDataList" class="ml-4 row align-items-center" @click="handleApp(app)">
                 <img :src="app.iconUrl" style="width: 24px;height: 24px" />
                 <el-button type="text" class="ml-2">
                     {{app.toolName}}
@@ -29,6 +29,13 @@
             this.requestPost('tool/getToolListByUserId',{},res=>{
                 this.dataArray = res.data
             })
+        },
+        methods:{
+            handleApp(app) {
+                if(app.toolCode==='code002') {//网盘
+                    window.open(app.toolUrl+'?token='+app.sdkToken)
+                }
+            }
         }
     }
 </script>

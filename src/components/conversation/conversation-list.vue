@@ -92,9 +92,6 @@
                 this.show = false
             },
             handleRefresh() {
-                this.refreshConversation()()
-            },
-            refreshConversation() {
                 let that = this
                 return function () {
                     if (!that.timeout) {
@@ -110,9 +107,28 @@
                     }
                 }
             },
+            getFriendList() {
+                this.tim
+                    .getFriendList()
+                    .then(({data: friendList}) => {
+                        this.$store.commit('upadteFriendList', friendList)
+                    })
+                    .catch(error => {
+                        this.$store.commit('showMessage', {
+                            type: 'error',
+                            message: error.message
+                        })
+                    })
+                    .catch(error => {
+                        this.$store.commit('showMessage', {
+                            type: 'error',
+                            message: error.message
+                        })
+                    })
+            },
             handleAddButtonClick() {
+                this.getFriendList()
                 this.showDialog = true
-
             },
             handleConfirm() {
                 let Name = this.userApi().nickName,MemberList=[]
