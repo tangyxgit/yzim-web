@@ -55,6 +55,7 @@
         computed: {
             ...mapState({
                 friendList: state => state.friend.friendList,
+                currentMemberList: state => state.group.currentMemberList,
                 currentConversation: state => state.conversation.currentConversation
             }),
             hasFriend() {
@@ -62,9 +63,17 @@
             },
             getFriendList() {
                 this.friendList.forEach(friend=>{
-                    friend.disabled = false;
+                    friend.disabled = false
                     friend.isChecked = false
-                });
+                    for (let i = 0; i < this.currentMemberList.length; i++) {
+                        let member = this.currentMemberList[i]
+                        if(member.userID === friend.userID) {
+                            friend.disabled = true
+                            friend.isChecked = true
+                            break
+                        }
+                    }
+                })
                 return this.friendList
             }
         },
@@ -83,9 +92,7 @@
                 this.friendList.forEach(item => {
                     if (item.isChecked) {//选中的
                         if(!item.disabled) {
-                            MemberList.push({
-                                userID: item.profile.userID
-                            })
+                            MemberList.push(item.profile.userID)
                         }
                         if (Name.length <= 9) {
                             if (Name) {
@@ -108,16 +115,40 @@
                     Name = Name.substring(0, 8) + '...'
                 }
                 this.close()
-                this.tim.createGroup({
-                    name: Name,
-                    type: this.TIM.TYPES.GRP_WORK,
-                    memberList: MemberList
-                }).then((imResponse) => {
-                    this.$store.commit('showMessage', {
-                        message: `群聊：【${imResponse.data.group.name}】发起成功`,
-                        type: 'success'
+                const groupID = this.currentConversation.conversationID.replace('GROUP', '')
+                this.tim
+                    .addGroupMember({
+                        groupID,
+                        userIDList:MemberList
                     })
-                })
+                    .then((imResponse) => {
+                        const {
+                            successUserIDList,
+                            // failureUserIDList,
+                            // existedUserIDList
+                        } = imResponse.data
+                        if (successUserIDList.length > 0) {
+                            this.$store.commit('showMessage', {
+                                message: '群成员添加加群成功',
+                                type: 'success'
+                            })
+                            this.tim.getGroupMemberProfile({groupID, userIDList: successUserIDList})
+                                .then(({ data: { memberList }}) => {
+                                    this.$store.commit('updateCurrentMemberList', memberList)
+                                })
+                        }
+                        // if (failureUserIDList.length > 0) {
+                        //     this.$store.commit('showMessage', {
+                        //         message: `群成员：${failureUserIDList.join(',')}，添加失败！`,
+                        //         type: 'error'
+                        //     })
+                        // }
+                        // if (existedUserIDList.length > 0) {
+                        //     this.$store.commit('showMessage', {
+                        //         message: `群成员：${existedUserIDList.join(',')}，已在群中`
+                        //     })
+                        // }
+                    })
                     .catch(error => {
                         this.$store.commit('showMessage', {
                             type: 'error',

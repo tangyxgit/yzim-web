@@ -26,7 +26,7 @@
     <div class="more">
       <el-button v-if="showLoadMore" type="text" @click="loadMore">查看更多</el-button>
     </div>
-    <group-dialog :showDialog="showAddGroup" :add-group-member="true" @closeGroup="closeGroup"></group-dialog>
+    <group-dialog :showDialog="showAddGroup" @closeGroup="closeGroup"></group-dialog>
   </div>
 </template>
 
@@ -34,7 +34,7 @@
 import { Popover } from 'element-ui'
 import { mapState } from 'vuex'
 import GroupMemberInfo from './group-member-info.vue'
-import GroupDialog from '../../group/group-chat'
+import GroupDialog from '../../group/group-chat-add'
 export default {
   data() {
     return {
