@@ -156,7 +156,9 @@
         },
         methods: {
             openProfile() {
-                this.requestPost('user/getUserByUserId', this.form, res => {
+                this.requestPost('user/getUserByUserId', {
+                    userId:this.userApi().userId
+                }, res => {
                     this.form = res.data
                     this.showEditMyProfile = true
                 }, () => {
