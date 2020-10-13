@@ -28,7 +28,6 @@ export default {
       }
     },
     defaultSrc: function () {
-      console.log(this.type)
       switch(this.type) {
         case 'C2C':
           // 个人头像
