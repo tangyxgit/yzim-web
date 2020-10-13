@@ -33,14 +33,14 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.conversation-profile-wrapper 
+.conversation-profile-wrapper
   background-color $white
   height 100%
   overflow-y scroll
 
 /* 设置滚动条的样式 */
 ::-webkit-scrollbar {
-  width: 0px;
-  height: 0px;
+  width: 0;
+  height: 0;
 }
 </style>

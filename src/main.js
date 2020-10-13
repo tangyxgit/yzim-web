@@ -77,7 +77,8 @@ Axios.defaults.baseURL = baseUrl()
 Vue.prototype.requestPost = function (url, params, success, fail) {
     if (params && this.userApi() && this.userApi().userId
         && url!=='user/updateFriend'
-        && url!=='user/addFriend') {
+        && url!=='user/addFriend'
+        && url!=='user/getUserByUserId') {
         params.userId = this.userApi().userId
     }
     //加上headers
