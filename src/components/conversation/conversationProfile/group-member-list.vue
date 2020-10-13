@@ -2,12 +2,9 @@
   <div class="group-member-list-wrapper">
     <div class="header">
       <span class="member-count text-ellipsis">群成员：{{currentConversation.groupProfile.memberNum}}</span>
-      <popover v-model="addGroupMemberVisible">
-        <add-group-member></add-group-member>
-        <div slot="reference" class="btn-add-member" title="添加群成员">
-          <span class="tim-icon-friend-add"></span>
-        </div>
-      </popover>
+      <div slot="reference" class="btn-add-member" title="添加群成员" @click="handleAddButtonClick">
+        <span class="tim-icon-friend-add"></span>
+      </div>
     </div>
     <div class="scroll-content">
       <div class="group-member-list">
@@ -29,32 +26,35 @@
     <div class="more">
       <el-button v-if="showLoadMore" type="text" @click="loadMore">查看更多</el-button>
     </div>
+    <group-dialog :showDialog="showAddGroup" :add-group-member="true" @closeGroup="closeGroup"></group-dialog>
   </div>
 </template>
 
 <script>
 import { Popover } from 'element-ui'
 import { mapState } from 'vuex'
-import AddGroupMember from './add-group-member.vue'
 import GroupMemberInfo from './group-member-info.vue'
+import GroupDialog from '../../group/group-chat'
 export default {
   data() {
     return {
       addGroupMemberVisible: false,
       currentMemberID: '',
+      showAddGroup:false,
       count: 30 // 显示的群成员数量
     }
   },
   props: ['groupProfile'],
   components: {
     Popover,
-    AddGroupMember,
-    GroupMemberInfo
+    GroupMemberInfo,
+    GroupDialog
   },
   computed: {
     ...mapState({
       currentConversation: state => state.conversation.currentConversation,
-      currentMemberList: state => state.group.currentMemberList
+      currentMemberList: state => state.group.currentMemberList,
+      friendList: state=>state.friend.friendList
     }),
     showLoadMore() {
       return this.members.length < this.groupProfile.memberNum
@@ -73,6 +73,29 @@ export default {
         default:
           return '群成员'
       }
+    },
+    handleAddButtonClick() {
+      this.tim
+              .getFriendList()
+              .then(({data: friendList}) => {
+                this.$store.commit('updateFriendList', friendList)
+              })
+              .catch(error => {
+                this.$store.commit('showMessage', {
+                  type: 'error',
+                  message: error.message
+                })
+              })
+              .catch(error => {
+                this.$store.commit('showMessage', {
+                  type: 'error',
+                  message: error.message
+                })
+              })
+      this.showAddGroup = true
+    },
+    closeGroup() {
+      this.showAddGroup= false
     },
     loadMore() {
       this.$store

@@ -1,7 +1,7 @@
 <template>
     <el-dialog title="选择成员" :visible="showDialog" :before-close="close" width="600px">
         <div v-if="hasFriend">
-            <group-chat-friend v-for="friend in friendList" :key="friend.userID" :friend="friend"/>
+            <group-chat-friend v-for="friend in getFriendList" :key="friend.userID" :friend="friend"/>
         </div>
         <div style="color:gray;" v-else>暂无好友</div>
         <span slot="footer" class="dialog-footer">
@@ -24,14 +24,35 @@
             showDialog: {
                 type: Boolean,
                 default: false
+            },
+            addGroupMember: {
+                type: Boolean,
+                default: false
             }
         },
         computed: {
             ...mapState({
-                friendList: state => state.friend.friendList
+                friendList: state => state.friend.friendList,
+                currentMemberList: state => state.group.currentMemberList,
+                currentConversation: state => state.conversation.currentConversation
             }),
             hasFriend() {
                 return this.friendList.length > 0
+            },
+            getFriendList() {
+                this.friendList.forEach(friend=>{
+                    friend.disabled = false
+                    friend.isChecked = false
+                    for (let i = 0; i < this.currentMemberList.length; i++) {
+                        let member = this.currentMemberList[i]
+                        if(member.userID === friend.userID) {
+                            friend.disabled = true
+                            friend.isChecked = true
+                            break
+                        }
+                    }
+                })
+                return this.friendList
             }
         },
         methods: {
@@ -39,16 +60,23 @@
                 let Name = this.userApi().nickName, MemberList = []
                 this.friendList.forEach(item => {
                     if (item.isChecked) {//选中的
-                        item.isChecked = false
-                        MemberList.push({
-                            userID: item.profile.userID
-                        })
+                        if(!item.disabled) {
+                            if(this.addGroupMember) {
+                                MemberList.push(item.profile.userID)
+                            }else{
+                                MemberList.push({
+                                    userID: item.profile.userID
+                                })
+                            }
+                        }
                         if (Name.length <= 9) {
                             if (Name) {
                                 Name += '、'
                             }
                             Name += item.profile.nick
                         }
+                        item.isChecked = false
+                        item.disabled = false
                     }
                 })
                 if (MemberList.length === 0) {
@@ -61,23 +89,66 @@
                 if (Name.length >= 9) {
                     Name = Name.substring(0, 8) + '...'
                 }
-                this.$emit('closeGroup');
-                this.tim.createGroup({
-                    name: Name,
-                    type: this.TIM.TYPES.GRP_WORK,
-                    memberList: MemberList
-                }).then((imResponse) => {
-                    this.$store.commit('showMessage', {
-                        message: `群聊：【${imResponse.data.group.name}】发起成功`,
-                        type: 'success'
-                    })
-                })
-                    .catch(error => {
+                this.close()
+                if(this.addGroupMember) {
+                    const groupID = this.currentConversation.conversationID.replace('GROUP', '')
+                    this.tim
+                        .addGroupMember({
+                            groupID,
+                            userIDList:MemberList
+                        })
+                        .then((imResponse) => {
+                            const {
+                                successUserIDList,
+                                // failureUserIDList,
+                                // existedUserIDList
+                            } = imResponse.data
+                            if (successUserIDList.length > 0) {
+                                this.$store.commit('showMessage', {
+                                    message: '群成员添加加群成功',
+                                    type: 'success'
+                                })
+                                this.tim.getGroupMemberProfile({groupID, userIDList: successUserIDList})
+                                    .then(({ data: { memberList }}) => {
+                                        this.$store.commit('updateCurrentMemberList', memberList)
+                                    })
+                            }
+                            // if (failureUserIDList.length > 0) {
+                            //     this.$store.commit('showMessage', {
+                            //         message: `群成员：${failureUserIDList.join(',')}，添加失败！`,
+                            //         type: 'error'
+                            //     })
+                            // }
+                            // if (existedUserIDList.length > 0) {
+                            //     this.$store.commit('showMessage', {
+                            //         message: `群成员：${existedUserIDList.join(',')}，已在群中`
+                            //     })
+                            // }
+                        })
+                        .catch(error => {
+                            this.$store.commit('showMessage', {
+                                type: 'error',
+                                message: error.message
+                            })
+                        })
+                }else{
+                    this.tim.createGroup({
+                        name: Name,
+                        type: this.TIM.TYPES.GRP_WORK,
+                        memberList: MemberList
+                    }).then((imResponse) => {
                         this.$store.commit('showMessage', {
-                            type: 'error',
-                            message: error.message
+                            message: `群聊：【${imResponse.data.group.name}】发起成功`,
+                            type: 'success'
                         })
                     })
+                        .catch(error => {
+                            this.$store.commit('showMessage', {
+                                type: 'error',
+                                message: error.message
+                            })
+                        })
+                }
             },
             close() {
                 this.$emit('closeGroup')

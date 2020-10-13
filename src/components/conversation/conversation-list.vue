@@ -107,9 +107,6 @@
             closeSearch() {
                 this.show = false
             },
-            closeGroup() {
-                this.showAddGroup= false
-            },
             handleRefresh() {
                 let that = this
                 return function () {
@@ -126,7 +123,7 @@
                     }
                 }
             },
-            getFriendList() {
+            handleAddButtonClick() {
                 this.tim
                     .getFriendList()
                     .then(({data: friendList}) => {
@@ -144,12 +141,9 @@
                             message: error.message
                         })
                     })
-            },
-            handleAddButtonClick() {
-                this.getFriendList()
                 this.showAddGroup = true
             },
-            closeGroup(){
+            closeGroup() {
                 this.showAddGroup = false
             },
             handleKeydown(event) {
