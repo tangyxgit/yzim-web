@@ -149,9 +149,6 @@
                 this.getFriendList()
                 this.showAddGroup = true
             },
-            closeGroup(){
-                this.showAddGroup = false
-            },
             handleKeydown(event) {
                 if (event.keyCode !== 38 && event.keyCode !== 40 || this.isCheckouting) {
                     return

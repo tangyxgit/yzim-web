@@ -1,9 +1,31 @@
 <template>
     <el-dialog title="选择成员" :visible="showDialog" :before-close="close" width="600px">
-        <div v-if="hasFriend">
-            <group-chat-friend v-for="friend in friendList" :key="friend.userID" :friend="friend"/>
+        <el-input
+                @focus="startChoose"
+                @blur="endChoose"
+                size="mini"
+                v-model="keyword"
+                placeholder="请输入昵称"
+                prefix-icon="el-icon-search"
+        ></el-input>
+        <div v-if="!choose">
+            <div v-if="hasFriend">
+                <div v-for="friend in friendList" :key="friend.userID">
+                    <group-chat-friend  :friend="friend"/>
+                </div>
+            </div>
+            <div style="color:gray;" v-else>暂无好友</div>
         </div>
-        <div style="color:gray;" v-else>暂无好友</div>
+        <div v-else>
+            <div v-if="hasFriend">
+                <div v-for="friend in friendList" :key="friend.userID">
+                    <group-chat-friend v-if="filter(friend)" :friend="friend"/>
+                </div>
+            </div>
+            <div style="color:gray;" v-else>暂无好友</div>
+        </div>
+
+
         <span slot="footer" class="dialog-footer">
         <el-button @click="close" size="small">取 消</el-button>
         <el-button type="primary" @click="handleConfirm" size="small">确 定</el-button>
@@ -26,6 +48,12 @@
                 default: false
             }
         },
+        data() {
+            return {
+                keyword: '',
+                choose:false
+            }
+        },
         computed: {
             ...mapState({
                 friendList: state => state.friend.friendList
@@ -35,6 +63,15 @@
             }
         },
         methods: {
+            filter(friend) {
+                return friend.profile.nick.indexOf(this.keyword) >=0
+            },
+            startChoose() {
+                this.choose = true
+            },
+            endChoose() {
+                this.choose = false
+            },
             handleConfirm() {
                 let Name = this.userApi().nickName, MemberList = []
                 this.friendList.forEach(item => {
@@ -61,7 +98,7 @@
                 if (Name.length >= 9) {
                     Name = Name.substring(0, 8) + '...'
                 }
-                this.$emit('closeGroup');
+                this.$emit('closeGroup')
                 this.tim.createGroup({
                     name: Name,
                     type: this.TIM.TYPES.GRP_WORK,
