@@ -205,7 +205,7 @@
             <!--        </el-switch>-->
             <!--      </div>-->
             <div v-if="isOwner">
-                <el-button type="text" @click="showGroupMember" @closeGroup="closeGroup">转让群主</el-button>
+                <el-button type="text" @click="showGroupMember">转让群主</el-button>
                 <!--        <el-input-->
                 <!--            v-if="showChangeGroupOwner"-->
                 <!--            v-model="newOwnerUserID"-->
@@ -230,7 +230,10 @@
                 </el-popconfirm>
             </div>
         </div>
-        <el-dialog title="转让群主" :visible="showChangeGroupOwner" :before-close="closeGroup" width="600px">
+        <el-dialog title="转让群主"
+                   :visible="showChangeGroupOwner"
+                   :before-close="closeGroup"
+                   width="600px">
             <el-input
                     @focus="startSearch"
                     @blur="endSearch"
@@ -249,6 +252,10 @@
                 </div>
                 <div style="width: 80%;height: 0.5px;background: #E9EBEC;margin-left: 80px"></div>
             </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="closeGroup" size="small">取 消</el-button>
+                <el-button type="primary" @click="handleConfirmChangeOwner" size="small">确 定</el-button>
+              </span>
         </el-dialog>
     </div>
 </template>
@@ -502,26 +509,6 @@
                         })
                     })
             },
-            changeOwner() {
-                this.tim
-                    .changeGroupOwner({
-                        groupID: this.groupProfile.groupID,
-                        newOwnerID: this.newOwnerUserID
-                    })
-                    .then(() => {
-                        this.showChangeGroupOwner = false
-                        this.$store.commit('showMessage', {
-                            message: `转让群主成功，新群主ID：${this.newOwnerUserID}`
-                        })
-                        this.newOwnerUserID = ''
-                    })
-                    .catch(error => {
-                        this.$store.commit('showMessage', {
-                            type: 'error',
-                            message: error.message
-                        })
-                    })
-            },
             quitGroup() {
                 this.tim.quitGroup(this.groupProfile.groupID).then(({data: {groupID}}) => {
                     this.$store.commit('showMessage', {
@@ -627,7 +614,38 @@
                     }
                 })
             },
+            handleConfirmChangeOwner(){
+                if(!this.selectMember) {
+                    this.$store.commit('showMessage', {
+                        message: '请选择需要转让的成员',
+                        type: 'error'
+                    })
+                    return
+                }
+                this.tim
+                    .changeGroupOwner({
+                        groupID: this.groupProfile.groupID,
+                        newOwnerID: this.selectMember.userID
+                    })
+                    .then(() => {
+                        this.showChangeGroupOwner = false
+                        this.$store.commit('showMessage', {
+                            message: `转让群主成功，新群主：${this.selectMember.nick}`
+                        })
+                        this.closeGroup()
+                    })
+                    .catch(error => {
+                        this.$store.commit('showMessage', {
+                            type: 'error',
+                            message: error.message
+                        })
+                    })
+            },
             closeGroup() {
+                if(this.selectMember){
+                    this.selectMember.isChecked = false;
+                    this.selectMember = null
+                }
                 this.showChangeGroupOwner = false
             }
         }
