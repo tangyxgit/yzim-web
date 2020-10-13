@@ -75,23 +75,7 @@ export default {
       }
     },
     handleAddButtonClick() {
-      this.tim
-              .getFriendList()
-              .then(({data: friendList}) => {
-                this.$store.commit('updateFriendList', friendList)
-              })
-              .catch(error => {
-                this.$store.commit('showMessage', {
-                  type: 'error',
-                  message: error.message
-                })
-              })
-              .catch(error => {
-                this.$store.commit('showMessage', {
-                  type: 'error',
-                  message: error.message
-                })
-              })
+      this.$store.dispatch('getFriendlist')
       this.showAddGroup = true
     },
     closeGroup() {

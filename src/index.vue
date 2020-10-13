@@ -116,6 +116,7 @@
 
             },
             onReceiveMessage({data: messageList}) {
+                // eslint-disable-next-line no-console
                 console.error('收到推送的单聊、群聊、群提示、群系统通知的新消息：',messageList)
                 this.handleVideoMessage(messageList)
                 this.handleAt(messageList)
