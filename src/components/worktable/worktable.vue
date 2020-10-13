@@ -33,7 +33,18 @@
         methods:{
             handleApp(app) {
                 if(app.toolCode==='code002') {//网盘
-                    window.open(app.toolUrl+'?token='+app.sdkToken)
+                    this.requestPost('tool/getToolToken',{
+                        toolCode:app.toolCode,
+                        userName:this.userApi().userName
+                    },res=>{
+                        window.open(app.toolUrl+'?token='+res.data)
+                    },error=>{
+                        this.$store.commit('showMessage', {
+                            message: '启动应用失败：' + error.message,
+                            type: 'error'
+                        })
+                    })
+
                 }
             }
         }
