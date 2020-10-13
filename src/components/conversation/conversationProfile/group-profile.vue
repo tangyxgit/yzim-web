@@ -205,15 +205,15 @@
 <!--        </el-switch>-->
 <!--      </div>-->
       <div v-if="isOwner">
-        <el-button type="text" @click="showChangeGroupOwner = true">转让群主</el-button>
-        <el-input
-            v-if="showChangeGroupOwner"
-            v-model="newOwnerUserID"
-            placeholder="新群主的userID"
-            size="mini"
-            @blur="showChangeGroupOwner = false"
-            @keydown.enter.native="changeOwner"
-        />
+        <el-button type="text" @click="showGroupMember" @closeGroup="closeGroup">转让群主</el-button>
+<!--        <el-input-->
+<!--            v-if="showChangeGroupOwner"-->
+<!--            v-model="newOwnerUserID"-->
+<!--            placeholder="新群主的userID"-->
+<!--            size="mini"-->
+<!--            @blur="showChangeGroupOwner = false"-->
+<!--            @keydown.enter.native="changeOwner"-->
+<!--        />-->
       </div>
       <div v-if="!isOwner">
           <el-popconfirm
@@ -230,23 +230,36 @@
         </el-popconfirm>
       </div>
     </div>
+      <el-dialog title="转让群主" :visible="showChangeGroupOwner" :before-close="closeGroup" width="600px">
+          <el-input
+                  size="mini"
+                  v-model="keyword"
+                  placeholder="请输入昵称"
+                  prefix-icon="el-icon-search"
+          ></el-input>
+
+      </el-dialog>
   </div>
 </template>
 
 <script>
 import GroupMemberList from './group-member-list.vue'
-import { Select, Option, Switch,Popconfirm } from 'element-ui'
+import GroupChatFriend from '../../friend/GroupChatfriend'
+import { Select, Option,Popconfirm } from 'element-ui'
 export default {
   props: ['groupProfile'],
   components: {
     GroupMemberList,
-    ElSelect: Select,
-    ElOption: Option,
-    ElSwitch: Switch,
+      GroupChatFriend,
+      ElSelect: Select,
+      ElOption: Option,
     ElPopconfirm:Popconfirm
   },
   data() {
     return {
+        keyword:'',
+        memberOffset:0,
+        memberDataAll:[],
       showEditName: false,
       showEditFaceUrl: false,
       showEditIntroduction: false,
@@ -274,7 +287,8 @@ export default {
         NeedPermission: '需要验证',
         DisableApply: '禁止加群'
       },
-      active:false
+      active:false,
+        showChangeOwner:false
     }
   },
   computed: {
@@ -557,7 +571,30 @@ export default {
             message: error.message
           })
         })
-    }
+    },
+      showGroupMember() {
+          this.showChangeGroupOwner = true
+          if(this.memberDataAll.length===0){
+              this.loadMore()
+          }
+      },
+      loadMore() {
+        this.tim.getGroupMemberList({
+            groupID:this.groupProfile.groupID,
+            count:100,
+            offset:this.memberOffset
+        }).then( ({data})=>{
+            let memberList = data.memberList
+            this.memberDataAll = this.memberDataAll.concat(memberList)
+            if(memberList.length>0 && memberList.length>=100) {
+                this.loadMore()
+            }
+            console.log(this.memberDataAll)
+        });
+      },
+      closeGroup() {
+        this.showChangeGroupOwner = false
+      }
   }
 }
 </script>
