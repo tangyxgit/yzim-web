@@ -107,47 +107,26 @@
             closeSearch() {
                 this.show = false
             },
-            closeGroup() {
-                this.showAddGroup= false
-            },
             handleRefresh() {
                 let that = this
-                return function () {
-                    if (!that.timeout) {
-                        that.timeout = setTimeout(() => {
-                            that.timeout = null
-                            that.tim.getConversationList().then(() => {
-                                that.$store.commit('showMessage', {
-                                    message: '刷新成功',
-                                    type: 'success'
-                                })
+                if (!that.timeout) {
+                    that.timeout = setTimeout(() => {
+                        that.timeout = null
+                        that.tim.getConversationList().then(() => {
+                            that.$store.commit('showMessage', {
+                                message: '刷新成功',
+                                type: 'success'
                             })
-                        }, 1000)
-                    }
+                        })
+                    }, 1000)
                 }
             },
-            getFriendList() {
-                this.tim
-                    .getFriendList()
-                    .then(({data: friendList}) => {
-                        this.$store.commit('updateFriendList', friendList)
-                    })
-                    .catch(error => {
-                        this.$store.commit('showMessage', {
-                            type: 'error',
-                            message: error.message
-                        })
-                    })
-                    .catch(error => {
-                        this.$store.commit('showMessage', {
-                            type: 'error',
-                            message: error.message
-                        })
-                    })
-            },
             handleAddButtonClick() {
-                this.getFriendList()
+                this.$store.dispatch('getFriendlist')
                 this.showAddGroup = true
+            },
+            closeGroup() {
+                this.showAddGroup = false
             },
             handleKeydown(event) {
                 if (event.keyCode !== 38 && event.keyCode !== 40 || this.isCheckouting) {

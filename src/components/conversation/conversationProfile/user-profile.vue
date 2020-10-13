@@ -27,7 +27,7 @@
                 职位
             </div>
             <div class="content text-left">
-                {{form.dimension}}
+                {{form.position}}
             </div>
         </div>
 
@@ -36,7 +36,7 @@
                 工号
             </div>
             <div class="content text-left">
-                {{form.departmentId}}
+                {{form.card}}
             </div>
         </div>
 
@@ -100,8 +100,8 @@
             return {
                 form: {
                     departName: '待完善',
-                    dimension: '待完善',
-                    departmentId: '待完善',
+                    position: '待完善',
+                    card: '待完善',
                     email: '待完善',
                     friendRemark: this.userProfile.nick
                 },
@@ -115,6 +115,7 @@
                 myUserID: state => state.user.currentUserProfile.userID
             }),
             isInBlacklist() {
+                this.getDetail()
                 return this.blacklist.findIndex(item => item.userID === this.userProfile.userID) >= 0
             },
             gender() {
@@ -137,9 +138,6 @@
                         return ''
                 }
             }
-        },
-        mounted() {
-            this.getDetail()
         },
         methods: {
             inputFocus(ref) {
@@ -172,20 +170,29 @@
                     })
             },
             getDetail() {
+                const userId = this.userProfile.userID
                 this.requestPost('user/getUserByUserId', {
-                        userId: this.userProfile.userID
+                        userId: userId
                     }, res => {
                         if (res.data.departName) {
                             this.form.departName = res.data.departName
+                        }else{
+                            this.form.departName = '待完善'
                         }
-                        if (res.data.dimension) {
-                            this.form.dimension = res.data.dimension
+                        if (res.data.position) {
+                            this.form.position = res.data.position
+                        }else{
+                            this.form.position = '待完善'
                         }
-                        if (res.data.departmentId) {
-                            this.form.departmentId = res.data.departmentId
+                        if (res.data.card) {
+                            this.form.card = res.data.card
+                        }else{
+                            this.form.card = '待完善'
                         }
                         if (res.data.email) {
                             this.form.email = res.data.email
+                        }else{
+                            this.form.email = '待完善'
                         }
                     },
                     error => {

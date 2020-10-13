@@ -26,6 +26,7 @@ export default {
       const groupID = this.currentConversation.conversationID.replace('GROUP', '')
       this.tim
         .addGroupMember({
+
           groupID,
           userIDList: [this.userID]
         })

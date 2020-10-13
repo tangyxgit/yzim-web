@@ -33,7 +33,7 @@
                         :class="{ active: showFriendList }"
                         title="我的好友"
                         style="cursor:pointer;position: relative;margin-top: 24px"
-                        @click="showFriend"
+                        @click="getFriendList"
                 >
                     <img v-if="showFriendList" src='../../assets/image/icon_contact_fill_24.svg' style="background: #DBEBFE;border-radius: 4px" class="p-2" />
                     <img v-else src='../../assets/image/icon_contact_stroke_24.svg' style="pointer-events: none" class="p-2"/>
@@ -175,9 +175,6 @@
             checkoutActive(name) {
                 this.active = name
             },
-            showFriend() {
-                this.getFriendList()
-            },
             change() {
                 this.params.oldPassword = ''
                 this.params.newPassword = ''
@@ -262,23 +259,7 @@
                     })
             },
             getFriendList() {
-                this.tim
-                    .getFriendList()
-                    .then(({data: friendList}) => {
-                        this.$store.commit('updateFriendList', friendList)
-                    })
-                    .catch(error => {
-                        this.$store.commit('showMessage', {
-                            type: 'error',
-                            message: error.message
-                        })
-                    })
-                    .catch(error => {
-                        this.$store.commit('showMessage', {
-                            type: 'error',
-                            message: error.message
-                        })
-                    })
+                this.$store.dispatch('getFriendlist')
             },
             logout() {
                 this.$store.dispatch('logout')
