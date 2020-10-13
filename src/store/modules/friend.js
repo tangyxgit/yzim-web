@@ -4,7 +4,7 @@ const friendModules = {
     createGroupModelVisible: false
   },
   mutations: {
-    upadteFriendList(state, friendList) {
+    updateFriendList(state, friendList) {
       state.friendList = friendList
     },
     reset(state) {

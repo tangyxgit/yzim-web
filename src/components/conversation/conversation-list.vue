@@ -38,16 +38,6 @@
 
         </div>
         <friend-dialog :show="show" @closeSearch="closeSearch"></friend-dialog>
-<!--        <el-dialog title="选择成员" :visible.sync="showDialog" width="600px">-->
-<!--            <div v-if="hasFriend">-->
-<!--                <GroupChatFriend v-for="friend in friendList" :key="friend.userID" :friend="friend"/>-->
-<!--            </div>-->
-<!--            <div style="color:gray;" v-else>暂无好友</div>-->
-<!--            <span slot="footer" class="dialog-footer">-->
-<!--        <el-button @click="showDialog = false" size="small">取 消</el-button>-->
-<!--        <el-button type="primary" @click="handleConfirm" size="small">确 定</el-button>-->
-<!--      </span>-->
-<!--        </el-dialog>-->
         <group-dialog :showDialog="showAddGroup" @closeGroup="closeGroup"></group-dialog>
     </div>
 </template>
@@ -66,8 +56,6 @@
             ConversationItem,
             FriendDialog,
             ElPopover: Popover,
-            // ElCheckboxGroup:CheckboxGroup,
-            // ElCheckbox:Checkbox
         },
         data() {
             return {
@@ -142,7 +130,7 @@
                 this.tim
                     .getFriendList()
                     .then(({data: friendList}) => {
-                        this.$store.commit('upadteFriendList', friendList)
+                        this.$store.commit('updateFriendList', friendList)
                     })
                     .catch(error => {
                         this.$store.commit('showMessage', {

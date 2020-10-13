@@ -8,9 +8,6 @@
     </div>
     <div class="group-container">
       <group-item v-for="group in groupList" :key="group.groupID" :group="group" />
-<!--      <el-dialog title="创建群聊" :visible="createGroupModelVisible" @close="closeCreateGroupModel" width="30%">-->
-<!--        <create-group></create-group>-->
-<!--      </el-dialog>-->
     </div>
     <group-dialog :showDialog="showDialog" @closeGroup="closeGroup"></group-dialog>
   </div>
@@ -18,7 +15,6 @@
 
 <script>
 import { mapState } from 'vuex'
-import { Dialog } from 'element-ui'
 import CreateGroup from './create-group.vue'
 import GroupItem from './group-item.vue'
 import GroupDialog from '../group/group-chat'
@@ -36,9 +32,9 @@ export default {
     CreateGroup,
   },
   computed: {
-    groupList: function() {
-      return this.$store.state.group.groupList
-    },
+      ...mapState({
+          groupList: state => state.group.groupList
+      }),
     ...mapState({
       createGroupModelVisible: state => {
         return state.group.createGroupModelVisible

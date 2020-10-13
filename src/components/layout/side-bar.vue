@@ -252,7 +252,7 @@
                 this.tim
                     .getGroupList()
                     .then(({data: groupList}) => {
-                        this.$store.dispatch('updateGroupList', groupList)
+                        this.$store.commit('updateGroupList', groupList)
                     })
                     .catch(error => {
                         this.$store.commit('showMessage', {
@@ -265,7 +265,7 @@
                 this.tim
                     .getFriendList()
                     .then(({data: friendList}) => {
-                        this.$store.commit('upadteFriendList', friendList)
+                        this.$store.commit('updateFriendList', friendList)
                     })
                     .catch(error => {
                         this.$store.commit('showMessage', {

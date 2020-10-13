@@ -8,7 +8,7 @@
               class="group-seach-bar"
               prefix-icon="el-icon-search"
       ></el-input>
-      <button title="添加好友" >
+      <button title="添加好友" @click="show=true">
         <i class="tim-icon-add"></i>
       </button>
     </div>
@@ -17,15 +17,18 @@
         <friend-item v-if="filterKeyword(friend)"  :friend="friend" />
       </div>
     </div>
+    <friend-dialog :show="show" @closeSearch="closeSearch"></friend-dialog>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import FriendItem from './friend-item.vue'
+import FriendDialog from '../friend/addFriend'
 export default {
   components: {
     FriendItem,
+      FriendDialog
   },
   computed: {
     ...mapState({
@@ -38,13 +41,17 @@ export default {
   },
   data() {
     return {
-      keyword:''
+      keyword:'',
+        show:false
     }
   },
   methods:{
     filterKeyword(item) {
       return item.profile.nick.indexOf(this.keyword)>=0
-    }
+    },
+      closeSearch() {
+          this.show = false
+      },
   }
 }
 </script>

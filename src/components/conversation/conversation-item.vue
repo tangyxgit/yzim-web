@@ -267,7 +267,7 @@ export default {
         padding-left 10px
         flex-shrink 0
         text-align right
-        color $font-dark
+        color $secondary
 .choose {
   background-color: $dark-primary;
 }
