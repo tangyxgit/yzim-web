@@ -628,10 +628,10 @@
                         newOwnerID: this.selectMember.userID
                     })
                     .then(() => {
-                        this.showChangeGroupOwner = false
+                        this.showChangeGroupOwner = false;
                         this.$store.commit('showMessage', {
                             message: `转让群主成功，新群主：${this.selectMember.nick}`
-                        })
+                        });
                         this.closeGroup()
                     })
                     .catch(error => {
