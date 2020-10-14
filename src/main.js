@@ -67,6 +67,25 @@ Vue.prototype.userLogout = function () {
     this.$root.userApi = null
     this.$root.token = null
 }
+Vue.prototype.getFriendList = function () {
+    this.requestPost('user/getFriend',{
+        From_Account:this.userApi().userId,
+        StartIndex:0
+    },res=>{
+        let userDataArray = res.data.UserDataItem;
+        let userIDList = []
+        userDataArray.forEach(item=>{
+            userIDList.push(item.To_Account)
+        })
+        if(userIDList.length>0) {
+            this.tim.getUserProfile({
+                userIDList:userIDList
+            }).then(({data})=>{
+                this.$store.commit('updateFriendList',data)
+            })
+        }
+    })
+}
 
 function baseUrl() {
     return '/api'
@@ -78,7 +97,8 @@ Vue.prototype.requestPost = function (url, params, success, fail) {
     if (params && this.userApi() && this.userApi().userId
         && url!=='user/updateFriend'
         && url!=='user/addFriend'
-        && url!=='user/getUserByUserId') {
+        && url!=='user/getUserByUserId'
+        && url!=='user/getFriend') {
         params.userId = this.userApi().userId
     }
     //加上headers

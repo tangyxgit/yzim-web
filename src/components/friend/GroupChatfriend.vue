@@ -3,8 +3,8 @@
         <div @click="handleFriendClick" class="scroll-container">
             <div class="item">
                 <el-checkbox v-model="friend.isChecked" :disabled="friend.disabled" :checked="friend.isChecked" style="pointer-events: none" class="mt-3 mr-3"></el-checkbox>
-                <avatar :src="friend.profile.avatar" />
-                <div class="group-name text-ellipsis">{{ friend.profile.nick||friend.userID }}</div>
+                <avatar :src="friend.avatar" />
+                <div class="group-name text-ellipsis">{{ friend.nick||friend.userID }}</div>
             </div>
         </div>
         <div style="width: 80%;height: 0.5px;background: #E9EBEC;margin-left: 80px"></div>

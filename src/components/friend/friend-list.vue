@@ -13,8 +13,8 @@
       </button>
     </div>
     <div>
-      <div v-for="friend in friendList" :key="friend.userID">
-        <friend-item v-if="filterKeyword(friend)"  :friend="friend" />
+      <div v-for="friend in getFriendListData" :key="friend.userID">
+        <friend-item  :friend="friend" />
       </div>
     </div>
     <friend-dialog :show="show" @closeSearch="closeSearch"></friend-dialog>
@@ -37,7 +37,11 @@ export default {
     hasFriend() {
       return this.friendList.length > 0
     },
-
+    getFriendListData() {
+      return this.friendList.filter(item=>{
+        return item.nick.indexOf(this.keyword)>=0
+      })
+    }
   },
   data() {
     return {
@@ -46,9 +50,6 @@ export default {
     }
   },
   methods:{
-    filterKeyword(item) {
-      return item.profile.nick.indexOf(this.keyword)>=0
-    },
       closeSearch() {
           this.show = false
       },

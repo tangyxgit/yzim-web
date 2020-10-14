@@ -75,7 +75,7 @@ export default {
       }
     },
     handleAddButtonClick() {
-      this.$store.dispatch('getFriendlist')
+      this.getFriendList()
       this.showAddGroup = true
     },
     closeGroup() {

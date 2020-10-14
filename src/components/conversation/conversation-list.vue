@@ -27,15 +27,7 @@
             </el-popover>
         </div>
         <div class="scroll-container">
-            <div v-if="!start">
-                <conversation-item v-for="item in conversationList" :key="item.conversationID" :conversation="item"/>
-            </div>
-            <div v-if="start">
-                <div v-for="item in conversationList" :key="item.conversationID">
-                    <conversation-item v-if="filterKeyword(item)" :conversation="item"/>
-                </div>
-            </div>
-
+            <conversation-item v-for="item in getConversationListData" :key="item.conversationID" :conversation="item"/>
         </div>
         <friend-dialog :show="show" @closeSearch="closeSearch"></friend-dialog>
         <group-dialog :showDialog="showAddGroup" @closeGroup="closeGroup"></group-dialog>
@@ -77,6 +69,16 @@
             }),
             hasFriend() {
                 return this.friendList.length > 0
+            },
+            getConversationListData() {
+                return this.conversationList.filter(item=>{
+                    if (item.groupProfile) {
+                        return item.groupProfile.name.indexOf(this.keyword) >= 0
+                    }
+                    if (item.userProfile) {
+                        return item.userProfile.nick.indexOf(this.keyword) >= 0
+                    }
+                })
             }
         },
         mounted() {
@@ -122,7 +124,8 @@
                 }
             },
             handleAddButtonClick() {
-                this.$store.dispatch('getFriendlist')
+                // this.$store.dispatch('getFriendlist')
+                this.getFriendList()
                 this.showAddGroup = true
             },
             closeGroup() {

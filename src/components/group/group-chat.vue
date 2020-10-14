@@ -19,7 +19,7 @@
         <div v-else>
             <div v-if="hasFriend">
                 <div v-for="friend in getFriendList" :key="friend.userID">
-                    <group-chat-friend v-if="filter(friend)" :friend="friend"/>
+                    <group-chat-friend :friend="friend"/>
                 </div>
             </div>
             <div style="color:gray;" v-else>暂无好友</div>
@@ -62,16 +62,15 @@
             },
             getFriendList() {
                 this.friendList.forEach(friend=>{
-                    friend.disabled = false;
+                    friend.disabled = false
                     friend.isChecked = false
-                });
-                return this.friendList
+                })
+                return this.friendList.filter(item=>{
+                    return item.nick.indexOf(this.keyword) >=0
+                })
             }
         },
         methods: {
-            filter(friend) {
-                return friend.profile.nick.indexOf(this.keyword) >=0
-            },
             startChoose() {
                 this.choose = true
             },

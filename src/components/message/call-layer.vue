@@ -266,15 +266,29 @@ export default {
         invited_list: [],
         duration
       }
+      console.error(">>>>>"+this.toAccount+">"+this.currentConversationType+">")
       const message = this.tim.createCustomMessage({
         to: this.toAccount,
         conversationType: this.currentConversationType,
         payload: {
-          data: JSON.stringify(options),
+          data: JSON.stringify({
+            actionType:action,
+            businessID:'1',
+            data:JSON.stringify({
+              room_id:this.videoRoom,
+              version:VERSION,
+              call_type:2
+            }),
+            inviteID:144115225159159671+'-'+1602328563+'-'+parseInt(new Date().getTime()/1000),
+            invitedList: [],
+            inviter:this.userApi().userId,
+            timeout:30
+          }),
           description: '',
           extension: ''
         }
       })
+      console.error("message:",message)
       this.$store.commit('pushCurrentMessageList', message)
       this.tim.sendMessage(message)
     },

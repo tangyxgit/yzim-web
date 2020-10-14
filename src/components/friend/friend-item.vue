@@ -2,8 +2,8 @@
     <div>
         <div @click="handleFriendClick" class="scroll-container">
             <div class="group-item">
-                <avatar :src="friend.profile.avatar" />
-                <div class="group-name text-ellipsis">{{ friend.profile.nick||friend.userID }}</div>
+                <avatar :src="friend.avatar" />
+                <div class="group-name text-ellipsis">{{ friend.nick||friend.userID }}</div>
             </div>
         </div>
         <div style="width: 90%;height: 0.5px;background: #E9EBEC;margin-left: 80px"></div>
