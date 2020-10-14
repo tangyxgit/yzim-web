@@ -33,7 +33,7 @@
                         :class="{ active: showFriendList }"
                         title="我的好友"
                         style="cursor:pointer;position: relative;margin-top: 24px"
-                        @click="getFriendList"
+                        @click="handleRefreshFriend"
                 >
                     <img v-if="showFriendList" src='../../assets/image/icon_contact_fill_24.svg' style="background: #DBEBFE;border-radius: 4px" class="p-2" />
                     <img v-else src='../../assets/image/icon_contact_stroke_24.svg' style="pointer-events: none" class="p-2"/>
@@ -258,8 +258,8 @@
                         })
                     })
             },
-            getFriendList() {
-                this.$store.dispatch('getFriendlist')
+            handleRefreshFriend() {
+                this.getFriendList()
             },
             logout() {
                 this.$store.dispatch('logout')
