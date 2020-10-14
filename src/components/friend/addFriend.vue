@@ -25,7 +25,7 @@
                 </div>
             </div>
         </el-dialog>
-        <el-dialog :visible="sendCheckDialog" title="发送验证信息" width="600px">
+        <el-dialog :visible="sendCheckDialog" title="发送验证信息" width="600px" :before-close="closeSend">
             <div class="group-item">
                 <avatar :src="userIcon" />
                 <div class="group-name ">
@@ -77,6 +77,9 @@
         methods: {
             close() {
                 this.$emit('closeSearch')
+            },
+            closeSend() {
+                this.sendCheckDialog = false
             },
             search() {
                 this.requestPost('user/getUserByParam',{param:this.keyword},res=>{

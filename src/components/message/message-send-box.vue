@@ -64,8 +64,8 @@
       <el-radio-group
         v-model="atUserID"
         style="display:flex;flex-decoration: column;"
-        v-for="member in memberList"
-        :key="member.userID"
+        v-for="(member,index) in memberList"
+        :key="index"
         @change="handleSelectAtUser"
       >
         <el-radio :label="member.userID">{{ member.nameCard || member.nick || member.userID }}</el-radio>

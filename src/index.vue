@@ -118,7 +118,7 @@
             onReceiveMessage({data: messageList}) {
                 // eslint-disable-next-line no-console
                 console.error('收到推送的单聊、群聊、群提示、群系统通知的新消息：',messageList)
-                this.handleVideoMessage(messageList)
+                // this.handleVideoMessage(messageList)
                 this.handleAt(messageList)
                 this.handleQuitGroupTip(messageList)
                 this.$store.commit('pushCurrentMessageList', messageList)
@@ -271,7 +271,7 @@
                 )
                 if (videoMessageList.length === 0) return
                 const videoPayload = JSON.parse(videoMessageList[0].payload.data)
-                if (videoPayload.action === ACTION.VIDEO_CALL_ACTION_DIALING) {
+                if (videoPayload.actionType === ACTION.VIDEO_CALL_ACTION_DIALING) {
                     if (this.isBusy) {
                         this.$bus.$emit('busy', videoPayload, videoMessageList[0])
                         return
@@ -282,25 +282,25 @@
                         this.$bus.$emit('isCalled')
                     }
                 }
-                if (videoPayload.action === ACTION.VIDEO_CALL_ACTION_SPONSOR_CANCEL) {
+                if (videoPayload.actionType === ACTION.VIDEO_CALL_ACTION_SPONSOR_CANCEL) {
                     this.$bus.$emit('missCall')
                 }
-                if (videoPayload.action === ACTION.VIDEO_CALL_ACTION_REJECT) {
+                if (videoPayload.actionType === ACTION.VIDEO_CALL_ACTION_REJECT) {
                     this.$bus.$emit('isRefused')
                 }
-                if (videoPayload.action === ACTION.VIDEO_CALL_ACTION_SPONSOR_TIMEOUT) {
+                if (videoPayload.actionType === ACTION.VIDEO_CALL_ACTION_SPONSOR_TIMEOUT) {
                     this.$bus.$emit('missCall')
                 }
-                if (videoPayload.action === ACTION.VIDEO_CALL_ACTION_ACCEPTED) {
+                if (videoPayload.actionType === ACTION.VIDEO_CALL_ACTION_ACCEPTED) {
                     this.$bus.$emit('isAccept')
                 }
-                if (videoPayload.action === ACTION.VIDEO_CALL_ACTION_HANGUP) {
+                if (videoPayload.actionType === ACTION.VIDEO_CALL_ACTION_HANGUP) {
                     this.$bus.$emit('isHungUp')
                 }
-                if (videoPayload.action === ACTION.VIDEO_CALL_ACTION_LINE_BUSY) {
+                if (videoPayload.actionType === ACTION.VIDEO_CALL_ACTION_LINE_BUSY) {
                     this.$bus.$emit('isRefused')
                 }
-                if (videoPayload.action === ACTION.VIDEO_CALL_ACTION_ERROR) {
+                if (videoPayload.actionType === ACTION.VIDEO_CALL_ACTION_ERROR) {
                     this.$bus.$emit('isRefused')
                 }
             },

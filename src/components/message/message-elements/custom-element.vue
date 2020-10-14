@@ -12,7 +12,7 @@
       </el-rate>
       <div class="suggestion">{{this.payload.extension}}</div>
     </div>
-    <span class="text" title="您可以自行解析自定义消息" v-else>{{text}}</span>
+    <span class="text" title="不支持的消息，请在手机上查看" v-else>{{text}}</span>
   </div>
 </message-bubble>
 </template>
@@ -75,8 +75,6 @@ export default {
                 msgNick += item.nick
               })
               payload.extension = msgNick+' 发起了群聊'
-            }).catch((imError) => {
-              console.warn('translateCustomMessage getUserProfile error:', imError)// 获取其他用户资料失败的相关信息
             })
           }
         }
@@ -101,7 +99,7 @@ export default {
         case ACTION.VIDEO_CALL_ACTION_ERROR:
           return '[设备异常]'
         default:
-          return '[自定义消息]'
+          return '[不支持的消息，请在手机上查看]'
       }
     }
   }
