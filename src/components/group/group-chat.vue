@@ -83,14 +83,14 @@
                     if (item.isChecked) {//选中的
                         if(!item.disabled) {
                             MemberList.push({
-                                userID: item.profile.userID
+                                userID: item.userID
                             })
                         }
                         if (Name.length <= 9) {
                             if (Name) {
                                 Name += '、'
                             }
-                            Name += item.profile.nick
+                            Name += item.nick
                         }
                         item.isChecked = false
                         item.disabled = false

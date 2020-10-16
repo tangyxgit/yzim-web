@@ -44,7 +44,8 @@
                             type: 'error'
                         })
                     })
-
+                }else{
+                    window.open(app.toolUrl)
                 }
             }
         }

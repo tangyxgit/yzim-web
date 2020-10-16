@@ -92,13 +92,13 @@
                 this.friendList.forEach(item => {
                     if (item.isChecked) {//选中的
                         if(!item.disabled) {
-                            MemberList.push(item.profile.userID)
+                            MemberList.push(item.userID)
                         }
                         if (Name.length <= 9) {
                             if (Name) {
                                 Name += '、'
                             }
-                            Name += item.profile.nick
+                            Name += item.nick
                         }
                         item.isChecked = false
                         item.disabled = false
