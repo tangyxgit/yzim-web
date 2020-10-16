@@ -9,8 +9,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        // 此处的写法，目的是为了 将 /api 替换成 https://www.baidu.com/
-        target: 'http://118.31.108.13:8099',
+        target: 'https://dev-imapi.yzmetax.com',
         // 允许跨域
         changeOrigin: true,
         ws: true,
