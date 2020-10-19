@@ -25,12 +25,8 @@
 └───vue.config.js - vue-cli@3 配置文件
 ```
 
-### 准备工作
-
-1. 准备好您的 `SDKAPPID` 和 `SECRETKEY`，获取方式参考：[密钥获取方法](https://cloud.tencent.com/document/product/269/36838#.E6.AD.A5.E9.AA.A41.EF.BC.9A.E5.88.9B.E5.BB.BA.E5.BA.94.E7.94.A8)
-
 ### 启动流程
-3. 启动项目
+1. 启动项目
 
    ```shell
    # 同步依赖
