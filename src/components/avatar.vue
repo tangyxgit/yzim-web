@@ -15,6 +15,7 @@ export default {
       type: String,
       default: 'C2C'
     },
+
     shape: {
       type: String,
       default: 'circle'
