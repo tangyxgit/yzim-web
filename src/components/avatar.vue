@@ -6,6 +6,8 @@
 
 <script>
 import systemAvatar from '@/assets/image/system.png'
+import userAvatar from '@/assets/image/img_contact_default.png'
+import groupAvatar from '@/assets/image/img_group_default.png'
 export default {
   props: {
     src: String,
@@ -31,15 +33,15 @@ export default {
       switch(this.type) {
         case 'C2C':
           // 个人头像
-          return 'https://imgcache.qq.com/open/qcloud/video/act/webim-avatar/avatar-2.png'
+          return userAvatar
         case 'GROUP':
           // 群默认头像
-          return 'https://imgcache.qq.com/open/qcloud/video/act/webim-avatar/avatar-3.png'
+          return groupAvatar
         case this.TIM.TYPES.CONV_SYSTEM:
           return systemAvatar
         default:
           // 默认头像
-          return 'https://imgcache.qq.com/open/qcloud/video/act/webim-avatar/avatar-1.png'
+          return userAvatar
       }
     }
   }

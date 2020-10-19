@@ -44,6 +44,17 @@
                             type: 'error'
                         })
                     })
+                }else if(app.toolCode==='code003') {
+                    this.requestGet(app.toolUrl,res=>{
+                        if(res.data.Success) {
+                            window.open(res.data.Result.url)
+                        }else{
+                            this.$store.commit('showMessage', {
+                                message: '启动应用失败：' + res.data.message,
+                                type: 'error'
+                            })
+                        }
+                    })
                 }else{
                     window.open(app.toolUrl)
                 }

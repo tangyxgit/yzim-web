@@ -127,6 +127,17 @@ Vue.prototype.requestPost = function (url, params, success, fail) {
         }
     })
 }
+Vue.prototype.requestGet = function (url,success,fail) {
+    Axios.get(url).then(res=>{
+        if (success) {
+            success(res)
+        }
+    }).catch(error=>{
+        if (fail) {
+            fail(error)
+        }
+    })
+}
 
 new Vue({
     render: h => h(Index),
