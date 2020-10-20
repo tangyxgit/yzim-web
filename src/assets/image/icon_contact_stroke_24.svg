@@ -4,13 +4,13 @@
     <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="图标-for-iOS" transform="translate(-156.000000, -172.000000)">
             <g id="编组-3" transform="translate(156.000000, 172.000000)">
-                <rect id="矩形" fill="#e4e6e9" opacity="0" x="0" y="0" width="24" height="24"></rect>
+                <rect id="矩形" fill="#b2b2b2" opacity="0" x="0" y="0" width="24" height="24"></rect>
                 <g id="编组">
-                    <rect id="矩形" fill="#e4e6e9" opacity="0" x="0" y="0" width="24" height="24"></rect>
-                    <path d="M6,6 L6,4 C6,3.44771525 6.44771525,3 7,3 L17,3 L17,3 C18.1045695,3 19,3.8954305 19,5 L19,19 C19,20.1045695 18.1045695,21 17,21 L7,21 C6.44771525,21 6,20.5522847 6,20 L6,18 L6,18" id="路径" stroke="#e4e6e9" stroke-width="1.5"></path>
-                    <line x1="15.75" y1="18" x2="15.75" y2="6" id="路径-19" stroke="#e4e6e9" stroke-width="1.5"></line>
-                    <line x1="4" y1="8.75" x2="7" y2="8.75" id="路径-18" stroke="#e4e6e9" stroke-width="1.5"></line>
-                    <line x1="4" y1="14.75" x2="7" y2="14.75" id="路径-17" stroke="#e4e6e9" stroke-width="1.5"></line>
+                    <rect id="矩形" fill="#b2b2b2" opacity="0" x="0" y="0" width="24" height="24"></rect>
+                    <path d="M6,6 L6,4 C6,3.44771525 6.44771525,3 7,3 L17,3 L17,3 C18.1045695,3 19,3.8954305 19,5 L19,19 C19,20.1045695 18.1045695,21 17,21 L7,21 C6.44771525,21 6,20.5522847 6,20 L6,18 L6,18" id="路径" stroke="#b2b2b2" stroke-width="1.5"></path>
+                    <line x1="15.75" y1="18" x2="15.75" y2="6" id="路径-19" stroke="#b2b2b2" stroke-width="1.5"></line>
+                    <line x1="4" y1="8.75" x2="7" y2="8.75" id="路径-18" stroke="#b2b2b2" stroke-width="1.5"></line>
+                    <line x1="4" y1="14.75" x2="7" y2="14.75" id="路径-17" stroke="#b2b2b2" stroke-width="1.5"></line>
                 </g>
             </g>
         </g>
