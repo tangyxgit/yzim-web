@@ -9,7 +9,7 @@
                 style="width:100%">
             <el-form-item>
                 <el-input autocomplete="off" v-model="params.mobile" placeholder="请输入手机号" clearable>
-                    <template slot="prepend">+  86</template>
+                    <template slot="prepend">+86</template>
                 </el-input>
             </el-form-item>
             <el-form-item>
