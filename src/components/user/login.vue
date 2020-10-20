@@ -21,7 +21,9 @@
                 @keydown.enter.native="submit"
         >
             <el-form-item>
-                <el-input autocomplete="off" v-model="params.mobile" clearable placeholder="请输入手机号"></el-input>
+                <el-input autocomplete="off" v-model="params.mobile" clearable placeholder="请输入手机号">
+                    <template slot="prepend">+  86</template>
+                </el-input>
             </el-form-item>
             <el-form-item>
                 <el-input autocomplete="off" v-model="params.password" type="password" clearable

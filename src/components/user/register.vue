@@ -9,12 +9,11 @@
                 style="width:100%">
             <el-form-item>
                 <el-input autocomplete="off" v-model="params.mobile" placeholder="请输入手机号" clearable>
-                    <i slot="prefix" class="el-icon-user el-input__icon"></i>
+                    <template slot="prepend">+  86</template>
                 </el-input>
             </el-form-item>
             <el-form-item>
                 <el-input autocomplete="off" v-model="params.smsCode" placeholder="请输入验证码">
-                    <i slot="prefix" class="el-icon-chat-dot-square el-input__icon"></i>
                     <el-button :loading="sendSms" slot="append" @click="getCode" :disabled="time>0"
                                loading-text="发送中..." style="width: 100px">
                         <span v-if="time===0">{{sendSms?'发送中...':'获取验证码'}}</span>
@@ -31,14 +30,12 @@
             <el-form-item>
                 <el-input autocomplete="off" v-model="params.password" type="password" placeholder="请输入您的新密码"
                           clearable>
-                    <i slot="prefix" class="el-icon-lock el-input__icon"></i>
                 </el-input>
             </el-form-item>
             <el-form-item>
                 <el-input autocomplete="off" v-model="params.confirmPassword" type="password"
                           placeholder="请再次输入您的新密码"
                           clearable>
-                    <i slot="prefix" class="el-icon-lock el-input__icon"></i>
                 </el-input>
             </el-form-item>
         </el-form>
@@ -49,7 +46,10 @@
                 style="width:100%; margin-top: 6px;"
         >完成
         </el-button>
-        <div class="text-primary mt-2" style="font-size: 10px;cursor:pointer;" @click="$store.commit('userFlag', -1)">已有账号，去登录 ></div>
+        <div style="font-size: 12px;color: #787878" class="my-2">
+            注册即代表同意<a style="color: #787878;text-decoration: none" href="https://yinsi.yzmetax.com/agreement.html" target="_blank">《用户协议》</a><a style="color: #787878;text-decoration: none" href="https://yinsi.yzmetax.com/conceal.html" target="_blank">《隐私政策》</a>
+        </div>
+        <div class="text-primary" style="font-size: 10px;cursor:pointer;" @click="$store.commit('userFlag', -1)">已有账号，去登录 ></div>
     </div>
 </template>
 
