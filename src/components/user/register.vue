@@ -1,11 +1,11 @@
 <template>
     <div class="login-wrapper">
-        <div class="text-left w-100 row align-items-center">
-            <img class="logo" src="../../assets/image/logo.png"/>
-            <strong class="h3">{{userFlag===-2?'注册账号':'忘记密码'}}</strong>
+        <div class="text-left w-100">
+            <strong style="font-size: 24px">{{userFlag===-2?'注册账号':'忘记密码'}}</strong>
         </div>
         <el-form
                 label-width="0"
+                class="mt-4"
                 style="width:100%">
             <el-form-item>
                 <el-input autocomplete="off" v-model="params.mobile" placeholder="请输入手机号" clearable>

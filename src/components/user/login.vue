@@ -1,8 +1,15 @@
 <template>
     <div class="login-wrapper" v-if="showLogin">
-        <div class="text-left w-100 row align-items-center">
-            <img class="logo" :src="logo"/>
-            <strong class="h3">元信</strong>
+        <div class="text-left w-100">
+            <div>
+                <img class="logo" :src="logo"/>
+            </div>
+            <div class="mt-1">
+                <strong style="font-size: 24px">欢迎使用元信</strong>
+            </div>
+            <div style="color: #787878" class="mt-1">
+                <span>在元信与你的同事和朋友进行沟通与协作</span>
+            </div>
         </div>
         <el-form
                 ref="login"
@@ -10,6 +17,7 @@
                 :model="form"
                 label-width="0"
                 style="width:100%"
+                class="mt-4"
                 @keydown.enter.native="submit"
         >
             <el-form-item>
