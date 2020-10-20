@@ -71,8 +71,8 @@
             }
             return {
                 params: {
-                    mobile: '18310458251',
-                    password: '123456'
+                    mobile: '',
+                    password: ''
                 },
                 form: {
                     userID: 'user0',
@@ -80,7 +80,7 @@
                 },
                 rules: {
                     userID: [
-                        {required: true, message: '请输入 userID', trigger: 'blur'},
+                        {required: true, message: '请输入手机号', trigger: 'blur'},
                         {validator: checkUserID, trigger: 'blur'}
                     ],
                     password: [{required: true, message: '请输入密码', trigger: 'blur'}]
