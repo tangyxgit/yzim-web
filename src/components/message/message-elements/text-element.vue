@@ -1,7 +1,7 @@
 <template>
   <message-bubble :isMine=isMine :message=message>
     <template v-for="(item, index) in contentList">
-      <span :key="index" v-if="item.name === 'text'">{{ item.text }}</span>
+      <span :key="index" v-if="item.name === 'text'" v-html="httpTextHtml(item)"></span>
       <img v-else-if="item.name === 'img'" :src="item.src" width="20px" height="20px" :key="index"/>
     </template>
   </message-bubble>
@@ -41,11 +41,43 @@ export default {
     contentList() {
       return decodeText(this.payload)
     }
+  },
+  methods:{
+    httpTextHtml(item) {
+      var text = item.text
+      // var reg = /(http:\/\/|https:\/\/)((\w|=|\?|\.|\/|&|-)+)/g;
+      //var reg = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+      //var reg=/(http(s)?\:\/\/)?(www\.)?(\w+\:\d+)?(\/\w+)+\.(swf|gif|jpg|bmp|jpeg)/gi;
+      //var reg=/(http(s)?\:\/\/)?(www\.)?(\w+\:\d+)?(\/\w+)+\.(swf|gif|jpg|bmp|jpeg)/gi;
+      var reg= /(https?|http|ftp|file):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/g
+      //var reg= /^((ht|f)tps?):\/\/[\w\-]+(\.[\w\-]+)+([\w\-\.,@?^=%&:\/~\+#]*[\w\-\@?^=%&\/~\+#])?$/;
+      // const v = text.replace(reg, "<a href='$1$2'>$1$2</a>"); //这里的reg就是上面的正则表达式
+      // var s = text.replace(reg, "$1$2"); //这里的reg就是上面的正则表达式
+      var urls = text.match(reg)
+      if(urls && urls.length>0) {
+        var eleStyle = this.message.flow==='in'?'text-url-in':'text-url-out'
+        urls.forEach(item=>{
+          text = text.replace(item,'<a class="text-url-out-in '+eleStyle+'" href="'+item+'" target="_blank">'+item+'</a>')
+        })
+      }
+      return text
+    }
   }
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
+  .text-url-in{
+    text-decoration none;
+    color $font-dark
+  }
+  .text-url-out{
+    text-decoration none;
+    color $font-light
+  }
+    .text-url-out-in:hover{
+       text-decoration underline
+     }
 // .chat-bubble
 //   position relative
 //   .message-content
