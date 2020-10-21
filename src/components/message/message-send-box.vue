@@ -401,11 +401,14 @@ export default {
       this.$bus.$emit('video-call')
     },
     sendImage() {
+      this.sendImageMessage(document.getElementById('imagePicker'))
+    },
+    sendImageMessage(ele) {
       const message = this.tim.createImageMessage({
         to: this.toAccount,
         conversationType: this.currentConversationType,
         payload: {
-          file: document.getElementById('imagePicker') // 或者用event.target
+          file: ele // 或者用event.target
         },
         onProgress: percent => {
           this.$set(message, 'progress', percent) // 手动给message 实例加个响应式属性: progress
@@ -413,18 +416,27 @@ export default {
       })
       this.$store.commit('pushCurrentMessageList', message)
       this.tim
-        .sendMessage(message)
-        .then(() => {
-          this.$refs.imagePicker.value = null
-        })
-        .catch(imError => {
-          this.$store.commit('showMessage', {
-            message: imError.message,
-            type: 'error'
-          })
-        })
+              .sendMessage(message)
+              .then(() => {
+                this.$refs.imagePicker.value = null
+              })
+              .catch(imError => {
+                this.$store.commit('showMessage', {
+                  message: imError.message,
+                  type: 'error'
+                })
+              })
     },
-    sendFile() {
+    sendFile(e) {
+      const file = e.currentTarget.files[0]
+      if(file.type.indexOf('image')>=0) {//是图片
+        this.sendImageMessage(document.getElementById('filePicker'))
+        return
+      }
+      if(file.type === 'video/mp4') {
+        this.sendVideoMessage(document.getElementById('filePicker'))
+        return
+      }
       const message = this.tim.createFileMessage({
         to: this.toAccount,
         conversationType: this.currentConversationType,
@@ -449,11 +461,14 @@ export default {
         })
     },
     sendVideo() {
+      this.sendVideoMessage(document.getElementById('videoPicker'))
+    },
+    sendVideoMessage(ele) {
       const message = this.tim.createVideoMessage({
         to: this.toAccount,
         conversationType: this.currentConversationType,
         payload: {
-          file: document.getElementById('videoPicker') // 或者用event.target
+          file: ele // 或者用event.target
         },
         onProgress: percent => {
           this.$set(message, 'progress', percent) // 手动给message 实例加个响应式属性: progress
@@ -461,16 +476,16 @@ export default {
       })
       this.$store.commit('pushCurrentMessageList', message)
       this.tim
-        .sendMessage(message)
-        .then(() => {
-          this.$refs.videoPicker.value = null
+      .sendMessage(message)
+      .then(() => {
+        this.$refs.videoPicker.value = null
+      })
+      .catch(imError => {
+        this.$store.commit('showMessage', {
+          message: imError.message,
+          type: 'error'
         })
-        .catch(imError => {
-          this.$store.commit('showMessage', {
-            message: imError.message,
-            type: 'error'
-          })
-        })
+      })
     }
   }
 }
