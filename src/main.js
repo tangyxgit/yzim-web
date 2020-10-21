@@ -72,7 +72,7 @@ Vue.prototype.getFriendList = function () {
         From_Account:this.userApi().userId,
         StartIndex:0
     },res=>{
-        let userDataArray = res.data.UserDataItem;
+        let userDataArray = res.data.UserDataItem
         let userIDList = []
         userDataArray.forEach(item=>{
             userIDList.push(item.To_Account)
