@@ -3,9 +3,9 @@
         <div class="header-bar">
             <strong>应用中心</strong>
         </div>
-        <div v-for="item in dataArray">
+        <div v-for="(item,index) in dataArray" :key="index">
             <h5 class="ml-4" style="color: #666">{{item.toolCategory}}</h5>
-            <div v-for="app in item.toolDataList" class="ml-4 row align-items-center" @click="handleApp(app)">
+            <div v-for="(app,index) in item.toolDataList" :key="index" class="ml-4 row align-items-center" @click="handleApp(app)">
                 <img :src="app.iconUrl" style="width: 24px;height: 24px" />
                 <el-button type="text" class="ml-2">
                     {{app.toolName}}
@@ -57,8 +57,6 @@
                             type: 'error'
                         })
                     })
-                }else if(app.toolCode==='code003') {
-
                 }else{
                     window.open(app.toolUrl)
                 }
