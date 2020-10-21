@@ -32,12 +32,25 @@
         },
         methods:{
             handleApp(app) {
-                if(app.toolCode==='code002') {//网盘
+                if(app.toolCode==='code002' || app.toolCode === 'code003') {//网盘//打车
                     this.requestPost('tool/getToolToken',{
                         toolCode:app.toolCode,
                         userName:this.userApi().userName
                     },res=>{
-                        window.open(app.toolUrl+'?token='+res.data)
+                        if(app.toolCode === 'code003') {
+                            this.requestGet(app.toolUrl+res.data,res=>{
+                                if(res.data.Success) {
+                                    window.open(res.data.Result.url)
+                                }else{
+                                    this.$store.commit('showMessage', {
+                                        message: '启动应用失败：' + res.data.message,
+                                        type: 'error'
+                                    })
+                                }
+                            })
+                        }else{
+                            window.open(app.toolUrl+'?token='+res.data)
+                        }
                     },error=>{
                         this.$store.commit('showMessage', {
                             message: '启动应用失败：' + error.message,
@@ -45,16 +58,7 @@
                         })
                     })
                 }else if(app.toolCode==='code003') {
-                    this.requestGet(app.toolUrl,res=>{
-                        if(res.data.Success) {
-                            window.open(res.data.Result.url)
-                        }else{
-                            this.$store.commit('showMessage', {
-                                message: '启动应用失败：' + res.data.message,
-                                type: 'error'
-                            })
-                        }
-                    })
+
                 }else{
                     window.open(app.toolUrl)
                 }
