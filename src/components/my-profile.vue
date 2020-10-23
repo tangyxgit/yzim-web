@@ -12,15 +12,15 @@
                             <el-form-item label="手机">
                                 <el-input @focus="changePhone = true" v-model="form.mobile" placeholder="手机号码"/>
                             </el-form-item>
-                            <el-form-item label="部门">
-                                <el-input v-model="form.departName" placeholder="部门"/>
-                            </el-form-item>
-                            <el-form-item label="职位">
-                                <el-input v-model="form.position" placeholder="职位"/>
-                            </el-form-item>
-                            <el-form-item label="工号">
-                                <el-input v-model="form.card" placeholder="工号"/>
-                            </el-form-item>
+<!--                            <el-form-item label="部门">-->
+<!--                                <el-input v-model="form.departName" placeholder="部门"/>-->
+<!--                            </el-form-item>-->
+<!--                            <el-form-item label="职位">-->
+<!--                                <el-input v-model="form.position" placeholder="职位"/>-->
+<!--                            </el-form-item>-->
+<!--                            <el-form-item label="工号">-->
+<!--                                <el-input v-model="form.card" placeholder="工号"/>-->
+<!--                            </el-form-item>-->
                             <el-form-item label="邮箱">
                                 <el-input v-model="form.email" placeholder="邮箱"/>
                             </el-form-item>

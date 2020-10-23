@@ -13,32 +13,32 @@
             <span :title="gender" class="iconfont" :class="genderClass"></span>
         </div>
 
-        <div class="info-item">
-            <div class="label text-left">
-                部门
-            </div>
-            <div class="content text-left">
-                {{form.departName}}
-            </div>
-        </div>
+<!--        <div class="info-item">-->
+<!--            <div class="label text-left">-->
+<!--                部门-->
+<!--            </div>-->
+<!--            <div class="content text-left">-->
+<!--                {{form.departName}}-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <div class="info-item">
-            <div class="label text-left">
-                职位
-            </div>
-            <div class="content text-left">
-                {{form.position}}
-            </div>
-        </div>
+<!--        <div class="info-item">-->
+<!--            <div class="label text-left">-->
+<!--                职位-->
+<!--            </div>-->
+<!--            <div class="content text-left">-->
+<!--                {{form.position}}-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <div class="info-item">
-            <div class="label text-left">
-                工号
-            </div>
-            <div class="content text-left">
-                {{form.card}}
-            </div>
-        </div>
+<!--        <div class="info-item">-->
+<!--            <div class="label text-left">-->
+<!--                工号-->
+<!--            </div>-->
+<!--            <div class="content text-left">-->
+<!--                {{form.card}}-->
+<!--            </div>-->
+<!--        </div>-->
 
         <div class="info-item">
             <div class="label text-left">
