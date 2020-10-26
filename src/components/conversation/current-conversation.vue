@@ -201,7 +201,6 @@ export default {
     font-size 18px
     font-weight bold
     line-height 50px
-    text-shadow $font-dark 0 0 0.1em
   .btn-more-info
     position absolute
     top 10px
