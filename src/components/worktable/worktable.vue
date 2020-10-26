@@ -57,6 +57,10 @@
                             type: 'error'
                         })
                     })
+                }else if(app.toolCode === 'code004') {
+                    window.open('https://www.fliggy.com/jiudian/')
+                }else if(app.toolCode === 'code005') {
+                    window.open('https://www.fliggy.com/jipiao/')
                 }else{
                     window.open(app.toolUrl)
                 }

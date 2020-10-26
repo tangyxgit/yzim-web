@@ -141,7 +141,8 @@
                 params: {
                     userId: '',
                     newPassword: '',
-                    oldPassword: ''
+                    oldPassword: '',
+                    confirmPassword:''
                 }
             }
         },
