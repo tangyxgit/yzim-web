@@ -10,7 +10,7 @@
         ></el-input>
         <div v-if="!choose">
             <div v-if="hasFriend">
-                <div v-for="friend in getFriendList" :key="friend.userID">
+                <div v-for="friend in getFriendListData" :key="friend.userID">
                     <group-chat-friend  :friend="friend"/>
                 </div>
             </div>
@@ -49,19 +49,19 @@
         data() {
             return {
                 keyword: '',
-                choose:false
+                choose:false,
+                friendList:[],
             }
         },
         computed: {
             ...mapState({
-                friendList: state => state.friend.friendList,
                 currentMemberList: state => state.group.currentMemberList,
                 currentConversation: state => state.conversation.currentConversation
             }),
             hasFriend() {
                 return this.friendList.length > 0
             },
-            getFriendList() {
+            getFriendListData() {
                 this.friendList.forEach(friend=>{
                     friend.disabled = false
                     friend.isChecked = false
@@ -78,6 +78,11 @@
             }
         },
         methods: {
+            refreshData() {
+                this.getFriendList(data=>{
+                    this.friendList = data
+                })
+            },
             filter(friend) {
                 return friend.profile.nick.indexOf(this.keyword) >=0
             },

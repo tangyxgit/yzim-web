@@ -26,7 +26,7 @@
     <div class="more">
       <el-button v-if="showLoadMore" type="text" @click="loadMore">查看更多</el-button>
     </div>
-    <group-dialog :showDialog="showAddGroup" @closeGroup="closeGroup"></group-dialog>
+    <group-dialog ref="groupAdd" :showDialog="showAddGroup" @closeGroup="closeGroup"></group-dialog>
   </div>
 </template>
 
@@ -75,7 +75,7 @@ export default {
       }
     },
     handleAddButtonClick() {
-      this.getFriendList()
+      this.$refs.groupAdd.refreshData()
       this.showAddGroup = true
     },
     closeGroup() {

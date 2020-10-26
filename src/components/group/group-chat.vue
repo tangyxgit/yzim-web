@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="选择成员" :visible="showDialog" :before-close="close" width="600px">
+    <el-dialog title="发起群聊" :visible="showDialog" :before-close="close" width="600px">
         <el-input
                 @focus="startChoose"
                 @blur="endChoose"
@@ -10,7 +10,7 @@
         ></el-input>
         <div v-if="!choose">
             <div v-if="hasFriend">
-                <div v-for="friend in getFriendList" :key="friend.userID">
+                <div v-for="friend in getFriendListData" :key="friend.userID">
                     <group-chat-friend  :friend="friend"/>
                 </div>
             </div>
@@ -32,7 +32,6 @@
 </template>
 
 <script>
-    import {mapState} from 'vuex'
     import GroupChatFriend from '../friend/GroupChatfriend'
 
     export default {
@@ -49,18 +48,15 @@
         data() {
             return {
                 keyword: '',
-                choose:false
+                choose:false,
+                friendList:[],
             }
         },
         computed: {
-            ...mapState({
-                friendList: state => state.friend.friendList,
-                currentConversation: state => state.conversation.currentConversation
-            }),
             hasFriend() {
                 return this.friendList.length > 0
             },
-            getFriendList() {
+            getFriendListData() {
                 this.friendList.forEach(friend=>{
                     friend.disabled = false
                     friend.isChecked = false
@@ -71,6 +67,11 @@
             }
         },
         methods: {
+            refreshData() {
+              this.getFriendList(data=>{
+                  this.friendList = data
+              })
+            },
             startChoose() {
                 this.choose = true
             },

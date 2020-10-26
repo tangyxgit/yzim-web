@@ -47,7 +47,7 @@
         >完成
         </el-button>
         <div style="font-size: 12px;color: #787878" class="my-2">
-            <span v-if="userFlag===-2">注册即代表同意<a style="color: #787878;text-decoration: none" href="https://yinsi.yzmetax.com/agreement.html" target="_blank">《用户协议》</a><a style="color: #787878;text-decoration: none" href="https://yinsi.yzmetax.com/conceal.html" target="_blank">《隐私政策》</a></span>
+            <span v-if="userFlag===-2">注册即代表同意<a style="color: #3a89f0;text-decoration: none" href="https://yinsi.yzmetax.com/agreement.html" target="_blank">《用户协议》</a><a style="color: #3a89f0;text-decoration: none" href="https://yinsi.yzmetax.com/conceal.html" target="_blank">《隐私政策》</a></span>
         </div>
         <div class="text-primary" style="font-size: 10px;cursor:pointer;" @click="$store.commit('userFlag', -1)">已有账号，去登录 ></div>
     </div>
