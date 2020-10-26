@@ -86,13 +86,9 @@ Vue.prototype.getFriendList = function () {
         }
     })
 }
-
-function baseUrl() {
-    return '/api'
-}
-
+Vue.prototype.baseUrl='https://dev-imapi.yzmetax.com/'
 //网络配置
-Axios.defaults.baseURL = baseUrl()
+Axios.defaults.baseURL = Vue.prototype.baseUrl
 Vue.prototype.requestPost = function (url, params, success, fail) {
     if (params && this.userApi() && this.userApi().userId
         && url!=='user/updateFriend'

@@ -30,7 +30,7 @@
                 <el-col :span="6" class="row justify-content-center pl-4">
                     <el-upload
                             class="avatar-uploader "
-                            action="/api/api/upload/"
+                            :action="uploadAvatarUrl"
                             style="border-radius: 100%;position: relative"
                             :on-success="avatarSuccess"
                             :on-error="avatarError"
@@ -119,6 +119,7 @@
                 changePhone: false,
                 time: 0,
                 sendSms: false,
+                uploadAvatarUrl:this.baseUrl+'api/upload/',
                 form: {
                     userId: '',
                     userIcon: '',

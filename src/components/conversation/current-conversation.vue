@@ -199,7 +199,6 @@ export default {
     padding 0 20px
     color $base
     font-size 18px
-    font-weight bold
     line-height 50px
   .btn-more-info
     position absolute
