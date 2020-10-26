@@ -78,6 +78,7 @@
                     if (item.userProfile) {
                         return item.userProfile.nick.indexOf(this.keyword) >= 0
                     }
+                    if(item.type==='@TIM#SYSTEM' && !this.keyword) { return true }
                 })
             }
         },
