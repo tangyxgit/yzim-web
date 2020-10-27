@@ -30,7 +30,7 @@
             <conversation-item v-for="item in getConversationListData" :key="item.conversationID" :conversation="item"/>
         </div>
         <friend-dialog :show="show" @closeSearch="closeSearch"></friend-dialog>
-        <group-dialog :showDialog="showAddGroup" @closeGroup="closeGroup"></group-dialog>
+        <group-dialog ref="createGroup" :showDialog="showAddGroup" @closeGroup="closeGroup"></group-dialog>
     </div>
 </template>
 
@@ -78,6 +78,7 @@
                     if (item.userProfile) {
                         return item.userProfile.nick.indexOf(this.keyword) >= 0
                     }
+                    if(item.type==='@TIM#SYSTEM' && !this.keyword) { return true }
                 })
             }
         },
@@ -125,7 +126,7 @@
             },
             handleAddButtonClick() {
                 // this.$store.dispatch('getFriendlist')
-                this.getFriendList()
+                this.$refs.createGroup.refreshData()
                 this.showAddGroup = true
             },
             closeGroup() {

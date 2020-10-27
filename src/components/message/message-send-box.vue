@@ -10,8 +10,8 @@
         <i class="iconfont icon-smile" slot="reference" title="发表情"></i>
       </el-popover>
       <i class="iconfont icon-tupian" title="发图片" @click="handleSendImageClick"></i>
-      <i class="el-icon-camera" title="发视频" @click="handleSendVideoClick"></i>
-      <i class="iconfont icon-wenjian" title="发文件" @click="handleSendFileClick"></i>
+<!--      <i class="el-icon-camera" title="发视频" @click="handleSendVideoClick"></i>-->
+      <i class="iconfont icon-wenjian" title="发文件 " @click="handleSendFileClick"></i>
 <!--      <i class="iconfont icon-zidingyi" title="发自定义消息" @click="sendCustomDialogVisible = true"></i>-->
 <!--      <i class="iconfont icon-diaocha" title="小调查" @click="surveyDialogVisible = true"></i>-->
 <!--      <i class="el-icon-video-camera" v-if="currentConversationType === 'C2C'&& toAccount !== userID" title="视频通话" @click="videoCall"></i>-->

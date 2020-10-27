@@ -71,7 +71,7 @@
                 </el-popover>
             </el-row>
         </div>
-        <el-dialog :visible.sync="changePassword" class="p-0" width="32%" center>
+        <el-dialog :visible.sync="changePassword" class="p-0" width="32%">
             <div slot="title" class="text-center w-100" style="font-size: 15px">修改密码</div>
             <div class="p-2 ">
                 <el-form v-model="params" label-width="70px" size="mini">
@@ -141,7 +141,8 @@
                 params: {
                     userId: '',
                     newPassword: '',
-                    oldPassword: ''
+                    oldPassword: '',
+                    confirmPassword:''
                 }
             }
         },

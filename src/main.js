@@ -9,6 +9,7 @@ import Axios from 'axios'
 import './assets/icon/iconfont.css'
 import './assets/icon/tim.css'
 import './assets/css/yzmw.css'
+import ca from 'element-ui/src/locale/lang/ca'
 // import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 window.tim = tim
 window.TIM = TIM
@@ -67,7 +68,7 @@ Vue.prototype.userLogout = function () {
     this.$root.userApi = null
     this.$root.token = null
 }
-Vue.prototype.getFriendList = function () {
+Vue.prototype.getFriendList = function (callback) {
     this.requestPost('user/getFriend',{
         From_Account:this.userApi().userId,
         StartIndex:0
@@ -82,17 +83,16 @@ Vue.prototype.getFriendList = function () {
                 userIDList:userIDList
             }).then(({data})=>{
                 this.$store.commit('updateFriendList',data)
+                if(callback) {
+                    callback(data)
+                }
             })
         }
     })
 }
-
-function baseUrl() {
-    return '/api'
-}
-
+Vue.prototype.baseUrl='https://dev-imapi.yzmetax.com/'
 //网络配置
-Axios.defaults.baseURL = baseUrl()
+Axios.defaults.baseURL = Vue.prototype.baseUrl
 Vue.prototype.requestPost = function (url, params, success, fail) {
     if (params && this.userApi() && this.userApi().userId
         && url!=='user/updateFriend'

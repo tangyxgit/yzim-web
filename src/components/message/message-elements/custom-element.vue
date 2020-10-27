@@ -80,6 +80,9 @@ export default {
         }
         return `${payload.extension}`
         // return '发起群聊'
+      }else if(payload.data.indexOf('group_create')>0)  {
+        const dataJson = JSON.parse(payload.data)
+        return dataJson.opUser+' '+dataJson.content
       }
       switch (videoPayload.action) {
         case ACTION.VIDEO_CALL_ACTION_DIALING:

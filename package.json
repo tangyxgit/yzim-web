@@ -9,17 +9,17 @@
     "lint": "node node_modules/@vue/cli-service/bin/vue-cli-service.js lint src --ext .vue,.js --fix"
   },
   "dependencies": {
-    "bootstrap": "^4.5.2",
     "axios": "^0.19.2",
+    "bootstrap": "^4.5.3",
     "core-js": "^2.6.11",
     "cos-js-sdk-v5": "^0.5.22",
     "element-ui": "^2.13.0",
     "mta-h5-analysis": "^2.0.15",
     "tim-js-sdk": "^2.8.0",
-    "trtc-js-sdk": "^4.3.6",
+    "trtc-js-sdk": "^4.6.6",
+    "vant": "^2.10.11",
     "vue": "^2.6.11",
-    "vuex": "^3.1.2",
-    "vant": "^2.6.1"
+    "vuex": "^3.1.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.12.1",

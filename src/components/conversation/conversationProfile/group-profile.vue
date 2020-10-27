@@ -155,7 +155,7 @@
                             style="cursor:pointer; font-size:16px;"></i>
                 </div>
                 <div class="content" v-show="!showEditMessageRemindType">
-                    {{ messageRemindTypeMap[this.groupProfile.selfInfo.messageRemindType] }}
+                    {{ this.groupProfile.selfInfo.messageRemindType?messageRemindTypeMap[this.groupProfile.selfInfo.messageRemindType]:'接收消息并提示' }}
                 </div>
                 <el-select
                         ref="editMessageRemindType"
@@ -364,7 +364,7 @@
                     introduction: groupProfile.introduction,
                     notification: groupProfile.notification,
                     joinOption: groupProfile.joinOption,
-                    messageRemindType: groupProfile.messageRemindType,
+                    messageRemindType: groupProfile.messageRemindType?groupProfile.messageRemindType:'AcceptAndNotify',
                     nameCard: groupProfile.selfInfo.nameCard || '',
                     muteAllMembers: groupProfile.muteAllMembers,
                 })
