@@ -10,18 +10,20 @@
             ></el-input>
             <div v-if="waitingList.length>0">
                 <div v-for="waitFriend in waitingList" :key="waitFriend.id" @click="sendCheck(waitFriend)">
-                    <div class="group-item">
+                    <div v-if="waitFriend.userId!==userId">
+                      <div class="group-item">
                         <avatar :src="waitFriend.userIcon" />
                         <div class="group-name ">
-                            <div class="line">
-                                {{ waitFriend.nickName }}
-                            </div>
-                            <div class="line">
-                                {{ waitFriend.mobile }}
-                            </div>
+                          <div class="line">
+                            {{ waitFriend.nickName }}
+                          </div>
+                          <div class="line">
+                            {{ waitFriend.mobile }}
+                          </div>
                         </div>
+                      </div>
+                      <div style="width: 80%;height: 0.5px;background: #E9EBEC;margin-left: 80px"></div>
                     </div>
-                    <div style="width: 80%;height: 0.5px;background: #E9EBEC;margin-left: 80px"></div>
                 </div>
             </div>
         </el-dialog>
@@ -62,6 +64,7 @@
         },
         data() {
             return {
+                userId:this.userApi().userId,
                 userIcon:'',
                 nickName:'',
                 mobile:'',
