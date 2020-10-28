@@ -150,6 +150,7 @@
                     .addToBlacklist({userIDList: [this.userProfile.userID]})
                     .then(() => {
                         this.$store.dispatch('getBlacklist')
+                        this.getFriendList()
                     })
                     .catch(imError => {
                         this.$store.commit('showMessage', {

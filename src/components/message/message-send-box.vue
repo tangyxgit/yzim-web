@@ -86,16 +86,18 @@
         @keydown.down.stop="handleDown"
       >
       </textarea>
-      <el-tooltip
-        class="item"
-        effect="dark"
-        content="按Enter发送消息，Ctrl+Enter换行"
-        placement="left-start"
-      >
+      <el-button class="btn-send"  type="primary" size="small"  @click="sendTextMessage">发送</el-button>
+<!--      <el-tooltip-->
+<!--        class="item"-->
+<!--        effect="dark"-->
+<!--        content="按Enter发送消息，Ctrl+Enter换行"-->
+<!--        placement="left-start"-->
+<!--      >-->
+<!--        -->
 <!--        <div class="btn-send" @click="sendTextMessage">-->
 <!--          <div class="tim-icon-send"></div>-->
 <!--        </div>-->
-      </el-tooltip>
+<!--      </el-tooltip>-->
     </div>
     <input
       type="file"
@@ -555,12 +557,11 @@ textarea {
   .btn-send {
     cursor: pointer;
     position: absolute;
-    color: $primary;
-    font-size: 30px;
+    font-size: 13px;
     right: 0;
     bottom: -5px;
-    padding: 6px 6px 4px 4px;
-    border-radius: 50%;
+    padding: 6px 6px 6px 6px;
+    /*border-radius: 50%;*/
   }
 }
 </style>
