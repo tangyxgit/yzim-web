@@ -44,8 +44,8 @@ export default {
 
 <style lang="stylus" scoped>
   .scroll-container
-    overflow-y scroll
-    flex 1
+    /*overflow-y scroll*/
+    /*flex 1*/
   .group-item
     display flex
     padding 15px 20px
