@@ -175,7 +175,8 @@ export default {
     height: $height;
   .profile
     height: $height;
-    overflow-y: scroll;
+    /*overflow-y: scroll;*/
+    /*overflow-x: hidden;*/
     width 220px
     border-left 1px solid $border-base
     flex-shrink 0

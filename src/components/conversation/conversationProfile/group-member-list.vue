@@ -116,7 +116,7 @@ export default {
         color $light-primary
   .scroll-content
     max-height: 250px;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding 10px 15px 10px 15px
     width 100%
     .group-member-list
@@ -154,7 +154,6 @@ export default {
 //   text-align: center;
 //   line-height: 30px;
 // }
-
 
 
 </style>
