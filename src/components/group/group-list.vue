@@ -15,7 +15,6 @@
 
 <script>
     import {mapState} from 'vuex'
-    import CreateGroup from './create-group.vue'
     import GroupItem from './group-item.vue'
     import GroupDialog from '../group/group-chat'
 
@@ -184,6 +183,7 @@
 
   .group-container
     overflow-y scroll
+    overflow-x hidden
     flex 1
   .default {
     display: flex;

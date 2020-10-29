@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div @click="handleGroupClick" class="scroll-container">
+    <div @click="handleGroupClick">
       <div class="group-item">
         <avatar type="GROUP" :src="group.avatar" />
         <div class="group-name text-ellipsis">{{ group.name }}</div>
       </div>
     </div>
-    <div style="width: 100%;height: 0.5px;background: #E9EBEC;margin-left: 80px"></div>
+    <div style="width: 80%;height: 1px;background: #E9EBEC;margin-left: 80px"></div>
   </div>
 </template>
 
@@ -43,9 +43,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-  .scroll-container
-    /*overflow-y scroll*/
-    /*flex 1*/
   .group-item
     display flex
     padding 15px 20px

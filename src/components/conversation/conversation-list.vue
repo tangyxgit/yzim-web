@@ -230,6 +230,7 @@
 
         .scroll-container
             overflow-y scroll
+            overflow-x hidden
             flex 1
 
     .bottom-circle-btn {

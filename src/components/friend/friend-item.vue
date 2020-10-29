@@ -1,12 +1,12 @@
 <template>
     <div>
-        <div @click="handleFriendClick" class="scroll-container">
+        <div @click="handleFriendClick" class="">
             <div class="group-item">
                 <avatar :src="friend.avatar" />
                 <div class="group-name text-ellipsis">{{ friend.nick||friend.userID }}</div>
             </div>
         </div>
-        <div style="width: 90%;height: 0.5px;background: #E9EBEC;margin-left: 80px"></div>
+        <div style="width: 90%;height: 1px;background: #E9EBEC;margin-left: 80px"></div>
     </div>
 </template>
 
@@ -38,8 +38,6 @@
 
 <style lang="stylus" scoped>
     .scroll-container
-        overflow-y scroll
-        flex 1
     .group-item
         display flex
         padding 15px 20px

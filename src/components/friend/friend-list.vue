@@ -12,7 +12,7 @@
         <i class="tim-icon-add"></i>
       </button>
     </div>
-    <div>
+    <div class="group-container">
       <div v-for="friend in getFriendListData" :key="friend.userID">
         <friend-item  :friend="friend" />
       </div>
@@ -58,6 +58,10 @@ export default {
 </script>
 
 <style lang="stylus" scpoed>
+  .group-container
+    overflow-y scroll
+    overflow-x hidden
+    flex 1
   .friend-list-container
     background white
     height 100%
@@ -106,6 +110,7 @@ export default {
       &:hover
         transform: rotate(360deg);
         color $light-primary
+
 .default {
   display: flex;
   justify-content: center;
@@ -113,4 +118,5 @@ export default {
   height: 100%;
   overflow-y: scroll;
 }
+
 </style>

@@ -48,7 +48,7 @@
           </div>
         </div>
       </div>
-      <div style="width: 100%;height: 0.5px;background: #E9EBEC;margin-left: 80px"></div>
+      <div style="width: 100%;height: 1px;background: #E9EBEC;margin-left: 80px"></div>
     </div>
 
 </template>
