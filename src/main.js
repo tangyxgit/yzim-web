@@ -73,21 +73,25 @@ Vue.prototype.getFriendList = function (callback) {
         From_Account:this.userApi().userId,
         StartIndex:0
     },res=>{
+      if(res.data.FriendNum===0){//说明没好友
+        this.$store.commit('updateFriendList',[])
+      }else{
         let userDataArray = res.data.UserDataItem
         let userIDList = []
         userDataArray.forEach(item=>{
-            userIDList.push(item.To_Account)
+          userIDList.push(item.To_Account)
         })
         if(userIDList.length>0) {
-            this.tim.getUserProfile({
-                userIDList:userIDList
-            }).then(({data})=>{
-                this.$store.commit('updateFriendList',data)
-                if(callback) {
-                    callback(data)
-                }
-            })
+          this.tim.getUserProfile({
+            userIDList: userIDList
+          }).then(({data}) => {
+            this.$store.commit('updateFriendList', data)
+            if (callback) {
+              callback(data)
+            }
+          })
         }
+      }
     })
 }
 Vue.prototype.baseUrl='https://dev-imapi.yzmetax.com/'
@@ -97,6 +101,7 @@ Vue.prototype.requestPost = function (url, params, success, fail) {
     if (params && this.userApi() && this.userApi().userId
         && url!=='user/updateFriend'
         && url!=='user/addFriend'
+        && url!=='user/deleteFriend'
         && url!=='user/getUserByUserId'
         && url!=='user/getFriend') {
         params.userId = this.userApi().userId

@@ -3,6 +3,7 @@
     <user-profile
       v-if="currentConversation.type === TIM.TYPES.CONV_C2C"
       :userProfile="currentConversation.userProfile"
+      :conversationID="currentConversation.conversationID"
     />
     <group-profile
       v-else-if="currentConversation.type === TIM.TYPES.CONV_GROUP"
