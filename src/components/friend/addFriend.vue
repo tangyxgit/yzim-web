@@ -22,7 +22,7 @@
                           </div>
                         </div>
                       </div>
-                      <div style="width: 80%;height: 0.5px;background: #E9EBEC;margin-left: 80px"></div>
+                      <div style="width: 80%;height: 1px;background: #E9EBEC;margin-left: 80px"></div>
                     </div>
                 </div>
             </div>

@@ -250,7 +250,7 @@
                         <div class="group-name ">{{ item.nick }}</div>
                     </div>
                 </div>
-                <div style="width: 80%;height: 0.5px;background: #E9EBEC;margin-left: 80px"></div>
+                <div style="width: 80%;height: 1px;background: #E9EBEC;margin-left: 80px"></div>
             </div>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="closeGroup" size="small">取 消</el-button>
