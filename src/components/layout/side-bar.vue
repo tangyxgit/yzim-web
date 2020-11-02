@@ -60,11 +60,11 @@
                 </div>
             </div>
             <el-row class="bottom " type="flex" justify="center" align="middle">
-<!--                <div class="iconfont el-icon-setting" @click="logout" title="退出"></div>-->
-<!--                <div class="el-icon-setting setting"></div>-->
                 <el-popover placement="right" width="300px"  trigger="click" class="p-0" >
-                    <span style="cursor:pointer" @click="change">修改密码</span>
-                    <el-divider direction="vertical" class="text-dark" width="120px"></el-divider>
+                    <span class="mt-1" style="cursor:pointer" @click="change">修改密码</span>
+                  <div class="my-2" style="width:100%;height:1px;background: #dddfe5"></div>
+                  <span style="cursor:pointer" @click="aboutUs=true">关于我们</span>
+                  <div class="my-2" style="width:100%;height:1px;background: #dddfe5"></div>
                     <span style="cursor:pointer" @click="logout">退出登录</span>
 <!--                    <el-button slot="reference">click 激活</el-button>-->
                     <div slot="reference" class="el-icon-setting setting"></div>
@@ -91,6 +91,28 @@
                 <el-button :disabled="!params.oldPassword || !params.newPassword || !params.confirmPassword" size="medium" type="primary" @click="commitPassword">确定</el-button>
             </span>
         </el-dialog>
+        <el-dialog :visible.sync="aboutUs" class="p-0" width="32%">
+        <div slot="title" class="text-center w-100 " style="font-size: 15px">关于我们</div>
+        <div class="p-0 pt-2">
+          <div class="text-center">
+            <img class="logo" :src="logo"/>
+          </div>
+
+          <el-collapse class="mt-5 mb-2">
+            <el-collapse-item disabled>
+              <template slot="title">
+                <a href="https://yinsi.yzmetax.com/agreement.html" target="_blank">《用户协议》</a>
+              </template>
+            </el-collapse-item>
+            <el-collapse-item disabled>
+              <template slot="title" >
+                <a  href="https://yinsi.yzmetax.com/conceal.html" target="_blank">《隐私政策》</a>
+              </template>
+            </el-collapse-item>
+          </el-collapse>
+
+        </div>
+      </el-dialog>
         <div class="bar-right">
             <conversation-list v-show="showConversationList"/>
             <group-list v-show="showGroupList"/>
@@ -109,7 +131,8 @@
     import FriendList from '../friend/friend-list'
     import BlackList from '../blacklist/blacklist'
     import WorktableList from '../worktable/worktable'
-    import {Popover, Divider, Dialog, Form, FormItem} from 'element-ui'
+    import {Popover, Dialog, Form, FormItem ,Collapse, CollapseItem} from 'element-ui'
+    import logo from '../../assets/image/logo.png'
 
     const activeName = {
         CONVERSATION_LIST: 'conversation-list',
@@ -127,8 +150,9 @@
             FriendList,
             BlackList,
             WorktableList,
+            elCollapseItem:CollapseItem,
+            ElCollapse:Collapse,
             ElPopover:Popover,
-            ElDivider:Divider,
             ElDialog:Dialog,
             ElForm: Form,
             ElFormItem: FormItem,
@@ -138,6 +162,8 @@
                 active: activeName.CONVERSATION_LIST,
                 activeName: activeName,
                 changePassword:false,
+                aboutUs:false,
+                logo:logo,
                 params: {
                     userId: '',
                     newPassword: '',
@@ -396,5 +422,9 @@
             position: relative;
             background-color: $background-dark;
         }
+      .logo {
+        width: 64px;
+        height: 64px;
+      }
     }
 </style>
