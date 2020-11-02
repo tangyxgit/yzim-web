@@ -40,7 +40,7 @@
       </el-form-item>
     </el-form>
     <el-button
-      :disabled="!params.mobile || !params.smsCode || !params.password || !params.confirmPassword || !checked"
+      :disabled="!params.mobile || !params.smsCode || !params.password || !params.confirmPassword || (userFlag===-2 && !checked)"
       @click="login"
       type="primary"
       style="width:100%; margin-top: 6px;"
@@ -49,12 +49,12 @@
     <!--        <div style="font-size: 12px;color: #787878" class="my-2">-->
     <!--            <span v-if="userFlag===-2">注册即代表同意<a style="color: #787878;text-decoration: none" href="https://yinsi.yzmetax.com/agreement.html" target="_blank">《用户协议》</a><a style="color: #787878;text-decoration: none" href="https://yinsi.yzmetax.com/conceal.html" target="_blank">《隐私政策》</a></span>-->
     <!--        </div>-->
-    <el-checkbox  v-if="userFlag===-2" v-model="checked" label="1" class="my-2"><span
+    <el-checkbox  v-if="userFlag===-2" v-model="checked" label="1" class="mt-2"><span
       style="font-size: 12px;color: #787878">注册即代表同意<a style="color: #007bff;text-decoration: none"
                                                        href="https://yinsi.yzmetax.com/agreement.html" target="_blank">《用户协议》</a><a
       style="color: #007bff;text-decoration: none" href="https://yinsi.yzmetax.com/conceal.html"
       target="_blank">《隐私政策》</a></span></el-checkbox>
-    <div class="text-primary" style="font-size: 10px;cursor:pointer;" @click="$store.commit('userFlag', -1)">已有账号，去登录
+    <div class="text-primary mt-2" style="font-size: 10px;cursor:pointer;" @click="$store.commit('userFlag', -1)">已有账号，去登录
       >
     </div>
   </div>
