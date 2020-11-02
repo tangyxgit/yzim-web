@@ -99,15 +99,15 @@
           </div>
 
           <el-collapse class="mt-5 mb-2">
-            <el-collapse-item disabled>
-              <template slot="title">
-                <a href="https://yinsi.yzmetax.com/agreement.html" target="_blank">《用户协议》</a>
-              </template>
+            <el-collapse-item disabled >
+              <a slot="title" class="w-100 text-dark" style="text-decoration:none" href="https://yinsi.yzmetax.com/agreement.html" target="_blank">
+                《用户协议》
+              </a>
             </el-collapse-item>
             <el-collapse-item disabled>
-              <template slot="title" >
-                <a  href="https://yinsi.yzmetax.com/conceal.html" target="_blank">《隐私政策》</a>
-              </template>
+              <a slot="title" class="w-100 text-dark" style="text-decoration:none"  href="https://yinsi.yzmetax.com/conceal.html" target="_blank">
+               《隐私政策》
+              </a>
             </el-collapse-item>
           </el-collapse>
 
