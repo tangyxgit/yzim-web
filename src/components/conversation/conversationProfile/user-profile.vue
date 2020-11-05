@@ -48,6 +48,14 @@
         {{form.email}}
       </div>
     </div>
+    <div class="info-item">
+      <div class="label text-left">
+        电话
+      </div>
+      <div class="content text-left">
+        {{form.mobile}}
+      </div>
+    </div>
 
     <!--        <div class="info-item">-->
     <!--            <div class="label text-left">-->
@@ -193,10 +201,10 @@
                         } else {
                             this.form.position = '待完善'
                         }
-                        if (res.data.card) {
-                            this.form.card = res.data.card
+                        if (res.data.mobile) {
+                            this.form.mobile = res.data.mobile
                         } else {
-                            this.form.card = '待完善'
+                            this.form.mobile = '待完善'
                         }
                         if (res.data.email) {
                             this.form.email = res.data.email
