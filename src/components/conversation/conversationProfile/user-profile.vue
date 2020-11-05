@@ -50,7 +50,7 @@
     </div>
     <div class="info-item">
       <div class="label text-left">
-        电话
+        手机号
       </div>
       <div class="content text-left">
         {{form.mobile}}
