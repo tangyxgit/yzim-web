@@ -28,7 +28,7 @@
         </el-input>
       </el-form-item>
       <el-form-item>
-        <el-input autocomplete="off" v-model="params.password" type="password" placeholder="请输入您的新密码"
+        <el-input autocomplete="off" v-model="params.password" type="password" placeholder="请输入长度6-16的密码，需包含大小写字母和数字"
                   clearable>
         </el-input>
       </el-form-item>
@@ -49,12 +49,13 @@
     <!--        <div style="font-size: 12px;color: #787878" class="my-2">-->
     <!--            <span v-if="userFlag===-2">注册即代表同意<a style="color: #787878;text-decoration: none" href="https://yinsi.yzmetax.com/agreement.html" target="_blank">《用户协议》</a><a style="color: #787878;text-decoration: none" href="https://yinsi.yzmetax.com/conceal.html" target="_blank">《隐私政策》</a></span>-->
     <!--        </div>-->
-    <el-checkbox  v-if="userFlag===-2" v-model="checked" label="1" class="mt-2"><span
+    <el-checkbox v-if="userFlag===-2" v-model="checked" label="1" class="mt-2"><span
       style="font-size: 12px;color: #787878">注册即代表同意<a style="color: #007bff;text-decoration: none"
                                                        href="https://yinsi.yzmetax.com/agreement.html" target="_blank">《用户协议》</a><a
       style="color: #007bff;text-decoration: none" href="https://yinsi.yzmetax.com/conceal.html"
       target="_blank">《隐私政策》</a></span></el-checkbox>
-    <div class="text-primary mt-2" style="font-size: 10px;cursor:pointer;" @click="$store.commit('userFlag', -1)">已有账号，去登录
+    <div class="text-primary mt-2" style="font-size: 10px;cursor:pointer;" @click="$store.commit('userFlag', -1)">
+      已有账号，去登录
       >
     </div>
   </div>
@@ -98,6 +99,14 @@
                     this.$store.commit('showMessage', {
                         type: 'error',
                         message: '两次密码不一致'
+                    })
+                    return
+                }
+                var reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,16}$/
+                if (!reg.test(this.params.password)) {
+                    this.$store.commit('showMessage', {
+                        message: '请输入长度6-16的密码，需包含大小写字母和数字',
+                        type: 'error'
                     })
                     return
                 }

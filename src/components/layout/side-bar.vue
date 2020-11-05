@@ -79,7 +79,7 @@
                         <el-input type="password" v-model="params.oldPassword" placeholder="请输入旧密码" autocomplete="off" clearable></el-input>
                     </el-form-item>
                     <el-form-item label="新密码">
-                        <el-input type="password" v-model="params.newPassword" placeholder="请输入新密码" autocomplete="off" clearable></el-input>
+                        <el-input type="password" v-model="params.newPassword" placeholder="密码6-16位，需包含大小写字母和数字" autocomplete="off" clearable></el-input>
                     </el-form-item>
                     <el-form-item label="新密码">
                         <el-input type="password" v-model="params.confirmPassword" placeholder="请重复新密码" autocomplete="off" clearable></el-input>
@@ -213,6 +213,14 @@
                     this.$store.commit('showMessage',{
                         type: 'error',
                         message: '两次密码不一致'
+                    })
+                    return
+                }
+                var reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,16}$/
+                if (!reg.test(this.params.newPassword)) {
+                    this.$store.commit('showMessage', {
+                        message: '请输入长度6-16的密码，需包含大小写字母和数字',
+                        type: 'error'
                     })
                     return
                 }
