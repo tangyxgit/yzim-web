@@ -6,7 +6,7 @@
 <!--            <span class="tim-icon-friend-add"></span>-->
 <!--          </div>-->
 <!--        </div>-->
-    <div class="scroll-content pt-3 " v-if="members[0]&&members[1]">
+    <div class="scroll-content " v-if="members[0]&&members[1]">
         <div class="groupAvatar " style="left:43px;z-index: 99">
           <avatar :src="members[0].avatar "/>
         </div>
@@ -14,9 +14,9 @@
           <avatar :src="members[1].avatar"/>
         </div>
         <div class="groupAvatar pointBg" style="left:107px;z-index: 89;background-color:#e9ebec">
-          <div class="point bg-dark" style="z-index: 99;right: 6px;top:28px"></div>
-          <div class="point bg-dark" style="z-index: 99;right: 13px;top:28px"></div>
-          <div class="point bg-dark" style="z-index: 99;right: 20px;top:28px"></div>
+          <div class="point" style="z-index: 99;right: 6px;top:28px;background-color: #a8afba"></div>
+          <div class="point" style="z-index: 99;right: 13px;top:28px;background-color: #a8afba"></div>
+          <div class="point" style="z-index: 99;right: 20px;top:28px;background-color: #a8afba"></div>
         </div>
         <div class="w-100 text-center" style="margin-top: 75px;">
           {{name}}
@@ -108,7 +108,6 @@
 
 <style lang="stylus" scoped>
   .group-member-list-wrapper
-
     .header
       height 50px
       padding 10px 16px 10px 20px

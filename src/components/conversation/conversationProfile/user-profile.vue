@@ -1,7 +1,7 @@
 <template>
   <div class="profile-user">
     <avatar :title=userProfile.userID :src="userProfile.avatar"/>
-    <div class="nick-name text-ellipsis">
+    <div class="nick-name text-ellipsis" style="margin-top: 16px">
       <span v-if="userProfile.nick" :title=userProfile.nick>
         {{ userProfile.nick }}
       </span>
@@ -9,10 +9,6 @@
         [Anonymous]
       </span>
     </div>
-    <div class="gender " v-if="genderClass">
-      <span :title="gender" class="iconfont" :class="genderClass"></span>
-    </div>
-
     <!--        <div class="info-item">-->
     <!--            <div class="label text-left">-->
     <!--                部门-->
@@ -40,13 +36,13 @@
     <!--            </div>-->
     <!--        </div>-->
 
-    <div class="info-item top ">
+    <div class="info-item top" style="margin-top: 24px">
       <div class="row justify-content-between px-4">
         <div>
           <div class="label text-left">
             邮箱
           </div>
-          <div class="content text-left" style="font-size: 12px">
+          <div class="content text-left" style="font-size: 14px">
             {{form.email}}
           </div>
         </div>
@@ -60,7 +56,7 @@
           <div class="label text-left">
             手机号
           </div>
-          <div class="content text-left" style="font-size: 12px">
+          <div class="content text-left" style="font-size: 14px">
             {{form.mobile}}
           </div>
         </div>
@@ -301,7 +297,7 @@
   }
 
   .info-item {
-    margin-bottom: 0px;
+    margin-bottom: 0;
     padding-top 8px;
     padding-bottom 8px;
     border-bottom 1px solid $border-base
