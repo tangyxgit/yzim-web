@@ -137,7 +137,7 @@
               <el-button class="w-100" slot="reference">退出群聊</el-button>
             </el-popconfirm>
           </div>
-          <div v-if="showDissmissGroup"  class="mx-3 mt-3">
+          <div v-if="showDissmissGroup" class="mx-3 mt-3">
             <el-popconfirm
               title="确认解散该群吗？"
               @onConfirm="dismissGroup">
@@ -149,18 +149,22 @@
     </div>
     <div>
       <div class="row justify-content-between pt-1 top" style="height:15%;padding-left: 25px;padding-right: 25px;">
-        <div class="member-count text-ellipsis" style="font-size: 14px;">群成员：{{currentConversation.groupProfile.memberNum}}</div>
-        <div slot="reference" class="btn-add-member" title="添加群成员" @click="handleAddButtonClick" style="cursor: pointer">
+        <div class="member-count text-ellipsis" style="font-size: 14px;color:#A8AFBA">
+          群成员：{{currentConversation.groupProfile.memberNum}}
+        </div>
+        <div slot="reference" class="btn-add-member" title="添加群成员" @click="handleAddButtonClick"
+             style="cursor: pointer">
           <span class="tim-icon-friend-add" style="color: #007bff;font-size: 18px"></span>
         </div>
       </div>
 
-      <div style="height:85%;overflow-y: auto;overflow-x: hidden" >
-        <div v-for="member in members" :key="member.userID" class="row justify-content-between pt-1" style="padding-left: 25px;padding-right: 25px;">
+      <div style="height:85%;overflow-y: auto;overflow-x: hidden">
+        <div v-for="member in members" :key="member.userID" class="row"
+             style="padding-left: 25px;padding-right: 25px;padding-bottom: 8px;padding-top: 8px">
           <div>
-            <avatar :src="member.avatar" style="width:30px;height:30px;border-radius: 90%"/>
+            <avatar :src="member.avatar" style="width:32px;height:32px;border-radius: 90%"/>
           </div>
-          <div style="font-size: 14px">
+          <div class="ml-2 row align-items-center" style="font-size: 14px">
             <span v-if="member.nameCard" :title=member.nameCard>{{ member.nameCard }}</span>
             <span v-else-if="member.nick" :title=member.nick>{{ member.nick }}</span>
           </div>
@@ -241,7 +245,7 @@
                 messageRemindType: this.groupProfile.selfInfo.messageRemindType,
                 nameCard: this.groupProfile.selfInfo.nameCard || '',
                 muteAllMembers: this.groupProfile.muteAllMembers,
-                memberCount:this.groupProfile.memberCount,
+                memberCount: this.groupProfile.memberCount,
                 messageRemindTypeMap: {
                     AcceptAndNotify: '接收消息并提示',
                     AcceptNotNotify: '接收消息但不提示',
@@ -642,13 +646,14 @@
       height 40px
       border-radius 50%
 
-  .top{
+  .top {
     border-top 1px solid $border-base
   }
 
   .info-item {
     padding 10px;
-    border-bottom:  1px solid #e7e7e7
+    border-bottom: 1px solid #e7e7e7
+
     .label {
       font-size: 14px;
       color: $secondary;

@@ -88,10 +88,11 @@
     <!--        </div>-->
 
 
-    <div v-if="!isInBlacklist && userProfile.userID !== myUserID" class="m-3">
+    <div v-if="!isInBlacklist && userProfile.userID !== myUserID" class="m-3 mt-4">
       <el-button
               title="将该用户加入黑名单"
               @click="addToBlackList"
+              style="font-size: 14px"
               class="w-100">
         加入黑名单
       </el-button>
@@ -103,7 +104,7 @@
     </div>
     <!-- 拉黑 和 反拉黑 -->
     <div class="mx-3">
-      <el-button @click="deleteFriend" class="w-100">删除好友</el-button>
+      <el-button style="font-size: 14px" @click="deleteFriend" class="w-100">删除好友</el-button>
     </div>
   </div>
 </template>
