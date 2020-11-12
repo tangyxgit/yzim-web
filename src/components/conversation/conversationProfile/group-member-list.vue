@@ -6,12 +6,12 @@
 <!--            <span class="tim-icon-friend-add"></span>-->
 <!--          </div>-->
 <!--        </div>-->
-    <div class="scroll-content pt-3 " v-if="members[1]&&members[2]">
+    <div class="scroll-content pt-3 " v-if="members[0]&&members[1]">
         <div class="groupAvatar " style="left:43px;z-index: 99">
-          <avatar :src="members[1].avatar "/>
+          <avatar :src="members[0].avatar "/>
         </div>
         <div class="groupAvatar " style="left:75px;z-index: 90">
-          <avatar :src="members[2].avatar"/>
+          <avatar :src="members[1].avatar"/>
         </div>
         <div class="groupAvatar pointBg" style="left:107px;z-index: 89;background-color:#e9ebec">
           <div class="point bg-dark" style="z-index: 99;right: 6px;top:28px"></div>
