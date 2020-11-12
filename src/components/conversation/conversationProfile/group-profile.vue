@@ -1,277 +1,284 @@
 <template>
-  <div>
-    <group-member-list :groupProfile="groupProfile"/>
-    <div class="group-info-content" style="height: 285px">
-      <div class="info-item">
-        <div class="label">
-          群公告
-          <i
-            class="el-icon-edit"
-            v-if="editable"
-            @click="
+  <div style="height: 100%">
+    <div style="height: 70%">
+      <group-member-list :groupProfile="groupProfile"/>
+      <div class="group-info-content" style="">
+        <div class="info-item">
+          <div class="label">
+            群公告
+            <i
+              class="el-icon-edit"
+              v-if="editable"
+              @click="
             showEditNotification = true
             inputFocus('editNotification')
           "
-            style="cursor:pointer; font-size:16px;"></i>
-        </div>
-        <div class="long-content" :title="groupProfile.notification" v-if="!showEditNotification">
-          {{ groupProfile.notification || '暂无' }}
-        </div>
+              style="cursor:pointer; font-size:16px;"></i>
+          </div>
+          <div class="long-content" :title="groupProfile.notification" v-if="!showEditNotification">
+            {{ groupProfile.notification || '暂无' }}
+          </div>
 
-        <el-input
-          ref="editNotification"
-          v-else
-          autofocus
-          v-model="notification"
-          size="mini"
-          @blur="showEditNotification = false"
-          @keydown.enter.native="editNotification"
-        />
-      </div>
-      <div class="info-item">
-        <div class="label">
-          我的群名片
-          <i
-            class="el-icon-edit"
-            @click="
+          <el-input
+            ref="editNotification"
+            v-else
+            autofocus
+            v-model="notification"
+            size="mini"
+            @blur="showEditNotification = false"
+            @keydown.enter.native="editNotification"
+          />
+        </div>
+        <div class="info-item">
+          <div class="label">
+            我的群名片
+            <i
+              class="el-icon-edit"
+              @click="
               showEditNameCard = true
               inputFocus('editNameCard')
             "
-            style="cursor:pointer; font-size:16px;"></i>
+              style="cursor:pointer; font-size:16px;"></i>
+          </div>
+          <div class="content cursor-pointer" v-if="!showEditNameCard">
+            {{ groupProfile.selfInfo.nameCard || '暂无' }}
+          </div>
+          <el-input
+            ref="editNameCard"
+            v-else
+            autofocus
+            v-model="nameCard"
+            size="mini"
+            @blur="showEditNameCard = false"
+            @keydown.enter.native="editNameCard"
+          />
         </div>
-        <div class="content cursor-pointer" v-if="!showEditNameCard">
-          {{ groupProfile.selfInfo.nameCard || '暂无' }}
-        </div>
-        <el-input
-          ref="editNameCard"
-          v-else
-          autofocus
-          v-model="nameCard"
-          size="mini"
-          @blur="showEditNameCard = false"
-          @keydown.enter.native="editNameCard"
-        />
-      </div>
-      <!--      <div class="info-item">-->
-      <!--        <div class="label">群ID</div>-->
-      <!--        <div class="content">{{ groupProfile.groupID }}</div>-->
-      <!--      </div>-->
-      <!--      <div class="info-item">-->
-      <!--        <div class="label">-->
-      <!--          群头像-->
-      <!--          <i-->
-      <!--              class="el-icon-edit"-->
-      <!--              v-if="editable"-->
-      <!--              @click="-->
-      <!--            showEditFaceUrl = true-->
-      <!--            inputFocus('editFaceUrl')-->
-      <!--          "-->
-      <!--              style="cursor:pointer; font-size:16px;"></i>-->
-      <!--        </div>-->
-      <!--        <div class="content" v-if="!showEditFaceUrl">-->
-      <!--          <avatar :src="groupProfile.avatar"/>-->
-      <!--        </div>-->
-      <!--        <el-input-->
-      <!--            ref="editFaceUrl"-->
-      <!--            v-else-->
-      <!--            autofocus-->
-      <!--            v-model="avatar"-->
-      <!--            size="mini"-->
-      <!--            @blur="showEditFaceUrl = false"-->
-      <!--            @keydown.enter.native="editFaceUrl"-->
-      <!--        />-->
-      <!--      </div>-->
+        <!--      <div class="info-item">-->
+        <!--        <div class="label">群ID</div>-->
+        <!--        <div class="content">{{ groupProfile.groupID }}</div>-->
+        <!--      </div>-->
+        <!--      <div class="info-item">-->
+        <!--        <div class="label">-->
+        <!--          群头像-->
+        <!--          <i-->
+        <!--              class="el-icon-edit"-->
+        <!--              v-if="editable"-->
+        <!--              @click="-->
+        <!--            showEditFaceUrl = true-->
+        <!--            inputFocus('editFaceUrl')-->
+        <!--          "-->
+        <!--              style="cursor:pointer; font-size:16px;"></i>-->
+        <!--        </div>-->
+        <!--        <div class="content" v-if="!showEditFaceUrl">-->
+        <!--          <avatar :src="groupProfile.avatar"/>-->
+        <!--        </div>-->
+        <!--        <el-input-->
+        <!--            ref="editFaceUrl"-->
+        <!--            v-else-->
+        <!--            autofocus-->
+        <!--            v-model="avatar"-->
+        <!--            size="mini"-->
+        <!--            @blur="showEditFaceUrl = false"-->
+        <!--            @keydown.enter.native="editFaceUrl"-->
+        <!--        />-->
+        <!--      </div>-->
 
-      <!--      <div class="info-item">-->
-      <!--        <div class="label">群类型</div>-->
-      <!--        <div class="content">{{ groupType}}</div>-->
-      <!--      </div>-->
-      <div class="info-item">
-        <div class="label">
-          群名称
-          <i
-            class="el-icon-edit"
-            v-if="editable"
-            @click="
+        <!--      <div class="info-item">-->
+        <!--        <div class="label">群类型</div>-->
+        <!--        <div class="content">{{ groupType}}</div>-->
+        <!--      </div>-->
+        <div class="info-item">
+          <div class="label">
+            群名称
+            <i
+              class="el-icon-edit"
+              v-if="editable"
+              @click="
             showEditName = true
             inputFocus('editName')
           "
-            style="cursor:pointer; font-size:16px;"></i>
-        </div>
+              style="cursor:pointer; font-size:16px;"></i>
+          </div>
 
-        <div class="content text-ellipsis" :title="groupProfile.name" v-if="!showEditName">
-          {{ groupProfile.name || '暂无' }}
+          <div class="content text-ellipsis" :title="groupProfile.name" v-if="!showEditName">
+            {{ groupProfile.name || '暂无' }}
+          </div>
+          <el-input
+            ref="editName"
+            v-else
+            autofocus
+            v-model="name"
+            size="mini"
+            @blur="showEditName = false"
+            @keydown.enter.native="editName"
+          />
         </div>
-        <el-input
-          ref="editName"
-          v-else
-          autofocus
-          v-model="name"
-          size="mini"
-          @blur="showEditName = false"
-          @keydown.enter.native="editName"
-        />
-      </div>
-      <!--      <div class="info-item">-->
-      <!--        <div class="label">-->
-      <!--          群介绍-->
-      <!--          <i-->
-      <!--              class="el-icon-edit"-->
-      <!--              v-if="editable"-->
-      <!--              @click="-->
-      <!--            showEditIntroduction = true-->
-      <!--            inputFocus('editIntroduction')-->
-      <!--          "-->
-      <!--              style="cursor:pointer; font-size:16px;"></i>-->
-      <!--        </div>-->
-      <!--        <div class="long-content" :title="groupProfile.introduction" v-if="!showEditIntroduction">-->
-      <!--          {{ groupProfile.introduction || '暂无' }}-->
-      <!--        </div>-->
-      <!--        <el-input-->
-      <!--            ref="editIntroduction"-->
-      <!--            v-else-->
-      <!--            autofocus-->
-      <!--            v-model="introduction"-->
-      <!--            size="mini"-->
-      <!--            @blur="showEditIntroduction = false"-->
-      <!--            @keydown.enter.native="editIntroduction"-->
-      <!--        />-->
-      <!--      </div>-->
+        <!--      <div class="info-item">-->
+        <!--        <div class="label">-->
+        <!--          群介绍-->
+        <!--          <i-->
+        <!--              class="el-icon-edit"-->
+        <!--              v-if="editable"-->
+        <!--              @click="-->
+        <!--            showEditIntroduction = true-->
+        <!--            inputFocus('editIntroduction')-->
+        <!--          "-->
+        <!--              style="cursor:pointer; font-size:16px;"></i>-->
+        <!--        </div>-->
+        <!--        <div class="long-content" :title="groupProfile.introduction" v-if="!showEditIntroduction">-->
+        <!--          {{ groupProfile.introduction || '暂无' }}-->
+        <!--        </div>-->
+        <!--        <el-input-->
+        <!--            ref="editIntroduction"-->
+        <!--            v-else-->
+        <!--            autofocus-->
+        <!--            v-model="introduction"-->
+        <!--            size="mini"-->
+        <!--            @blur="showEditIntroduction = false"-->
+        <!--            @keydown.enter.native="editIntroduction"-->
+        <!--        />-->
+        <!--      </div>-->
 
-      <div class="info-item" v-if="groupProfile.type !== 'Private'">
-        <div class="label">
-          申请加群方式
-          <i
-            class="el-icon-edit"
-            v-if="editable"
-            @click="
+        <div class="info-item" v-if="groupProfile.type !== 'Private'">
+          <div class="label">
+            申请加群方式
+            <i
+              class="el-icon-edit"
+              v-if="editable"
+              @click="
             showEditJoinOption = true
             inputFocus('editJoinOption')
           "
-            style="cursor:pointer; font-size:16px;"></i>
+              style="cursor:pointer; font-size:16px;"></i>
+          </div>
+          <div class="content" v-show="!showEditJoinOption">
+            {{ joinOptionMap[groupProfile.joinOption] }}
+          </div>
+          <el-select
+            ref="editJoinOption"
+            v-model="joinOption"
+            v-show="showEditJoinOption"
+            size="mini"
+            automatic-dropdown
+            @blur="showEditJoinOption = false"
+            @change="editJoinOption"
+          >
+            <el-option label="自由加入" value="FreeAccess"></el-option>
+            <el-option label="需要验证" value="NeedPermission"></el-option>
+            <el-option label="禁止加群" value="DisableApply"></el-option>
+          </el-select>
         </div>
-        <div class="content" v-show="!showEditJoinOption">
-          {{ joinOptionMap[groupProfile.joinOption] }}
-        </div>
-        <el-select
-          ref="editJoinOption"
-          v-model="joinOption"
-          v-show="showEditJoinOption"
-          size="mini"
-          automatic-dropdown
-          @blur="showEditJoinOption = false"
-          @change="editJoinOption"
-        >
-          <el-option label="自由加入" value="FreeAccess"></el-option>
-          <el-option label="需要验证" value="NeedPermission"></el-option>
-          <el-option label="禁止加群" value="DisableApply"></el-option>
-        </el-select>
-      </div>
 
-      <!--            <div class="info-item">-->
-      <!--                <div class="label">-->
-      <!--                    群消息提示-->
-      <!--                    <i-->
-      <!--                            class="el-icon-edit"-->
-      <!--                            v-if="editable"-->
-      <!--                            @click="-->
-      <!--            showEditMessageRemindType = true-->
-      <!--            inputFocus('editMessageRemindType')-->
-      <!--          "-->
-      <!--                            style="cursor:pointer; font-size:16px;"></i>-->
-      <!--                </div>-->
-      <!--                <div class="content" v-show="!showEditMessageRemindType">-->
-      <!--                    {{ this.groupProfile.selfInfo.messageRemindType?messageRemindTypeMap[this.groupProfile.selfInfo.messageRemindType]:'接收消息并提示' }}-->
-      <!--                </div>-->
-      <!--                <el-select-->
-      <!--                        ref="editMessageRemindType"-->
-      <!--                        v-show="showEditMessageRemindType"-->
-      <!--                        v-model="messageRemindType"-->
-      <!--                        size="mini"-->
-      <!--                        automatic-dropdown-->
-      <!--                        @change="editMessageRemindType"-->
-      <!--                        @blur="showEditMessageRemindType = false"-->
-      <!--                >-->
-      <!--                    <el-option label="接收消息并提示" value="AcceptAndNotify"></el-option>-->
-      <!--                    <el-option label="接收消息但不提示" value="AcceptNotNotify"></el-option>-->
-      <!--                    &lt;!&ndash;          <el-option label="屏蔽消息" value="Discard"></el-option>&ndash;&gt;-->
-      <!--                </el-select>-->
-      <!--            </div>-->
+        <!--            <div class="info-item">-->
+        <!--                <div class="label">-->
+        <!--                    群消息提示-->
+        <!--                    <i-->
+        <!--                            class="el-icon-edit"-->
+        <!--                            v-if="editable"-->
+        <!--                            @click="-->
+        <!--            showEditMessageRemindType = true-->
+        <!--            inputFocus('editMessageRemindType')-->
+        <!--          "-->
+        <!--                            style="cursor:pointer; font-size:16px;"></i>-->
+        <!--                </div>-->
+        <!--                <div class="content" v-show="!showEditMessageRemindType">-->
+        <!--                    {{ this.groupProfile.selfInfo.messageRemindType?messageRemindTypeMap[this.groupProfile.selfInfo.messageRemindType]:'接收消息并提示' }}-->
+        <!--                </div>-->
+        <!--                <el-select-->
+        <!--                        ref="editMessageRemindType"-->
+        <!--                        v-show="showEditMessageRemindType"-->
+        <!--                        v-model="messageRemindType"-->
+        <!--                        size="mini"-->
+        <!--                        automatic-dropdown-->
+        <!--                        @change="editMessageRemindType"-->
+        <!--                        @blur="showEditMessageRemindType = false"-->
+        <!--                >-->
+        <!--                    <el-option label="接收消息并提示" value="AcceptAndNotify"></el-option>-->
+        <!--                    <el-option label="接收消息但不提示" value="AcceptNotNotify"></el-option>-->
+        <!--                    &lt;!&ndash;          <el-option label="屏蔽消息" value="Discard"></el-option>&ndash;&gt;-->
+        <!--                </el-select>-->
+        <!--            </div>-->
 
-      <div class="info-item">
-        <div class="label">群消息提示</div>
-        <div class="long-content ">
-          <div class="row justify-content-between px-3">
-            <div>开启消息提示</div>
-            <div>
-              <el-switch
-                @change="editMessageRemindType"
-                v-model="messageRemindType"
-                active-value="AcceptAndNotify"
-                inactive-value="AcceptNotNotify">
-              </el-switch>
+        <div class="info-item">
+          <div class="label">群消息提示</div>
+          <div class="long-content ">
+            <div class="row justify-content-between px-3">
+              <div>开启消息提示</div>
+              <div>
+                <el-switch
+                  @change="editMessageRemindType"
+                  v-model="messageRemindType"
+                  active-value="AcceptAndNotify"
+                  inactive-value="AcceptNotNotify">
+                </el-switch>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
 
-      <!--      <div class="info-item">-->
-      <!--        <div class="label" :class="{'active' : active}">全体禁言</div>-->
-      <!--        <el-switch-->
-      <!--                v-model="muteAllMembers"-->
-      <!--                active-color="#409eff"-->
-      <!--                inactive-color="#dcdfe6"-->
-      <!--                @change='changeMuteStatus'>-->
-      <!--        </el-switch>-->
-      <!--      </div>-->
-      <div class="row pl-3" >
-        <div v-if="isOwner">
-          <el-button class="mr-2" type="text" @click="showGroupMember">转让群主</el-button>
-          <!--        <el-input-->
-          <!--            v-if="showChangeGroupOwner"-->
-          <!--            v-model="newOwnerUserID"-->
-          <!--            placeholder="新群主的userID"-->
-          <!--            size="mini"-->
-          <!--            @blur="showChangeGroupOwner = false"-->
-          <!--            @keydown.enter.native="changeOwner"-->
-          <!--        />-->
+        <!--      <div class="info-item">-->
+        <!--        <div class="label" :class="{'active' : active}">全体禁言</div>-->
+        <!--        <el-switch-->
+        <!--                v-model="muteAllMembers"-->
+        <!--                active-color="#409eff"-->
+        <!--                inactive-color="#dcdfe6"-->
+        <!--                @change='changeMuteStatus'>-->
+        <!--        </el-switch>-->
+        <!--      </div>-->
+        <div class="row pl-3" >
+          <div v-if="isOwner">
+            <el-button class="mr-2" type="text" @click="showGroupMember">转让群主</el-button>
+            <!--        <el-input-->
+            <!--            v-if="showChangeGroupOwner"-->
+            <!--            v-model="newOwnerUserID"-->
+            <!--            placeholder="新群主的userID"-->
+            <!--            size="mini"-->
+            <!--            @blur="showChangeGroupOwner = false"-->
+            <!--            @keydown.enter.native="changeOwner"-->
+            <!--        />-->
+          </div>
+          <div v-if="!isOwner" >
+            <el-popconfirm
+              title="确认退出该群吗？"
+              @onConfirm="quitGroup">
+              <el-button class="mr-2"  slot="reference" type="text" style="color:red;" >退出群聊</el-button>
+            </el-popconfirm>
+          </div>
+          <div v-if="showDissmissGroup">
+            <el-popconfirm
+              title="确认解散该群吗？"
+              @onConfirm="dismissGroup">
+              <el-button slot="reference" type="text" style="color:red;">解散该群</el-button>
+            </el-popconfirm>
+          </div>
         </div>
-        <div v-if="!isOwner" >
-          <el-popconfirm
-            title="确认退出该群吗？"
-            @onConfirm="quitGroup">
-            <el-button class="mr-2"  slot="reference" type="text" style="color:red;" >退出群聊</el-button>
-          </el-popconfirm>
-        </div>
-        <div v-if="showDissmissGroup">
-          <el-popconfirm
-            title="确认解散该群吗？"
-            @onConfirm="dismissGroup">
-            <el-button slot="reference" type="text" style="color:red;">解散该群</el-button>
-          </el-popconfirm>
-        </div>
-      </div>
 
-    </div>
-
-    <div class="row justify-content-between pt-1" style="padding-left: 25px;padding-right: 25px;">
-      <div class="member-count text-ellipsis" style="font-size: 14px;">群成员：{{currentConversation.groupProfile.memberNum}}</div>
-      <div slot="reference" class="btn-add-member" title="添加群成员" @click="handleAddButtonClick" style="cursor: pointer">
-        <span class="tim-icon-friend-add" style="color: #007bff;font-size: 18px"></span>
       </div>
     </div>
-    <div style="height:130px;overflow-y: scroll;overflow-x: hidden" >
-      <div v-for="member in members" :key="member.userID" class="row justify-content-between pt-1" style="padding-left: 25px;padding-right: 25px;">
-        <div>
-          <avatar :src="member.avatar" style="width:30px;height:30px;border-radius: 90%"/>
+    <div style="height: 30%">
+      <div class="row justify-content-between pt-1 top" style="height:15%;padding-left: 25px;padding-right: 25px;">
+        <div class="member-count text-ellipsis" style="font-size: 14px;">群成员：{{currentConversation.groupProfile.memberNum}}</div>
+        <div slot="reference" class="btn-add-member" title="添加群成员" @click="handleAddButtonClick" style="cursor: pointer">
+          <span class="tim-icon-friend-add" style="color: #007bff;font-size: 18px"></span>
         </div>
-        <div style="font-size: 14px">
-          <span v-if="member.nameCard" :title=member.nameCard>{{ member.nameCard }}</span>
-          <span v-else-if="member.nick" :title=member.nick>{{ member.nick }}</span>
+      </div>
+
+      <div style="height:85%;overflow-y: auto;overflow-x: hidden" >
+        <div v-for="member in members" :key="member.userID" class="row justify-content-between pt-1" style="padding-left: 25px;padding-right: 25px;">
+          <div>
+            <avatar :src="member.avatar" style="width:30px;height:30px;border-radius: 90%"/>
+          </div>
+          <div style="font-size: 14px">
+            <span v-if="member.nameCard" :title=member.nameCard>{{ member.nameCard }}</span>
+            <span v-else-if="member.nick" :title=member.nick>{{ member.nick }}</span>
+          </div>
         </div>
       </div>
     </div>
+
+
+
     <group-dialog ref="groupAdd" :showDialog="showAddGroup" @closeGroup="closeAddGroup"></group-dialog>
 
     <el-dialog title="转让群主"
@@ -743,12 +750,16 @@
 
   .group-info-content
     padding 10px 10px
-    border-bottom 1px solid $border-base
+
 
     .avatar
       width 40px
       height 40px
       border-radius 50%
+
+  .top{
+    border-top 1px solid $border-base
+  }
 
   .info-item {
     margin-bottom: 12px;
