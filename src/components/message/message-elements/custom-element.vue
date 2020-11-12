@@ -33,7 +33,7 @@
         </div>
       </a>
     </div>
-    <span class="text" title="不支持的消息，请在手机上查看" v-else>{{payload.data}}</span>
+    <span class="text" title="不支持的消息，请在手机上查看" v-else>{{text}}</span>
   </div>
 </message-bubble>
 </template>

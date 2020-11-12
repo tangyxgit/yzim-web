@@ -61,6 +61,16 @@ export default {
         classString += 'message-send'
         if(this.message.type === this.TIM.TYPES.MSG_GEO) {
           classString+=' message-send-white-style p-0'
+        } else {
+          let payload = this.message.payload
+          if(payload) {
+            let payloadData = payload.data
+            if(payloadData) {
+              if(JSON.parse(payloadData).businessID === 'card_link'){
+                classString+=' message-send-white-style'
+              }
+            }
+          }
         }
       } else {
         classString += 'message-received'
