@@ -258,7 +258,7 @@
         <span class="tim-icon-friend-add" style="color: #007bff;font-size: 18px"></span>
       </div>
     </div>
-    <div style="max-height:140px;overflow-y: scroll;border-bottom: none">
+    <div style="max-height:140px;overflow-y: scroll;overflow-x: hidden" >
       <div v-for="member in members" :key="member.userID" class="row justify-content-between pt-1" style="padding-left: 25px;padding-right: 25px;">
         <div>
           <avatar :src="member.avatar" style="width:30px;height:30px;border-radius: 90%"/>
