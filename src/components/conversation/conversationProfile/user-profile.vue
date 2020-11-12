@@ -40,22 +40,35 @@
     <!--            </div>-->
     <!--        </div>-->
 
-    <div class="info-item">
-      <div class="label text-left">
-        邮箱
-      </div>
-      <div class="content text-left">
-        {{form.email}}
-      </div>
-    </div>
-    <div class="info-item">
-      <div class="label text-left">
-        手机号
-      </div>
-      <div class="content text-left">
-        {{form.mobile}}
+    <div class="info-item top ">
+      <div class="row justify-content-between px-4">
+        <div>
+          <div class="label text-left">
+            邮箱
+          </div>
+          <div class="content text-left" style="font-size: 12px">
+            {{form.email}}
+          </div>
+        </div>
+        <div class="el-icon-message " style="width:16px;font-size: 18px;margin-top: 13px;color: #999999"></div>
       </div>
     </div>
+
+    <div class="info-item ">
+      <div class="row justify-content-between px-4">
+        <div>
+          <div class="label text-left">
+            手机号
+          </div>
+          <div class="content text-left" style="font-size: 12px">
+            {{form.mobile}}
+          </div>
+        </div>
+        <div class="el-icon-mobile-phone" style="width:16px;font-size: 18px;margin-top: 13px;color: #999999"></div>
+      </div>
+    </div>
+
+
 
     <!--        <div class="info-item">-->
     <!--            <div class="label text-left">-->
@@ -92,7 +105,7 @@
     </el-button>
     <!-- 拉黑 和 反拉黑 -->
     <div>
-      <el-button type="text" style="color:dodgerblue" @click="deleteFriend" >删除好友</el-button>
+      <el-button type="text" style="color:dodgerblue" @click="deleteFriend">删除好友</el-button>
     </div>
 
   </div>
@@ -107,7 +120,7 @@
                 type: Object,
                 required: true
             },
-            conversationID:{
+            conversationID: {
                 type: String,
                 required: false
             }
@@ -211,6 +224,7 @@
                         } else {
                             this.form.email = '待完善'
                         }
+                        this.$forceUpdate()
                     },
                     error => {
                         this.$store.commit('showMessage', {
@@ -247,22 +261,22 @@
             },
             deleteFriend() {
                 this.requestPost('user/deleteFriend', {
-                    From_Account:this.userApi().userId,
-                    To_Account:[this.userProfile.userID],
-                    DeleteType:'Delete_Type_Both'
-                },()=>{
-                        this.$store.commit('showMessage', {
-                            type: 'success',
-                            message: '删除好友成功'
-                        })
-                        this.getFriendList()
-                        this.deleteConversation()
-                    },error=>{
-                        this.$store.commit('showMessage', {
-                            type: 'error',
-                            message: error.msg
-                        })
+                    From_Account: this.userApi().userId,
+                    To_Account: [this.userProfile.userID],
+                    DeleteType: 'Delete_Type_Both'
+                }, () => {
+                    this.$store.commit('showMessage', {
+                        type: 'success',
+                        message: '删除好友成功'
                     })
+                    this.getFriendList()
+                    this.deleteConversation()
+                }, error => {
+                    this.$store.commit('showMessage', {
+                        type: 'error',
+                        message: error.msg
+                    })
+                })
             },
             deleteConversation() {
                 this.tim
@@ -282,8 +296,15 @@
 </script>
 
 <style lang="stylus" scoped>
+  .top {
+    border-top 1px solid $border-base
+  }
+
   .info-item {
-    margin-bottom: 12px;
+    margin-bottom: 0px;
+    padding-top 8px;
+    padding-bottom 8px;
+    border-bottom 1px solid $border-base
   }
 
   .label {
@@ -300,20 +321,18 @@
   .profile-user
     width 100%
     text-align center
-    padding 0 20px
 
     .avatar
-      width 160px
-      height 160px
+      width 64px
+      height 64px
       border-radius 50%
       margin 30px auto
+      margin-bottom 10px
 
     .nick-name
       width 100%
-      color $base
-      font-size 20px
-      font-weight bold
-      text-shadow $font-dark 0 0 0.1em
+      font-size 16px
+      padding-bottom 12px
 
       .anonymous
         color $first

@@ -253,12 +253,12 @@
     </div>
 
     <div class="row justify-content-between pt-1" style="padding-left: 25px;padding-right: 25px;">
-      <div class="member-count text-ellipsis" style="font-size: 14px;">群成员：{{memberCount}}</div>
-      <div slot="reference" class="btn-add-member" title="添加群成员" @click="handleAddButtonClick">
-        <span class="tim-icon-friend-add"></span>
+      <div class="member-count text-ellipsis" style="font-size: 14px;">群成员：{{currentConversation.groupProfile.memberNum}}</div>
+      <div slot="reference" class="btn-add-member" title="添加群成员" @click="handleAddButtonClick" style="cursor: pointer">
+        <span class="tim-icon-friend-add" style="color: #007bff;font-size: 18px"></span>
       </div>
     </div>
-    <div style="height:134px;overflow-y: scroll">
+    <div style="max-height:140px;overflow-y: scroll;border-bottom: none">
       <div v-for="member in members" :key="member.userID" class="row justify-content-between pt-1" style="padding-left: 25px;padding-right: 25px;">
         <div>
           <avatar :src="member.avatar" style="width:30px;height:30px;border-radius: 90%"/>
@@ -360,6 +360,7 @@
         },
         computed: {
             ...mapState({
+                currentConversation: state => state.conversation.currentConversation,
                 currentMemberList: state => state.group.currentMemberList,
             }),
             members() {
