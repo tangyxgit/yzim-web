@@ -59,8 +59,14 @@ export default {
       let classString = ''
       if (this.isMine) {
         classString += 'message-send'
+        if(this.message.type === this.TIM.TYPES.MSG_GEO) {
+          classString+=' message-send-white-style p-0'
+        }
       } else {
         classString += 'message-received'
+        if(this.message.type === this.TIM.TYPES.MSG_GEO) {
+          classString += ' p-0'
+        }
       }
       if (this.isNew) {
         classString += 'new'
@@ -213,6 +219,12 @@ export default {
   .el-icon-arrow-down {
     font-size: 12px;
   }
+  .message-send-white-style
+    background white
+    &::before
+      right: -10px
+      color white
+
 .group-tip-element-wrapper
   background $white
   padding 4px 15px
