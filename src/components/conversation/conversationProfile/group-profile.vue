@@ -126,22 +126,22 @@
             </div>
           </div>
         </div>
-        <div class="row pl-3" >
-          <div v-if="isOwner">
-            <el-button class="mr-2" type="text" @click="showGroupMember">转让群主</el-button>
+        <div class="mb-3">
+          <div v-if="isOwner" class="mx-3 mt-3">
+            <el-button class="w-100" @click="showGroupMember">转让群主</el-button>
           </div>
-          <div v-if="!isOwner" >
+          <div v-if="!isOwner" class="mx-3 mt-3">
             <el-popconfirm
               title="确认退出该群吗？"
               @onConfirm="quitGroup">
-              <el-button class="mr-2"  slot="reference" type="text" style="color:red;" >退出群聊</el-button>
+              <el-button class="w-100" slot="reference">退出群聊</el-button>
             </el-popconfirm>
           </div>
-          <div v-if="showDissmissGroup">
+          <div v-if="showDissmissGroup"  class="mx-3 mt-3">
             <el-popconfirm
               title="确认解散该群吗？"
               @onConfirm="dismissGroup">
-              <el-button slot="reference" type="text" style="color:red;">解散该群</el-button>
+              <el-button slot="reference" class="w-100">解散该群</el-button>
             </el-popconfirm>
           </div>
         </div>

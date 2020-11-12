@@ -88,22 +88,23 @@
     <!--        </div>-->
 
 
-    <el-button
-      title="将该用户加入黑名单"
-      type="text"
-      @click="addToBlackList"
-      v-if="!isInBlacklist && userProfile.userID !== myUserID"
-      class="btn-add-blacklist "
-    >加入黑名单
-    </el-button
-    >
-    <el-button title="将该用户移出黑名单" type="text" @click="removeFromBlacklist" v-else-if="isInBlacklist">移出黑名单
-    </el-button>
-    <!-- 拉黑 和 反拉黑 -->
-    <div>
-      <el-button type="text" style="color:dodgerblue" @click="deleteFriend">删除好友</el-button>
+    <div v-if="!isInBlacklist && userProfile.userID !== myUserID" class="m-3">
+      <el-button
+              title="将该用户加入黑名单"
+              @click="addToBlackList"
+              class="w-100">
+        加入黑名单
+      </el-button>
     </div>
-
+    <div v-else-if="isInBlacklist" class="m-3">
+      <el-button title="将该用户移出黑名单" @click="removeFromBlacklist" class="w-100">
+        移出黑名单
+      </el-button>
+    </div>
+    <!-- 拉黑 和 反拉黑 -->
+    <div class="mx-3">
+      <el-button @click="deleteFriend" class="w-100">删除好友</el-button>
+    </div>
   </div>
 </template>
 
