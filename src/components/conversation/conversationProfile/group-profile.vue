@@ -1,7 +1,7 @@
 <template>
   <div>
     <group-member-list :groupProfile="groupProfile"/>
-    <div class="group-info-content">
+    <div class="group-info-content" style="height: 285px">
       <div class="info-item">
         <div class="label">
           群公告
@@ -225,31 +225,34 @@
       <!--                @change='changeMuteStatus'>-->
       <!--        </el-switch>-->
       <!--      </div>-->
-      <div v-if="isOwner">
-        <el-button type="text" @click="showGroupMember">转让群主</el-button>
-        <!--        <el-input-->
-        <!--            v-if="showChangeGroupOwner"-->
-        <!--            v-model="newOwnerUserID"-->
-        <!--            placeholder="新群主的userID"-->
-        <!--            size="mini"-->
-        <!--            @blur="showChangeGroupOwner = false"-->
-        <!--            @keydown.enter.native="changeOwner"-->
-        <!--        />-->
+      <div class="row pl-3" >
+        <div v-if="isOwner">
+          <el-button class="mr-2" type="text" @click="showGroupMember">转让群主</el-button>
+          <!--        <el-input-->
+          <!--            v-if="showChangeGroupOwner"-->
+          <!--            v-model="newOwnerUserID"-->
+          <!--            placeholder="新群主的userID"-->
+          <!--            size="mini"-->
+          <!--            @blur="showChangeGroupOwner = false"-->
+          <!--            @keydown.enter.native="changeOwner"-->
+          <!--        />-->
+        </div>
+        <div v-if="!isOwner" >
+          <el-popconfirm
+            title="确认退出该群吗？"
+            @onConfirm="quitGroup">
+            <el-button class="mr-2"  slot="reference" type="text" style="color:red;" >退出群聊</el-button>
+          </el-popconfirm>
+        </div>
+        <div v-if="showDissmissGroup">
+          <el-popconfirm
+            title="确认解散该群吗？"
+            @onConfirm="dismissGroup">
+            <el-button slot="reference" type="text" style="color:red;">解散该群</el-button>
+          </el-popconfirm>
+        </div>
       </div>
-      <div v-if="!isOwner">
-        <el-popconfirm
-          title="确认退出该群吗？"
-          @onConfirm="quitGroup">
-          <el-button slot="reference" type="text" style="color:red;">退出群聊</el-button>
-        </el-popconfirm>
-      </div>
-      <div v-if="showDissmissGroup">
-        <el-popconfirm
-          title="确认解散该群吗？"
-          @onConfirm="dismissGroup">
-          <el-button slot="reference" type="text" style="color:red;">解散该群</el-button>
-        </el-popconfirm>
-      </div>
+
     </div>
 
     <div class="row justify-content-between pt-1" style="padding-left: 25px;padding-right: 25px;">
@@ -258,7 +261,7 @@
         <span class="tim-icon-friend-add" style="color: #007bff;font-size: 18px"></span>
       </div>
     </div>
-    <div style="max-height:140px;overflow-y: scroll;overflow-x: hidden" >
+    <div style="height:130px;overflow-y: scroll;overflow-x: hidden" >
       <div v-for="member in members" :key="member.userID" class="row justify-content-between pt-1" style="padding-left: 25px;padding-right: 25px;">
         <div>
           <avatar :src="member.avatar" style="width:30px;height:30px;border-radius: 90%"/>
