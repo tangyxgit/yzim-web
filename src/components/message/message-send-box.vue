@@ -8,10 +8,10 @@
           </div>
         </div>
 <!--        <i class="iconfont icon-smile" slot="reference" title="发表情"></i>-->
-        <img src="../../assets/image/icon_emoji_stroke.svg" width="24" height="24" slot="reference" title="发表情">
+        <img src="../../assets/image/icon_emoji_stroke.png" width="24" style="cursor:pointer;" height="24" slot="reference" title="发表情">
       </el-popover>
-      <img src="../../assets/image/icon_photo_fill.svg" class="ml-2" width="24" height="24" @click="handleSendImageClick" title="发图片">
-      <img src="../../assets/image/icon_folder_fill.svg" class="ml-2" width="24" height="24" @click="handleSendFileClick" title="发文件">
+      <img src="../../assets/image/icon_photo_fill.png" class="ml-2" width="24" height="24" style="cursor:pointer;" @click="handleSendImageClick" title="发图片">
+      <img src="../../assets/image/icon_folder_fill.png" class="ml-2" width="24" height="24" style="cursor:pointer;" @click="handleSendFileClick" title="发文件">
 <!--      <i class="iconfont icon-tupian" title="发图片" @click="handleSendImageClick"></i>-->
 <!--      <i class="el-icon-camera" title="发视频" @click="handleSendVideoClick"></i>-->
 <!--      <i class="iconfont icon-wenjian" title="发文件 " @click="handleSendFileClick"></i>-->
