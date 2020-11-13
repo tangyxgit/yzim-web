@@ -7,11 +7,14 @@
             <img :src="emojiUrl + emojiMap[item]" style="width:30px;height:30px" />
           </div>
         </div>
-        <i class="iconfont icon-smile" slot="reference" title="发表情"></i>
+<!--        <i class="iconfont icon-smile" slot="reference" title="发表情"></i>-->
+        <img src="../../assets/image/icon_emoji_stroke.svg" width="24" height="24" slot="reference" title="发表情">
       </el-popover>
-      <i class="iconfont icon-tupian" title="发图片" @click="handleSendImageClick"></i>
+      <img src="../../assets/image/icon_photo_fill.svg" class="ml-2" width="24" height="24" @click="handleSendImageClick" title="发图片">
+      <img src="../../assets/image/icon_folder_fill.svg" class="ml-2" width="24" height="24" @click="handleSendFileClick" title="发文件">
+<!--      <i class="iconfont icon-tupian" title="发图片" @click="handleSendImageClick"></i>-->
 <!--      <i class="el-icon-camera" title="发视频" @click="handleSendVideoClick"></i>-->
-      <i class="iconfont icon-wenjian" title="发文件 " @click="handleSendFileClick"></i>
+<!--      <i class="iconfont icon-wenjian" title="发文件 " @click="handleSendFileClick"></i>-->
 <!--      <i class="iconfont icon-zidingyi" title="发自定义消息" @click="sendCustomDialogVisible = true"></i>-->
 <!--      <i class="iconfont icon-diaocha" title="小调查" @click="surveyDialogVisible = true"></i>-->
 <!--      <i class="el-icon-video-camera" v-if="currentConversationType === 'C2C'&& toAccount !== userID" title="视频通话" @click="videoCall"></i>-->
@@ -31,28 +34,6 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="sendCustomDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="sendCustomMessage">确 定</el-button>
-      </span>
-    </el-dialog>
-    <el-dialog title="对IM Web demo的建议和使用感受" :visible.sync="surveyDialogVisible" width="30%">
-      <el-form label-width="100px">
-        <el-form-item label="评分">
-          <div class="block">
-            <el-rate v-model="rate" :colors="colors" show-text></el-rate>
-          </div>
-        </el-form-item>
-        <el-form-item label="建议">
-          <el-input
-            type="textarea"
-            :rows="2"
-            placeholder="请输入内容"
-            resize="none"
-            v-model="suggestion"
-          ></el-input>
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="surveyDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="sendSurvey">确 定</el-button>
       </span>
     </el-dialog>
     <el-popover
@@ -75,6 +56,7 @@
       <textarea
         ref="text-input"
         rows="4"
+        placeholder="发消息..."
         resize="false"
         v-model="messageContent"
         class="text-input"
@@ -87,17 +69,6 @@
       >
       </textarea>
       <el-button class="btn-send"  type="primary" size="small"  @click="sendTextMessage">发送</el-button>
-<!--      <el-tooltip-->
-<!--        class="item"-->
-<!--        effect="dark"-->
-<!--        content="按Enter发送消息，Ctrl+Enter换行"-->
-<!--        placement="left-start"-->
-<!--      >-->
-<!--        -->
-<!--        <div class="btn-send" @click="sendTextMessage">-->
-<!--          <div class="tim-icon-send"></div>-->
-<!--        </div>-->
-<!--      </el-tooltip>-->
     </div>
     <input
       type="file"
@@ -122,8 +93,6 @@ import {
   Popover,
   RadioGroup,
   Radio,
-  Tooltip,
-  Rate
 } from 'element-ui'
 import { emojiMap, emojiName, emojiUrl } from '../../utils/emojiMap'
 
@@ -138,8 +107,6 @@ export default {
     ElPopover: Popover,
     ElRadioGroup: RadioGroup,
     ElRadio: Radio,
-    ElTooltip: Tooltip,
-    ElRate: Rate
   },
   data() {
     return {

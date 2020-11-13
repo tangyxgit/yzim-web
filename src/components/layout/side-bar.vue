@@ -67,7 +67,7 @@
                   <div class="my-2" style="width:100%;height:1px;background: #dddfe5"></div>
                     <span style="cursor:pointer" @click="logout">退出登录</span>
 <!--                    <el-button slot="reference">click 激活</el-button>-->
-                    <div slot="reference" class="el-icon-setting setting"></div>
+                    <div slot="reference" class="el-icon-setting setting" style="font-size: 24px"></div>
                 </el-popover>
             </el-row>
         </div>

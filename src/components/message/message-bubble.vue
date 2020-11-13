@@ -179,7 +179,7 @@ export default {
     word-wrap break-word
     word-break break-all
     padding 10px
-    box-shadow: 0 5px 10px 0 rgba(0,0,0,.1);
+    box-shadow: 0 0  0 rgba(0,0,0,.1);
     span
       white-space pre-wrap
       margin 0
@@ -197,10 +197,10 @@ export default {
       font-size 24px // 32px 在mac上会模糊 24px正常 , window 24px模糊 28px 32px正常  36px windows mac 基本一致，但是太大
   .message-received
     background-color $white
-    margin-left 15px
-    border-radius 0 4px 4px 4px
+    margin-left 5px
+    border-radius 4px 4px 4px 4px
     &::before
-      left -10px
+      left 0
       transform scaleX(-1)
       color $white
     &.new
@@ -209,11 +209,11 @@ export default {
       animation: bounce 500ms linear both;
   .message-send
     background-color $light-primary
-    margin-right 15px
-    border-radius 4px 0 4px 4px
+    margin-right 5px
+    border-radius 4px 4px 4px 4px
     color $white
     &::before
-      right: -10px
+      right: 0
       color $light-primary
     &.new
       transform: scale(0);
@@ -232,7 +232,7 @@ export default {
   .message-send-white-style
     background white
     &::before
-      right: -10px
+      right: 0
       color white
 
 .group-tip-element-wrapper

@@ -61,4 +61,5 @@ export default {
     height 100%
 .shape-circle
   border-radius 50%
+  background-color transparent
 </style>
