@@ -461,7 +461,22 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-#message-send-box-wrapper {
+  ::-webkit-input-placeholder { /* WebKit browsers */
+    color: #aaaaaa;
+    font-size: 16px;
+  }
+
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #aaaaaa;
+    font-size: 16px;
+  }
+
+  :-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: #aaaaaa;
+    font-size: 16px;
+  }
+
+  #message-send-box-wrapper {
   box-sizing: border-box;
   overflow: hidden;
   padding: 3px 20px 20px 20px;
