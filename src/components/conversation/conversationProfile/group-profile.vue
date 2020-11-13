@@ -159,15 +159,19 @@
       </div>
 
       <div style="height:85%;overflow-y: auto;overflow-x: hidden">
-        <div v-for="member in members" :key="member.userID" class="row"
-             style="padding-left: 25px;padding-right: 25px;padding-bottom: 8px;padding-top: 8px">
-          <div>
-            <avatar :src="member.avatar" style="width:32px;height:32px;border-radius: 90%"/>
-          </div>
-          <div class="ml-2 row align-items-center" style="font-size: 14px">
-            <span v-if="member.nameCard" :title=member.nameCard>{{ member.nameCard }}</span>
-            <span v-else-if="member.nick" :title=member.nick>{{ member.nick }}</span>
-          </div>
+        <div v-for="member in members" :key="member.userID" style="padding-left: 25px;padding-right: 25px;padding-bottom: 8px;padding-top: 8px">
+          <popover placement="right" :key="member.userID" >
+            <group-member-info :member="member"/>
+            <div slot="reference" class="row">
+              <div>
+                <avatar :src="member.avatar" style="width:32px;height:32px;border-radius: 90%"/>
+              </div>
+              <div class="ml-2 row align-items-center" style="font-size: 14px">
+                <span v-if="member.nameCard" :title=member.nameCard>{{ member.nameCard }}</span>
+                <span v-else-if="member.nick" :title=member.nick>{{ member.nick }}</span>
+              </div>
+            </div>
+          </popover>
         </div>
       </div>
     </div>
@@ -205,9 +209,10 @@
 
 <script>
     import GroupMemberList from './group-member-list.vue'
-    import {Select, Option, Popconfirm, Checkbox, Switch} from 'element-ui'
+    import {Select, Option, Popconfirm, Checkbox, Switch, Popover} from 'element-ui'
     import GroupDialog from '../../group/group-chat-add'
     import {mapState} from 'vuex'
+    import GroupMemberInfo from './group-member-info.vue'
 
     export default {
         props: ['groupProfile'],
@@ -218,7 +223,9 @@
             ElPopconfirm: Popconfirm,
             ElCheckbox: Checkbox,
             ElSwitch: Switch,
-            GroupDialog
+            GroupDialog,
+            GroupMemberInfo,
+            Popover
         },
         data() {
             return {
