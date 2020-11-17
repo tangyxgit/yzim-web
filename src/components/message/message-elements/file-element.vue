@@ -75,24 +75,29 @@
                 return number.toFixed(precision)
             },
             downloadFile() {
+                let a = document.createElement('a')
+                a.href = this.fileUrl
+                a.target = '_blank'
+                a.download = this.fileName
+                a.click()
                 // 浏览器支持fetch则用blob下载，避免浏览器点击a标签，跳转到新页面预览的行为
-                if (window.fetch) {
-                    fetch(this.fileUrl)
-                        .then(res => res.blob())
-                        .then(blob => {
-                            let a = document.createElement('a')
-                            let url = window.URL.createObjectURL(blob)
-                            a.href = url
-                            a.download = this.fileName
-                            a.click()
-                        })
-                } else {
-                    let a = document.createElement('a')
-                    a.href = this.fileUrl
-                    a.target = '_blank'
-                    a.download = this.filename
-                    a.click()
-                }
+                // if (window.fetch) {
+                //     fetch(this.fileUrl)
+                //         .then(res => res.blob())
+                //         .then(blob => {
+                //             let a = document.createElement('a')
+                //             let url = window.URL.createObjectURL(blob)
+                //             a.href = url
+                //             a.download = this.fileName
+                //             a.click()
+                //         })
+                // } else {
+                //     let a = document.createElement('a')
+                //     a.href = this.fileUrl
+                //     a.target = '_blank'
+                //     a.download = this.filename
+                //     a.click()
+                // }
             }
         }
     }
