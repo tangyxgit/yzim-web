@@ -7,7 +7,7 @@
         <img v-else-if="fileName.indexOf('ppt') >= 0 || fileName.indexOf('pptx') >= 0" src="../../../assets/image/icon_ppt.png" style="height: 40px;width:40px"/>
         <img v-else-if="fileName.indexOf('pdf') >= 0" src="../../../assets/image/icon_pdf.png" style="height: 40px;width:40px"/>
         <img v-else-if="fileName.indexOf('doc') >= 0 || fileName.indexOf('docx') >= 0" src="../../../assets/image/icon_word.png" style="height: 40px;width:40px"/>
-        <img v-else-if="fileName.indexOf('zar') >= 0 || fileName.indexOf('rar') >= 0" src="../../../assets/image/icon_zar.png" style="height: 40px;width:40px"/>
+        <img v-else-if="fileName.indexOf('zip') >= 0 || fileName.indexOf('rar') >= 0" src="../../../assets/image/icon_zar.png" style="height: 40px;width:40px"/>
         <img v-else src="../../../assets/image/icon_dk.png" style="height: 40px;width:40px"/>
         <div class="file-element">
           <span class="file-name">{{ fileName }}</span>
