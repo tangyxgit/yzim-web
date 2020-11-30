@@ -66,7 +66,7 @@ export default {
           if(payload) {
             let payloadData = payload.data
             if(payloadData) {
-              if(JSON.parse(payloadData).businessID === 'card_link'){
+              if(JSON.parse(payloadData).businessID === 'card_link') {
                 classString+=' message-send-white-style'
               }
             }
@@ -88,7 +88,7 @@ export default {
         return '对方撤回了一条消息'
       }
       if (this.message.conversationType === this.TIM.TYPES.CONV_GROUP && !this.isMine) {
-        return `${this.message.from}撤回了一条消息`
+        return `"${this.message.nick || this.message.from}" 撤回了一条消息`
       }
       return '你撤回了一条消息'
     },
