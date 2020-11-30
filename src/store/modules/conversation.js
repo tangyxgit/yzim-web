@@ -36,7 +36,12 @@ const conversationModules = {
         if (!store.getters.hidden && state.currentConversation.conversationID === conversation.conversationID) {
           return count
         }
-        return count + conversation.unreadCount
+        let type = conversation.type
+        let groupProfile = conversation.groupProfile
+        if (type === 'C2C' || (type === 'GROUP' && groupProfile.selfInfo.messageRemindType === 'AcceptAndNotify')) {
+          count = count + conversation.unreadCount
+        }
+        return count
       }, 0)
       titleNotify(result)
       return result

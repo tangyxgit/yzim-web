@@ -45,16 +45,9 @@
 </template>
 
 <script>
-    // import {Popover} from 'element-ui'
     import {mapState} from 'vuex'
-    // import GroupMemberInfo from './group-member-info.vue'
-    import GroupDialog from '../../group/group-chat-add'
-
     export default {
         props: ['groupProfile'],
-        components: {
-            GroupDialog
-        },
         data() {
             return {
                 addGroupMemberVisible: false,
@@ -76,6 +69,13 @@
             members() {
                 return this.currentMemberList.slice(0, this.count)
             },
+        },
+        watch: {
+            groupProfile(groupProfile) {
+                Object.assign(this, {
+                    name: groupProfile.name,
+                })
+            }
         },
         methods: {
             getGroupMemberAvatarText(role) {

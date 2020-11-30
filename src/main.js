@@ -9,7 +9,6 @@ import Axios from 'axios'
 import './assets/icon/iconfont.css'
 import './assets/icon/tim.css'
 import './assets/css/yzmw.css'
-import ca from 'element-ui/src/locale/lang/ca'
 // import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 window.tim = tim
 window.TIM = TIM
@@ -73,7 +72,7 @@ Vue.prototype.getFriendList = function (callback) {
         From_Account:this.userApi().userId,
         StartIndex:0
     },res=>{
-      if(res.data.FriendNum===0){//说明没好友
+      if(res.data.FriendNum===0) {//说明没好友
         this.$store.commit('updateFriendList',[])
       }else{
         let userDataArray = res.data.UserDataItem

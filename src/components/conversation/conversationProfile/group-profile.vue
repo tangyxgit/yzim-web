@@ -241,7 +241,6 @@
                 showEditNotification: false,
                 showEditJoinOption: false,
                 showChangeGroupOwner: false,
-                showEditMessageRemindType: false,
                 showEditNameCard: false,
                 name: this.groupProfile.name,
                 avatar: this.groupProfile.avatar,
@@ -253,11 +252,6 @@
                 nameCard: this.groupProfile.selfInfo.nameCard || '',
                 muteAllMembers: this.groupProfile.muteAllMembers,
                 memberCount: this.groupProfile.memberCount,
-                messageRemindTypeMap: {
-                    AcceptAndNotify: '接收消息并提示',
-                    AcceptNotNotify: '接收消息但不提示',
-                    Discard: '屏蔽消息'
-                },
                 joinOptionMap: {
                     FreeAccess: '自由加入',
                     NeedPermission: '需要验证',
@@ -327,7 +321,7 @@
                     introduction: groupProfile.introduction,
                     notification: groupProfile.notification,
                     joinOption: groupProfile.joinOption,
-                    messageRemindType: groupProfile.messageRemindType ? groupProfile.messageRemindType : 'AcceptAndNotify',
+                    messageRemindType: groupProfile.selfInfo.messageRemindType,
                     nameCard: groupProfile.selfInfo.nameCard || '',
                     muteAllMembers: groupProfile.muteAllMembers,
                 })
@@ -533,7 +527,10 @@
                         messageRemindType: this.messageRemindType
                     })
                     .then(() => {
-                        this.showEditMessageRemindType = false
+                      this.$store.commit('showMessage', {
+                        type: 'success',
+                        message: '设置成功'
+                      })
                     })
                     .catch(error => {
                         this.$store.commit('showMessage', {

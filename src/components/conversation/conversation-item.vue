@@ -20,14 +20,11 @@
                         v-else-if="conversation.type ===  TIM.TYPES.CONV_GROUP"
                   >{{conversation.groupProfile.name || conversation.groupProfile.groupID}}
                 </span>
-                  <span
-                          v-else-if="conversation.type === TIM.TYPES.CONV_SYSTEM"
-                  >系统通知
-                </span>
+                  <span v-else-if="conversation.type === TIM.TYPES.CONV_SYSTEM">系统通知</span>
                 </div>
               </div>
               <div class="unread-count">
-              <span class="badge" v-if="showUnreadCount">
+              <span class="badge" v-if="showUnreadCount && !showGrayBadge">
                 {{conversation.unreadCount > 99 ? '99+' : conversation.unreadCount}}
               </span>
               </div>
