@@ -159,11 +159,11 @@
             kickedOutReason(type) {
                 switch (type) {
                     case this.TIM.TYPES.KICKED_OUT_MULT_ACCOUNT:
-                        return '由于多实例登录'
+                        return '由于其他设备登录'
                     case this.TIM.TYPES.KICKED_OUT_MULT_DEVICE:
                         return '由于多设备登录'
                     case this.TIM.TYPES.KICKED_OUT_USERSIG_EXPIRED:
-                        return '由于 userSig 过期'
+                        return '由于信息过期'
                     default:
                         return ''
                 }

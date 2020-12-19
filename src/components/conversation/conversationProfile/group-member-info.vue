@@ -47,7 +47,7 @@
       member.role === 'Admin' ? '取消管理员' : '设为管理员'
       }}
     </el-button>
-    <el-button type="text" v-if="showKickout" style="color:red;" @click="kickoutGroupMember">踢出群组</el-button>
+    <el-button class="ml-0 mt-2" type="danger" size="small" v-if="showKickout"  @click="kickoutGroupMember" plain>踢出群组</el-button>
   </div>
 </template>
 

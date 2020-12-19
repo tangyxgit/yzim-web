@@ -20,14 +20,11 @@
                         v-else-if="conversation.type ===  TIM.TYPES.CONV_GROUP"
                   >{{conversation.groupProfile.name || conversation.groupProfile.groupID}}
                 </span>
-                  <span
-                          v-else-if="conversation.type === TIM.TYPES.CONV_SYSTEM"
-                  >系统通知
-                </span>
+                  <span v-else-if="conversation.type === TIM.TYPES.CONV_SYSTEM">系统通知</span>
                 </div>
               </div>
               <div class="unread-count">
-              <span class="badge" v-if="showUnreadCount">
+              <span class="badge" v-if="showUnreadCount && !showGrayBadge">
                 {{conversation.unreadCount > 99 ? '99+' : conversation.unreadCount}}
               </span>
               </div>
@@ -37,7 +34,7 @@
                 <div v-if="conversation.lastMessage" class="text-ellipsis">
                   <span class="remind" style="color:red;" v-if="hasMessageAtMe">[有人提到我]</span>
                   <span class="text" :class="{'chooseName':conversation.conversationID === currentConversation.conversationID}" :title="conversation.lastMessage.messageForShow">
-                  {{messageForShow}}
+                  {{messageForShow()}}
                 </span>
                 </div>
               </div>
@@ -120,18 +117,6 @@ export default {
         'AcceptNotNotify'
       )
     },
-    messageForShow() {
-      if (this.conversation.lastMessage.isRevoked) {
-        if (this.conversation.lastMessage.fromAccount === this.currentUserProfile.userID) {
-          return '你撤回了一条消息'
-        }
-        if (this.conversation.type === this.TIM.TYPES.CONV_C2C) {
-          return '对方撤回了一条消息'
-        }
-        return `${this.conversation.lastMessage.fromAccount}撤回了一条消息`
-      }
-      return this.conversation.lastMessage.messageForShow
-    },
     ...mapState({
       currentConversation: state => state.conversation.currentConversation,
       currentUserProfile: state => state.user.currentUserProfile
@@ -150,6 +135,26 @@ export default {
     })
   },
   methods: {
+    messageForShow() {
+      if (this.conversation.lastMessage.isRevoked) {
+        if (this.conversation.lastMessage.fromAccount === this.currentUserProfile.userID) {
+          return '你撤回了一条消息'
+        }
+        if (this.conversation.type === this.TIM.TYPES.CONV_C2C) {
+          return '对方撤回了一条消息'
+        }
+        if (!this.conversation.lastMessage.nick) {
+          this.tim.getUserProfile({
+            userIDList:[this.conversation.lastMessage.fromAccount]
+          }).then(imResponse=>{
+            let userData = imResponse.data
+            this.conversation.lastMessage.nick = userData[0].nick
+          })
+        }
+        return `"${this.conversation.lastMessage.nick || this.conversation.lastMessage.fromAccount}" 撤回了一条消息`
+      }
+      return this.conversation.lastMessage.messageForShow
+    },
     selectConversation() {
       if (this.conversation.conversationID !== this.currentConversation.conversationID) {
         this.$store.dispatch(

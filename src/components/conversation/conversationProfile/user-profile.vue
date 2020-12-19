@@ -1,7 +1,7 @@
 <template>
   <div class="profile-user">
     <avatar :title=userProfile.userID :src="userProfile.avatar"/>
-    <div class="nick-name text-ellipsis">
+    <div class="nick-name text-ellipsis" style="margin-top: 16px">
       <span v-if="userProfile.nick" :title=userProfile.nick>
         {{ userProfile.nick }}
       </span>
@@ -9,10 +9,6 @@
         [Anonymous]
       </span>
     </div>
-    <div class="gender " v-if="genderClass">
-      <span :title="gender" class="iconfont" :class="genderClass"></span>
-    </div>
-
     <!--        <div class="info-item">-->
     <!--            <div class="label text-left">-->
     <!--                部门-->
@@ -40,13 +36,13 @@
     <!--            </div>-->
     <!--        </div>-->
 
-    <div class="info-item top ">
+    <div class="info-item top" style="margin-top: 24px">
       <div class="row justify-content-between px-4">
         <div>
           <div class="label text-left">
             邮箱
           </div>
-          <div class="content text-left" style="font-size: 12px">
+          <div class="content text-left" style="font-size: 14px">
             {{form.email}}
           </div>
         </div>
@@ -60,7 +56,7 @@
           <div class="label text-left">
             手机号
           </div>
-          <div class="content text-left" style="font-size: 12px">
+          <div class="content text-left" style="font-size: 14px">
             {{form.mobile}}
           </div>
         </div>
@@ -92,22 +88,24 @@
     <!--        </div>-->
 
 
-    <el-button
-      title="将该用户加入黑名单"
-      type="text"
-      @click="addToBlackList"
-      v-if="!isInBlacklist && userProfile.userID !== myUserID"
-      class="btn-add-blacklist "
-    >加入黑名单
-    </el-button
-    >
-    <el-button title="将该用户移出黑名单" type="text" @click="removeFromBlacklist" v-else-if="isInBlacklist">移出黑名单
-    </el-button>
-    <!-- 拉黑 和 反拉黑 -->
-    <div>
-      <el-button type="text" style="color:dodgerblue" @click="deleteFriend">删除好友</el-button>
+    <div v-if="!isInBlacklist && userProfile.userID !== myUserID" class="m-3 mt-4">
+      <el-button
+              title="将该用户加入黑名单"
+              @click="addToBlackList"
+              style="font-size: 14px"
+              class="w-100">
+        加入黑名单
+      </el-button>
     </div>
-
+    <div v-else-if="isInBlacklist" class="m-3">
+      <el-button title="将该用户移出黑名单" @click="removeFromBlacklist" class="w-100">
+        移出黑名单
+      </el-button>
+    </div>
+    <!-- 拉黑 和 反拉黑 -->
+    <div class="mx-3">
+      <el-button style="font-size: 14px" @click="deleteFriend" class="w-100">删除好友</el-button>
+    </div>
   </div>
 </template>
 
@@ -301,7 +299,7 @@
   }
 
   .info-item {
-    margin-bottom: 0px;
+    margin-bottom: 0;
     padding-top 8px;
     padding-bottom 8px;
     border-bottom 1px solid $border-base

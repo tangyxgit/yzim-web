@@ -1,8 +1,11 @@
 <template>
   <message-bubble :isMine="isMine" :message=message>
     <a class="geo-element" :href="href" target="_blank" title="点击查看详情">
-      <span class="el-icon-location-outline">{{payload.description}}</span>
-      <img :src="url" />
+<!--      <span class="el-icon-location-outline">{{payload.description}}</span>-->
+      <span style="font-size: 16px;padding: 10px 10px 0 10px">{{title}}</span>
+      <span style="color: #999999;font-size: 12px;padding:5px 10px">{{desc}}</span>
+<!--      <img :src="url" />-->
+        <img src="../../../assets/image/img_location_default.png" width="100%"/>
     </a>
   </message-bubble>
 </template>
@@ -44,6 +47,12 @@ export default {
       return `https://map.qq.com/?type=marker&isopeninfowin=1&markertype=1&pointx=${
         this.lon
       }&pointy=${this.lat}&name=${this.payload.description}`
+    },
+    title() {
+      return this.payload.description.split('##')[0]
+    },
+    desc() {
+      return this.payload.description.split('##')[1]
     }
   },
   mounted() {
@@ -62,11 +71,10 @@ export default {
   color: #000;
   display: flex;
   flex-direction: column;
-  padding: 6px;
   font-size: 18px;
 
   img {
-    margin-top: 12px;
+    margin-top: 5px;
   }
 }
 </style>

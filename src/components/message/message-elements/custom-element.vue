@@ -1,8 +1,8 @@
 <template>
 <message-bubble :isMine=isMine :message=message>
   <div class="custom-element-wrapper">
-    <div class="survey"  v-if="this.payload.data === 'survey'">
-      <div class="title">对IM DEMO的评分和建议</div>
+    <div class="survey"  v-if="payload.data === 'survey'">
+      <div class="title">对元信的评分和建议</div>
       <el-rate
           v-model="rate"
           disabled
@@ -11,6 +11,27 @@
           score-template="{value}">
       </el-rate>
       <div class="suggestion">{{this.payload.extension}}</div>
+    </div>
+    <div v-if="cardLink" style="cursor:pointer;">
+      <a :href="cardJson.link" target="_blank" style="color: #000;text-decoration: none" title="查看详情">
+        <div style="font-size: 16px;color: black">
+          {{cardJson.title}}
+        </div>
+        <div class="row justify-content-between m-0 mt-1">
+          <el-row>
+            <el-col :span="20">
+              <div style="font-size: 12px;color: #999999">
+                {{cardJson.desc}}
+              </div>
+            </el-col>
+            <el-col :span="4">
+              <div>
+                <img :src="cardJson.logo" width="48" height="48"/>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+      </a>
     </div>
     <span class="text" title="不支持的消息，请在手机上查看" v-else>{{text}}</span>
   </div>
@@ -38,6 +59,11 @@ export default {
       type: Boolean
     }
   },
+  data() {
+    return {
+      cardJson:{}
+    }
+  },
   components: {
     MessageBubble,
     ElRate: Rate
@@ -48,6 +74,10 @@ export default {
     },
     rate() {
       return parseInt(this.payload.description)
+    },
+    cardLink() {
+      this.cardJson = JSON.parse(this.payload.data)
+      return this.cardJson.businessID==='card_link'
     }
   },
   methods: {

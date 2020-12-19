@@ -59,8 +59,24 @@ export default {
       let classString = ''
       if (this.isMine) {
         classString += 'message-send'
+        if(this.message.type === this.TIM.TYPES.MSG_GEO) {
+          classString+=' message-send-white-style p-0'
+        } else {
+          let payload = this.message.payload
+          if(payload) {
+            let payloadData = payload.data
+            if(payloadData) {
+              if(JSON.parse(payloadData).businessID === 'card_link') {
+                classString+=' message-send-white-style'
+              }
+            }
+          }
+        }
       } else {
         classString += 'message-received'
+        if(this.message.type === this.TIM.TYPES.MSG_GEO) {
+          classString += ' p-0'
+        }
       }
       if (this.isNew) {
         classString += 'new'
@@ -72,7 +88,7 @@ export default {
         return '对方撤回了一条消息'
       }
       if (this.message.conversationType === this.TIM.TYPES.CONV_GROUP && !this.isMine) {
-        return `${this.message.from}撤回了一条消息`
+        return `"${this.message.nick || this.message.from}" 撤回了一条消息`
       }
       return '你撤回了一条消息'
     },
@@ -163,7 +179,7 @@ export default {
     word-wrap break-word
     word-break break-all
     padding 10px
-    box-shadow: 0 5px 10px 0 rgba(0,0,0,.1);
+    box-shadow: 0 0  0 rgba(0,0,0,.1);
     span
       white-space pre-wrap
       margin 0
@@ -181,10 +197,10 @@ export default {
       font-size 24px // 32px 在mac上会模糊 24px正常 , window 24px模糊 28px 32px正常  36px windows mac 基本一致，但是太大
   .message-received
     background-color $white
-    margin-left 15px
-    border-radius 0 4px 4px 4px
+    margin-left 5px
+    border-radius 4px 4px 4px 4px
     &::before
-      left -10px
+      left 0
       transform scaleX(-1)
       color $white
     &.new
@@ -193,11 +209,11 @@ export default {
       animation: bounce 500ms linear both;
   .message-send
     background-color $light-primary
-    margin-right 15px
-    border-radius 4px 0 4px 4px
+    margin-right 5px
+    border-radius 4px 4px 4px 4px
     color $white
     &::before
-      right: -10px
+      right: 0
       color $light-primary
     &.new
       transform: scale(0);
@@ -213,6 +229,12 @@ export default {
   .el-icon-arrow-down {
     font-size: 12px;
   }
+  .message-send-white-style
+    background white
+    &::before
+      right: 0
+      color white
+
 .group-tip-element-wrapper
   background $white
   padding 4px 15px

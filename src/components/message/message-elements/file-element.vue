@@ -7,7 +7,7 @@
         <img v-else-if="fileName.indexOf('ppt') >= 0 || fileName.indexOf('pptx') >= 0" src="../../../assets/image/icon_ppt.png" style="height: 40px;width:40px"/>
         <img v-else-if="fileName.indexOf('pdf') >= 0" src="../../../assets/image/icon_pdf.png" style="height: 40px;width:40px"/>
         <img v-else-if="fileName.indexOf('doc') >= 0 || fileName.indexOf('docx') >= 0" src="../../../assets/image/icon_word.png" style="height: 40px;width:40px"/>
-        <img v-else-if="fileName.indexOf('zar') >= 0 || fileName.indexOf('rar') >= 0" src="../../../assets/image/icon_zar.png" style="height: 40px;width:40px"/>
+        <img v-else-if="fileName.indexOf('zip') >= 0 || fileName.indexOf('rar') >= 0" src="../../../assets/image/icon_zar.png" style="height: 40px;width:40px"/>
         <img v-else src="../../../assets/image/icon_dk.png" style="height: 40px;width:40px"/>
         <div class="file-element">
           <span class="file-name">{{ fileName }}</span>
@@ -75,24 +75,29 @@
                 return number.toFixed(precision)
             },
             downloadFile() {
+                let a = document.createElement('a')
+                a.href = this.fileUrl
+                a.target = '_blank'
+                a.download = this.fileName
+                a.click()
                 // 浏览器支持fetch则用blob下载，避免浏览器点击a标签，跳转到新页面预览的行为
-                if (window.fetch) {
-                    fetch(this.fileUrl)
-                        .then(res => res.blob())
-                        .then(blob => {
-                            let a = document.createElement('a')
-                            let url = window.URL.createObjectURL(blob)
-                            a.href = url
-                            a.download = this.fileName
-                            a.click()
-                        })
-                } else {
-                    let a = document.createElement('a')
-                    a.href = this.fileUrl
-                    a.target = '_blank'
-                    a.download = this.filename
-                    a.click()
-                }
+                // if (window.fetch) {
+                //     fetch(this.fileUrl)
+                //         .then(res => res.blob())
+                //         .then(blob => {
+                //             let a = document.createElement('a')
+                //             let url = window.URL.createObjectURL(blob)
+                //             a.href = url
+                //             a.download = this.fileName
+                //             a.click()
+                //         })
+                // } else {
+                //     let a = document.createElement('a')
+                //     a.href = this.fileUrl
+                //     a.target = '_blank'
+                //     a.download = this.filename
+                //     a.click()
+                // }
             }
         }
     }
