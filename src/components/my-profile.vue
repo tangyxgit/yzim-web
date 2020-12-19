@@ -7,7 +7,7 @@
                     <div class="offset-1">
                         <el-form v-model="form" label-width="60px" size="mini">
                             <el-form-item label="昵称">
-                                <el-input v-model="form.nickName" placeholder="昵称"/>
+                                <el-input v-model="form.nickName" maxlength="10" placeholder="昵称"/>
                             </el-form-item>
                             <el-form-item label="手机">
                                 <el-input @focus="changePhone = true" v-model="form.mobile" placeholder="手机号码"/>
