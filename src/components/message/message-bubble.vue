@@ -178,7 +178,7 @@ export default {
     max-width 350px
     word-wrap break-word
     word-break break-all
-    padding 10px
+    padding 10px 15px
     box-shadow: 0 0  0 rgba(0,0,0,.1);
     span
       white-space pre-wrap
