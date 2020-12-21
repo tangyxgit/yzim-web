@@ -158,7 +158,7 @@
         </div>
       </div>
 
-      <div style="height:85%;overflow-y: auto;overflow-x: hidden">
+      <div>
         <div v-for="member in members" :key="member.userID" style="padding-left: 25px;padding-right: 25px;padding-bottom: 8px;padding-top: 8px">
           <popover placement="right" :key="member.userID" >
             <group-member-info :member="member"/>
@@ -173,6 +173,9 @@
             </div>
           </popover>
         </div>
+      </div>
+      <div class="p-3" v-if="showLoadMore">
+        <el-button class="w-100" @click="loadMoreCount">查看更多</el-button>
       </div>
     </div>
     <group-dialog ref="groupAdd" :showDialog="showAddGroup" @closeGroup="closeAddGroup"></group-dialog>
@@ -258,7 +261,8 @@
                     DisableApply: '禁止加群'
                 },
                 active: false,
-                showChangeOwner: false
+                showChangeOwner: false,
+                count:0
             }
         },
         computed: {
@@ -267,7 +271,11 @@
                 currentMemberList: state => state.group.currentMemberList,
             }),
             members() {
+                console.log('this.currentMemberList:',this.currentMemberList)
                 return this.currentMemberList
+            },
+            showLoadMore() {
+              return this.members.length < this.groupProfile.memberNum
             },
             getAllMemberList() {
                 return this.memberDataAll.filter(item => {
@@ -328,6 +336,13 @@
             }
         },
         methods: {
+            loadMoreCount () {
+              this.$store
+                      .dispatch('getGroupMemberList', this.groupProfile.groupID)
+                      .then(() => {
+                        this.count += 30
+                      })
+            },
             handleAddButtonClick() {
                 this.$refs.groupAdd.refreshData()
                 this.showAddGroup = true
