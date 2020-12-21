@@ -137,7 +137,7 @@
               <el-button class="w-100" slot="reference">退出群聊</el-button>
             </el-popconfirm>
           </div>
-          <div v-if="showDissmissGroup" class="mx-3 mt-3">
+          <div v-if="showDismissGroup" class="mx-3 mt-3">
             <el-popconfirm
               title="确认解散该群吗？"
               @onConfirm="dismissGroup">
@@ -150,7 +150,7 @@
     <div>
       <div class="row justify-content-between pt-1 top" style="height:15%;padding-left: 25px;padding-right: 25px;">
         <div class="member-count text-ellipsis" style="font-size: 14px;color:#A8AFBA">
-          群成员：{{currentConversation.groupProfile.memberNum}}
+          群成员：{{currentConversation.groupProfile.memberCount}}
         </div>
         <div slot="reference" class="btn-add-member" title="添加群成员" @click="handleAddButtonClick"
              style="cursor: pointer">
@@ -162,11 +162,11 @@
         <div v-for="member in members" :key="member.userID" style="padding-left: 25px;padding-right: 25px;padding-bottom: 8px;padding-top: 8px">
           <popover placement="right" :key="member.userID" >
             <group-member-info :member="member"/>
-            <div slot="reference" class="row">
+            <div slot="reference" class="row align-items-center">
               <div>
                 <avatar :src="member.avatar" style="width:32px;height:32px;border-radius: 90%"/>
               </div>
-              <div class="ml-2 row align-items-center" style="font-size: 14px">
+              <div class="ml-2 col text-truncate align-items-center" style="font-size: 14px;width: 150px">
                 <span v-if="member.nameCard" :title=member.nameCard>{{ member.nameCard }}</span>
                 <span v-else-if="member.nick" :title=member.nick>{{ member.nick }}</span>
               </div>
@@ -286,7 +286,7 @@
             isAdmin() {
                 return this.groupProfile.selfInfo.role === this.TIM.TYPES.GRP_MBR_ROLE_ADMIN
             },
-            showDissmissGroup() {
+            showDismissGroup() {
                 // 好友工作群不能解散
                 // return this.isOwner && this.groupProfile.type !== this.TIM.TYPES.GRP_WORK
                 return this.isOwner
