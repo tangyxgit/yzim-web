@@ -169,10 +169,11 @@
                             <div>
                                 <avatar :src="member.avatar" style="width:32px;height:32px;border-radius: 90%"/>
                             </div>
-                            <div class="ml-2 col text-truncate align-items-center" style="font-size: 14px;width: 150px">
+                            <div class="ml-2 col text-truncate align-items-center" style="font-size: 14px;width: 130px">
                                 <span v-if="member.nameCard" :title=member.nameCard>{{ member.nameCard }}</span>
                                 <span v-else-if="member.nick" :title=member.nick>{{ member.nick }}</span>
                             </div>
+                            <div style="font-size: 14px" v-if="member.role==='Owner'">群主</div>
                         </div>
                     </popover>
                 </div>
