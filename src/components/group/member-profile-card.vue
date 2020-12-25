@@ -16,15 +16,15 @@
       <el-divider class="divider" />
       <div class="member-profile">
         <div class="item">
-          <span class="label">群名片</span>
+          <span class="label mr-2">群名片</span>
           {{member.nameCard||"暂无"}}
         </div>
         <div class="item">
-          <span class="label">入群时间</span>
+          <span class="label mr-2">入群时间</span>
           {{joinTime}}
         </div>
         <div v-if="member.muteUntil" class="item">
-          <span class="label">禁言至</span>
+          <span class="label mr-2">禁言至</span>
           {{muteUntil}}
         </div>
       </div>

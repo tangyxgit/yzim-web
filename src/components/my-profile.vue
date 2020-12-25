@@ -7,7 +7,7 @@
                     <div class="offset-1">
                         <el-form v-model="form" label-width="60px" size="mini">
                             <el-form-item label="昵称">
-                                <el-input v-model="form.nickName" placeholder="昵称"/>
+                                <el-input v-model="form.nickName" maxlength="10" placeholder="昵称"/>
                             </el-form-item>
                             <el-form-item label="手机">
                                 <el-input @focus="changePhone = true" v-model="form.mobile" placeholder="手机号码"/>
@@ -170,14 +170,14 @@
                     this.showEditMyProfile = false
                 })
             },
-            avatarSuccess(response, file, fileList) {
+            avatarSuccess(response) {
                 // console.log("avatar success",response,file,fileList)
                 if(response.code===200) {
-                    this.form.userIcon = response.data.userIcon;
+                    this.form.userIcon = response.data.userIcon
                     this.editMyProfile()
                 }
             },
-            avatarError(err, file, fileList){
+            avatarError() {
                 // console.log("avatar err",response,file,fileList)
 
             },
@@ -211,7 +211,7 @@
                     return
                 }
                 this.sendSms = true
-                this.requestPost('user/sendSms', this.params, res => {
+                this.requestPost('user/sendSms', this.params, () => {
                     this.sendSms = false
                     this.time = 60 * 1000
                 }, error => {

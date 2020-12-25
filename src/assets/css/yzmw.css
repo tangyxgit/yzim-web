@@ -13,6 +13,11 @@
 :focus {
     outline: 0;
 }
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
 
 .el-dialog__header {
