@@ -175,6 +175,9 @@ export default {
       if (this.showAtGroupMember) {
         this.handleSelectAtUser()
       } else {
+        if(this.messageContent === '' || this.messageContent.trim().length === 0) {
+            return
+        }
         this.sendTextMessage()
       }
     },
