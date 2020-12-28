@@ -105,8 +105,9 @@ Vue.prototype.requestPost = function (url, params, success, fail) {
         && url!=='user/getFriend') {
         params.userId = this.userApi().userId
     }
+    params.appid = 'de241446a50499bb77a8684cf610fd04'
     //加上headers
-    var headersval = {token: this.token(), platform: 'web'}
+    var headersval = {token: this.token(), platform: 'web',appid:'de241446a50499bb77a8684cf610fd04'}
     Axios.post(url, params,{headers:headersval}).then(res => {
         let code = res.data.code
         if (code === 200) {
