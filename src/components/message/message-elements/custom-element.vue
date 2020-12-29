@@ -74,13 +74,17 @@ export default {
     },
     rate() {
       return parseInt(this.payload.description)
-    },
-    cardLink() {
-      this.cardJson = JSON.parse(this.payload.data)
-      return this.cardJson.businessID==='card_link'
     }
   },
   methods: {
+    cardLink() {
+      try {
+        this.cardJson = JSON.parse(this.payload.data)
+        return this.cardJson.businessID==='card_link'
+      }catch (e) {
+        return false
+      }
+    },
     translateCustomMessage(payload) {
       let videoPayload = {}
       try{

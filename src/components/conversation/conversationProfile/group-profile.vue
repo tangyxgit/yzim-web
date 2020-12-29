@@ -151,8 +151,8 @@
             <div class="row justify-content-between pt-1 top"
                  style="height:15%;padding-left: 25px;padding-right: 25px;">
                 <div class="member-count text-ellipsis" style="font-size: 14px;color:#A8AFBA">
-                    <!--                    群成员：{{currentConversation.groupProfile.memberCount}}-->
-                    群成员：{{members.length}}
+                                        群成员：{{currentConversation.groupProfile.memberCount}}
+<!--                    群成员：{{members.length}}-->
                 </div>
                 <div slot="reference" class="btn-add-member" title="添加群成员" @click="handleAddButtonClick"
                      style="cursor: pointer">
