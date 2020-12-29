@@ -151,7 +151,7 @@
             <div class="row justify-content-between pt-1 top"
                  style="height:15%;padding-left: 25px;padding-right: 25px;">
                 <div class="member-count text-ellipsis" style="font-size: 14px;color:#A8AFBA">
-                                        群成员：{{currentConversation.groupProfile.memberCount}}
+                                        群成员：{{memberCount}}
 <!--                    群成员：{{members.length}}-->
                 </div>
                 <div slot="reference" class="btn-add-member" title="添加群成员" @click="handleAddButtonClick"
@@ -162,7 +162,7 @@
 
             <div>
                 <div v-for="member in members" :key="member.userID"
-                     style="padding-left: 25px;padding-right: 25px;padding-bottom: 8px;padding-top: 8px">
+                     style="padding: 8px 25px;">
                     <popover placement="right" :key="member.userID">
                         <group-member-info :member="member"/>
                         <div slot="reference" class="row align-items-center">
@@ -265,15 +265,19 @@
                 },
                 active: false,
                 showChangeOwner: false,
-                count: 0
+                count: 0,
+                isUpdateGroup:false
             }
         },
         computed: {
             ...mapState({
                 currentConversation: state => state.conversation.currentConversation,
-                currentMemberList: state => state.group.currentMemberList,
+                currentMemberList: (state) => {
+                    return state.group.currentMemberList
+                },
             }),
             members() {
+                this.updateGroupProfile()
                 return this.currentMemberList
             },
             showLoadMore() {
@@ -338,12 +342,15 @@
             }
         },
         methods: {
-            loadMoreCount() {
-                this.$store
-                    .dispatch('getGroupMemberList', this.groupProfile.groupID)
-                    .then(() => {
-                        this.count += 30
+            updateGroupProfile() {
+                if(this.isUpdateGroup) {
+                    this.isUpdateGroup = false
+                    this.tim.getGroupProfile({
+                        groupID:this.groupProfile.groupID
+                    }).then(imgResponse => {
+                        this.memberCount = imgResponse.data.group.memberCount
                     })
+                }
             },
             handleAddButtonClick() {
                 this.$refs.groupAdd.refreshData()

@@ -66,8 +66,8 @@ export default {
           if(payload) {
             let payloadData = payload.data
             if(payloadData) {
-              if(JSON.parse(payloadData).businessID === 'card_link') {
-                classString+=' message-send-white-style'
+              if(payloadData!=='group_create' && JSON.parse(payloadData).businessID === 'card_link') {
+                classString+='message-send-white-style'
               }
             }
           }

@@ -12,7 +12,7 @@
       </el-rate>
       <div class="suggestion">{{this.payload.extension}}</div>
     </div>
-    <div v-if="cardLink" style="cursor:pointer;">
+    <div v-if="cardLink()" style="cursor:pointer;">
       <a :href="cardJson.link" target="_blank" style="color: #000;text-decoration: none" title="查看详情">
         <div style="font-size: 16px;color: black">
           {{cardJson.title}}
@@ -78,12 +78,11 @@ export default {
   },
   methods: {
     cardLink() {
-      try {
+        if(this.payload.data === 'group_create') {
+            return false
+        }
         this.cardJson = JSON.parse(this.payload.data)
         return this.cardJson.businessID==='card_link'
-      }catch (e) {
-        return false
-      }
     },
     translateCustomMessage(payload) {
       let videoPayload = {}
