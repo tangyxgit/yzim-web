@@ -151,7 +151,7 @@
             <div class="row justify-content-between pt-1 top"
                  style="height:15%;padding-left: 25px;padding-right: 25px;">
                 <div class="member-count text-ellipsis" style="font-size: 14px;color:#A8AFBA">
-                                        群成员：{{memberCount}}
+                                        群成员：{{memberCount}}{{updateGroupMemberCount}}
 <!--                    群成员：{{members.length}}-->
                 </div>
                 <div slot="reference" class="btn-add-member" title="添加群成员" @click="handleAddButtonClick"
@@ -266,7 +266,6 @@
                 active: false,
                 showChangeOwner: false,
                 count: 0,
-                isUpdateGroup:false
             }
         },
         computed: {
@@ -275,9 +274,16 @@
                 currentMemberList: (state) => {
                     return state.group.currentMemberList
                 },
+                updateCurrentMemberCount: state=> state.group.updateCurrentMemberCount
             }),
+            updateGroupMemberCount() {
+                if(this.updateCurrentMemberCount) {
+                    this.$store.commit('changeUpdateCount', false)
+                    this.updateGroupProfile()
+                }
+                return ''
+            },
             members() {
-                this.updateGroupProfile()
                 return this.currentMemberList
             },
             showLoadMore() {
@@ -343,14 +349,11 @@
         },
         methods: {
             updateGroupProfile() {
-                if(this.isUpdateGroup) {
-                    this.isUpdateGroup = false
-                    this.tim.getGroupProfile({
-                        groupID:this.groupProfile.groupID
-                    }).then(imgResponse => {
-                        this.memberCount = imgResponse.data.group.memberCount
-                    })
-                }
+                this.tim.getGroupProfile({
+                    groupID:this.groupProfile.groupID
+                }).then(imgResponse => {
+                    this.memberCount = imgResponse.data.group.memberCount
+                })
             },
             handleAddButtonClick() {
                 this.$refs.groupAdd.refreshData()
