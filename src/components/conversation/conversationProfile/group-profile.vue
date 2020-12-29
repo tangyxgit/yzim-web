@@ -177,9 +177,9 @@
                     </popover>
                 </div>
             </div>
-            <!--            <div class="p-3" v-if="showLoadMore">-->
-            <!--                <el-button class="w-100" @click="loadMoreCount">查看更多</el-button>-->
-            <!--            </div>-->
+                        <div class="p-3" v-if="showLoadMore">
+                            <el-button class="w-100" @click="loadMoreCount">查看更多</el-button>
+                        </div>
         </div>
         <group-dialog ref="groupAdd" :showDialog="showAddGroup" @closeGroup="closeAddGroup"></group-dialog>
 
@@ -348,6 +348,13 @@
             }
         },
         methods: {
+            loadMoreCount() {
+                this.$store
+                    .dispatch('getGroupMemberList', this.groupProfile.groupID)
+                    .then(() => {
+                        this.count += 30
+                    })
+            },
             updateGroupProfile() {
                 this.tim.getGroupProfile({
                     groupID:this.groupProfile.groupID
