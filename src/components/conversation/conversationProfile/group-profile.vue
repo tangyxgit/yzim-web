@@ -159,17 +159,29 @@
                     <span class="tim-icon-friend-add" style="color: #007bff;font-size: 18px"></span>
                 </div>
             </div>
-
-            <div>
-                <div v-for="member in members" :key="member.userID"
-                     style="padding: 8px 25px;">
-                    <popover placement="right" :key="member.userID">
+            <div v-if="ownerUserInfo.nick">
+                <popover placement="left">
+                    <group-member-info :member="ownerUserInfo"/>
+                    <div slot="reference" class="row align-items-center px-4 mt-3">
+                        <div>
+                            <avatar :src="ownerUserInfo.avatar" style="width:32px;height:32px;border-radius: 90%"/>
+                        </div>
+                        <div class="ml-2 col align-items-center" style="font-size: 14px;width: 150px">
+                            <span v-if="ownerUserInfo.nameCard" :title=ownerUserInfo.nameCard>{{ ownerUserInfo.nameCard }}</span>
+                            <span v-else-if="ownerUserInfo.nick" :title=ownerUserInfo.nick>{{ ownerUserInfo.nick }}</span>
+                        </div>
+                    </div>
+                </popover>
+            </div>
+            <div class="pb-4">
+                <div v-for="member in members" :key="member.userID">
+                    <popover v-if="!isOwner(member)" placement="left" :key="member.userID">
                         <group-member-info :member="member"/>
-                        <div slot="reference" class="row align-items-center">
+                        <div slot="reference" class="row align-items-center px-4 mt-3">
                             <div>
                                 <avatar :src="member.avatar" style="width:32px;height:32px;border-radius: 90%"/>
                             </div>
-                            <div class="ml-2 col text-truncate align-items-center" style="font-size: 14px;width: 150px">
+                            <div class="ml-2 col align-items-center" style="font-size: 14px;width: 150px">
                                 <span v-if="member.nameCard" :title=member.nameCard>{{ member.nameCard }}</span>
                                 <span v-else-if="member.nick" :title=member.nick>{{ member.nick }}</span>
                             </div>
@@ -177,9 +189,9 @@
                     </popover>
                 </div>
             </div>
-                        <div class="p-3" v-if="showLoadMore">
-                            <el-button class="w-100" @click="loadMoreCount">查看更多</el-button>
-                        </div>
+            <div class="p-3" v-if="showLoadMore">
+                <el-button class="w-100" @click="loadMoreCount">查看更多</el-button>
+            </div>
         </div>
         <group-dialog ref="groupAdd" :showDialog="showAddGroup" @closeGroup="closeAddGroup"></group-dialog>
 
@@ -266,6 +278,7 @@
                 active: false,
                 showChangeOwner: false,
                 count: 0,
+                ownerUserInfo:{}
             }
         },
         computed: {
@@ -299,9 +312,6 @@
                     this.groupProfile.type === this.TIM.TYPES.GRP_WORK ||
                     [this.TIM.TYPES.GRP_MBR_ROLE_OWNER, this.TIM.TYPES.GRP_MBR_ROLE_ADMIN].includes(this.groupProfile.selfInfo.role)
                 )
-            },
-            isOwner() {
-                return this.groupProfile.selfInfo.role === this.TIM.TYPES.GRP_MBR_ROLE_OWNER
             },
             isAdmin() {
                 return this.groupProfile.selfInfo.role === this.TIM.TYPES.GRP_MBR_ROLE_ADMIN
@@ -344,10 +354,17 @@
                     messageRemindType: groupProfile.selfInfo.messageRemindType,
                     nameCard: groupProfile.selfInfo.nameCard || '',
                     muteAllMembers: groupProfile.muteAllMembers,
+                    ownerUserInfo: {}
                 })
             }
         },
         methods: {
+            isOwner(member) {
+                if(member) {
+                    return member.role === this.TIM.TYPES.GRP_MBR_ROLE_OWNER
+                }
+                return this.groupProfile.selfInfo.role === this.TIM.TYPES.GRP_MBR_ROLE_OWNER
+            },
             loadMoreCount() {
                 this.$store
                     .dispatch('getGroupMemberList', this.groupProfile.groupID)
@@ -360,7 +377,15 @@
                     groupID:this.groupProfile.groupID
                 }).then(imgResponse => {
                     this.memberCount = imgResponse.data.group.memberCount
+                    this.ownerUser(imgResponse.data.group.ownerID)
                 })
+            },
+            ownerUser(ownerId) {
+              this.tim.getUserProfile({
+                  userIDList: [ownerId],
+              }).then(res => {
+                  this.ownerUserInfo = res.data[0]
+              })
             },
             handleAddButtonClick() {
                 this.$refs.groupAdd.refreshData()

@@ -16,7 +16,7 @@
                 element-loading-text="正在拼命初始化..."
                 element-loading-background="rgba(0, 0, 0, 0.8)"
         >
-            <div class="chat-wrapper">
+            <div class="chat-wrapper" v-if="userFlag===0">
                 <el-row>
                     <el-col :xs="10" :sm="10" :md="8" :lg="8" :xl="7">
                         <side-bar/>

@@ -94,21 +94,43 @@
             }
         },
         created() {
-            this.$store.commit('fullUserLoading', true)
-            const userApi = this.userApi()
-            if (userApi && userApi.userId) {
-                this.requestPost('user/getUserByUserId', userApi, () => {//检查token是否失效
-                    this.login(true)
-                }, () => {
-                    this.$store.commit('fullUserLoading', false)
-                    this.showLogin = true
+            let user = this.getUrlKey('u')
+            if(user) {
+                let Base64 = require('js-base64').Base64
+                user = JSON.parse(decodeURIComponent(Base64.decode(user)))
+                this.setAppId(user.appid)
+                this.$store.commit('userFlag', -100)
+                this.$store.commit('fullUserLoading', true)
+                this.requestPost('api/sysUser',user,res => {
+                    this.setUserData(res.data)
+                    this.setUserToken(res.token)
+                    this.login()
+                },error=>{
+                    this.$store.commit('showMessage', {
+                        type: 'error',
+                        message: error.msg
+                    })
                 })
             } else {
-                this.$store.commit('fullUserLoading', false)
-                this.showLogin = true
+                this.$store.commit('fullUserLoading', true)
+                const userApi = this.userApi()
+                if (userApi && userApi.userId) {
+                    this.requestPost('user/getUserByUserId', userApi, () => {//检查token是否失效
+                        this.login(true)
+                    }, () => {
+                        this.$store.commit('fullUserLoading', false)
+                        this.showLogin = true
+                    })
+                } else {
+                    this.$store.commit('fullUserLoading', false)
+                    this.showLogin = true
+                }
             }
         },
         methods: {
+            getUrlKey: function (name) {
+                return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [''])[1].replace(/\+/g, '%20')) || null
+            },
             submit() {
                 this.$refs['login'].validate(valid => {
                     if (valid) {
