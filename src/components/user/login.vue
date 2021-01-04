@@ -96,6 +96,7 @@
         created() {
             let user = this.getUrlKey('u')
             if(user) {
+                //eyJ1c2VySWQiOiJ3ZWIyMDIxMDEwNCIsIm5pY2tOYW1lIjoid2Vi6Ieq5Yqo55m76ZmGIiwiYXBwaWQiOiJkZTI0MTQ0NmE1MDQ5OWJiNzdhODY4NGNmNjEwZmQwNCJ9
                 let Base64 = require('js-base64').Base64
                 user = JSON.parse(decodeURIComponent(Base64.decode(user)))
                 this.setAppId(user.appid)
@@ -129,7 +130,11 @@
         },
         methods: {
             getUrlKey: function (name) {
-                return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [''])[1].replace(/\+/g, '%20')) || null
+                let key = (new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [''])[1]
+                if(key) {
+                    return decodeURIComponent(key.replace(/\+/g, '%20')) || null
+                }
+                return ''
             },
             submit() {
                 this.$refs['login'].validate(valid => {
