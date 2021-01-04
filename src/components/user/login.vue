@@ -94,24 +94,21 @@
             }
         },
         created() {
+
+            // var params = {
+            //     userId:'web20200104',
+            //     nickName:'我是web',
+            //     mobile:'17774940000',
+            //     appid:'d368eeb23af1881ddf81dd596dfe3cf5'
+            // }
+            // console.log(encodeURIComponent(Base64.encode(JSON.stringify(params))))
             let user = this.getUrlKey('u')
             if(user) {
-                //eyJ1c2VySWQiOiJ3ZWIyMDIxMDEwNCIsIm5pY2tOYW1lIjoid2Vi6Ieq5Yqo55m76ZmGIiwiYXBwaWQiOiJkZTI0MTQ0NmE1MDQ5OWJiNzdhODY4NGNmNjEwZmQwNCJ9
+                //eyJ1c2VySWQiOiJ3ZWIyMDIwMDEwNCIsIm5pY2tOYW1lIjoi5oiR5pivd2ViIiwibW9iaWxlIjoiMTc3NzQ5NDAwMDAiLCJhcHBpZCI6ImQzNjhlZWIyM2FmMTg4MWRkZjgxZGQ1OTZkZmUzY2Y1In0%3D
                 let Base64 = require('js-base64').Base64
                 user = JSON.parse(decodeURIComponent(Base64.decode(user)))
                 this.setAppId(user.appid)
-                this.$store.commit('userFlag', -100)
-                this.$store.commit('fullUserLoading', true)
-                this.requestPost('api/sysUser',user,res => {
-                    this.setUserData(res.data)
-                    this.setUserToken(res.token)
-                    this.login()
-                },error=>{
-                    this.$store.commit('showMessage', {
-                        type: 'error',
-                        message: error.msg
-                    })
-                })
+                this.sysUser(user)
             } else {
                 this.$store.commit('fullUserLoading', true)
                 const userApi = this.userApi()
@@ -129,6 +126,21 @@
             }
         },
         methods: {
+            sysUser: function(data) {
+                this.$store.commit('userFlag', -100)
+                this.$store.commit('fullUserLoading', true)
+                this.requestPost('api/sysUser',data,res => {
+                    let user = res.data
+                    this.setUserData(user)
+                    this.setUserToken(res.token)
+                    this.login()
+                },error=>{
+                    this.$store.commit('showMessage', {
+                        type: 'error',
+                        message: error.msg
+                    })
+                })
+            },
             getUrlKey: function (name) {
                 let key = (new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [''])[1]
                 if(key) {
@@ -139,11 +151,14 @@
             submit() {
                 this.$refs['login'].validate(valid => {
                     if (valid) {
-                        // this.login()
+                        this.setAppId('de241446a50499bb77a8684cf610fd04')
                         this.requestPost('user/login', this.params, res => {
-                            this.setUserData(res.data)
-                            this.setUserToken(res.token)
-                            this.login()
+                            let data = res.data
+                            data.appid = 'de241446a50499bb77a8684cf610fd04'
+                            this.sysUser(data)
+                            // this.setUserData(res.data)
+                            // this.setUserToken(res.token)
+                            // this.login()
                         }, error => {
                             this.$store.commit('showMessage', {
                                 type: 'error',

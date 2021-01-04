@@ -155,6 +155,10 @@ Vue.prototype.requestGet = function (url,success,fail) {
     })
 }
 
+Vue.prototype.isYzApp = function () {
+    return this.appId() === 'de241446a50499bb77a8684cf610fd04'
+}
+
 new Vue({
     render: h => h(Index),
     data() {
