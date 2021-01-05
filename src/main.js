@@ -155,6 +155,14 @@ Vue.prototype.requestGet = function (url,success,fail) {
     })
 }
 
+Vue.prototype.getUrlKey = function (name) {
+    let key = (new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [''])[1]
+    if(key) {
+        return decodeURIComponent(key.replace(/\+/g, '%20')) || null
+    }
+    return ''
+}
+
 Vue.prototype.isYzApp = function () {
     return this.appId() === 'de241446a50499bb77a8684cf610fd04'
 }

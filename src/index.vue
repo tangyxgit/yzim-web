@@ -139,6 +139,18 @@
                 this.$store.commit('toggleIsSDKReady', isSDKReady)
 
                 if (isSDKReady) {
+                    let user = this.getUrlKey('u')
+                    if(user) {
+                        let Base64 = require('js-base64').Base64
+                        user = JSON.parse(decodeURIComponent(Base64.decode(user)))
+                        let chatId = user.toChatId
+                        if(chatId) {
+                            this.$store.dispatch(
+                                'checkoutConversation',
+                                'C2C'+chatId
+                            )
+                        }
+                    }
                     this.tim.updateMyProfile({
                         allowType: this.TIM.TYPES.ALLOW_TYPE_NEED_CONFIRM
                     })

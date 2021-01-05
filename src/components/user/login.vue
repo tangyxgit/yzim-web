@@ -90,7 +90,7 @@
                 logo: logo,
                 registerVisible: false,
                 loading: false,
-                showLogin: false,
+                showLogin: false
             }
         },
         created() {
@@ -99,12 +99,16 @@
             //     userId:'web20200104',
             //     nickName:'我是web',
             //     mobile:'17774940000',
-            //     appid:'d368eeb23af1881ddf81dd596dfe3cf5'
+            //     appid:'d368eeb23af1881ddf81dd596dfe3cf5',
+            //     toChatId:'android202010104'
             // }
             // console.log(encodeURIComponent(Base64.encode(JSON.stringify(params))))
             let user = this.getUrlKey('u')
             if(user) {
+                //主页
                 //eyJ1c2VySWQiOiJ3ZWIyMDIwMDEwNCIsIm5pY2tOYW1lIjoi5oiR5pivd2ViIiwibW9iaWxlIjoiMTc3NzQ5NDAwMDAiLCJhcHBpZCI6ImQzNjhlZWIyM2FmMTg4MWRkZjgxZGQ1OTZkZmUzY2Y1In0%3D
+                //直接聊天
+                //eyJ1c2VySWQiOiJ3ZWIyMDIwMDEwNCIsIm5pY2tOYW1lIjoi5oiR5pivd2ViIiwibW9iaWxlIjoiMTc3NzQ5NDAwMDAiLCJhcHBpZCI6ImQzNjhlZWIyM2FmMTg4MWRkZjgxZGQ1OTZkZmUzY2Y1IiwidG9DaGF0SWQiOiJhbmRyb2lkMjAyMDEwMTA0In0%3D
                 let Base64 = require('js-base64').Base64
                 user = JSON.parse(decodeURIComponent(Base64.decode(user)))
                 this.setAppId(user.appid)
@@ -140,13 +144,6 @@
                         message: error.msg
                     })
                 })
-            },
-            getUrlKey: function (name) {
-                let key = (new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [''])[1]
-                if(key) {
-                    return decodeURIComponent(key.replace(/\+/g, '%20')) || null
-                }
-                return ''
             },
             submit() {
                 this.$refs['login'].validate(valid => {
