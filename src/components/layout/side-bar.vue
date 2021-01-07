@@ -4,12 +4,12 @@
             <my-profile/>
             <div class="tab-items" @click="handleClick">
                 <div
-                        id="conversation-list"
-                        class="text-center"
-                        :class="{ active: showConversationList }"
-                        style="cursor:pointer;position: relative"
-                        title="消息"
-                >
+                    id="conversation-list"
+                    class="text-center"
+                    v-if="(functionPrem & 1)>0"
+                    :class="{ active: showConversationList }"
+                    style="cursor:pointer;position: relative"
+                    title="消息">
                     <img v-if="showConversationList" src='../../assets/image/icon_chat_fill_24.svg' style="background: #DBEBFE;border-radius: 4px" class="p-2" />
                     <img v-else src='../../assets/image/icon_chat_stroke_24.svg' style="pointer-events: none" class="p-2"/>
                     <sup class="unread" v-if="totalUnreadCount !== 0">
@@ -20,6 +20,7 @@
                 <div
                         id="group-list"
                         class="text-center"
+                        v-if="(functionPrem & 2)>0"
                         :class="{ active: showGroupList }"
                         style="cursor:pointer;position: relative;margin-top: 24px"
                         title="我的群组"
@@ -31,6 +32,7 @@
                         id="friend-list"
                         class="text-center"
                         :class="{ active: showFriendList }"
+                        v-if="(functionPrem & 2)>0"
                         title="我的好友"
                         style="cursor:pointer;position: relative;margin-top: 24px"
                         @click="handleRefreshFriend"
@@ -42,6 +44,7 @@
                         id="black-list"
                         class="text-center"
                         :class="{ active: showBlackList }"
+                        v-if="(functionPrem & 2)>0"
                         style="cursor:pointer;position: relative;margin-top: 24px"
                         title="黑名单"
                 >
@@ -51,6 +54,7 @@
                 <div
                         id="worktable-list"
                         class="text-center"
+                        v-if="(functionPrem & 4)>0"
                         :class="{ active: showWorktable }"
                         title="应用中心"
                         style="cursor:pointer;position: relative;margin-top: 24px"
@@ -59,7 +63,7 @@
                     <img v-else src='../../assets/image/icon_tools_stroke_24.svg' style="pointer-events: none" class="p-2"/>
                 </div>
             </div>
-            <el-row class="bottom " type="flex" justify="center" align="middle">
+            <el-row class="bottom " type="flex" justify="center" align="middle" v-if="isYzApp()">
                 <el-popover placement="right" width="300px"  trigger="click" class="p-0" >
                     <span class="mt-1" style="cursor:pointer" @click="change">修改密码</span>
                   <div class="my-2" style="width:100%;height:1px;background: #dddfe5"></div>
@@ -155,7 +159,8 @@
             ElPopover:Popover,
             ElDialog:Dialog,
             ElForm: Form,
-            ElFormItem: FormItem,
+            ElFormItem: FormItem
+
         },
         data() {
             return {
@@ -169,11 +174,12 @@
                     newPassword: '',
                     oldPassword: '',
                     confirmPassword:''
-                }
+                },
+                functionPrem: 0
             }
         },
         mounted() {
-
+            this.functionPrem = this.userApi().functionPerm
         },
         computed: {
             ...mapGetters(['totalUnreadCount']),

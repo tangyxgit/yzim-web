@@ -1,25 +1,15 @@
 <template>
     <el-dialog title="选择成员" :visible="showDialog" :before-close="close" width="600px">
         <el-input
-                @focus="startChoose"
-                @blur="endChoose"
                 size="mini"
                 v-model="keyword"
                 placeholder="请输入昵称"
                 prefix-icon="el-icon-search"
         ></el-input>
-        <div v-if="!choose">
+        <div>
             <div v-if="hasFriend">
                 <div v-for="friend in getFriendListData" :key="friend.userID">
                     <group-chat-friend  :friend="friend"/>
-                </div>
-            </div>
-            <div style="color:gray;" v-else>暂无好友</div>
-        </div>
-        <div v-else>
-            <div v-if="hasFriend">
-                <div v-for="friend in getFriendList" :key="friend.userID">
-                    <group-chat-friend v-if="filter(friend)" :friend="friend"/>
                 </div>
             </div>
             <div style="color:gray;" v-else>暂无好友</div>
@@ -49,7 +39,6 @@
         data() {
             return {
                 keyword: '',
-                choose:false,
                 friendList:[],
             }
         },
@@ -74,7 +63,9 @@
                         }
                     }
                 })
-                return this.friendList
+                return this.friendList.filter(item=>{
+                    return item.nick.indexOf(this.keyword) >=0
+                })
             }
         },
         methods: {
@@ -85,12 +76,6 @@
             },
             filter(friend) {
                 return friend.profile.nick.indexOf(this.keyword) >=0
-            },
-            startChoose() {
-                this.choose = true
-            },
-            endChoose() {
-                this.choose = false
             },
             handleConfirm() {
                 let Name = this.userApi().nickName, MemberList = []

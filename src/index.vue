@@ -16,7 +16,7 @@
                 element-loading-text="正在拼命初始化..."
                 element-loading-background="rgba(0, 0, 0, 0.8)"
         >
-            <div class="chat-wrapper">
+            <div class="chat-wrapper" v-if="userFlag===0">
                 <el-row>
                     <el-col :xs="10" :sm="10" :md="8" :lg="8" :xl="7">
                         <side-bar/>
@@ -139,6 +139,18 @@
                 this.$store.commit('toggleIsSDKReady', isSDKReady)
 
                 if (isSDKReady) {
+                    let user = this.getUrlKey('u')
+                    if(user) {
+                        let Base64 = require('js-base64').Base64
+                        user = JSON.parse(decodeURIComponent(Base64.decode(user)))
+                        let chatId = user.toChatId
+                        if(chatId) {
+                            this.$store.dispatch(
+                                'checkoutConversation',
+                                'C2C'+chatId
+                            )
+                        }
+                    }
                     this.tim.updateMyProfile({
                         allowType: this.TIM.TYPES.ALLOW_TYPE_NEED_CONFIRM
                     })

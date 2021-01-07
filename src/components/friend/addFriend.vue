@@ -87,7 +87,6 @@
             search() {
                 this.requestPost('user/getUserByParam',{param:this.keyword},res=>{
                     this.waitingList = res.data
-                    // console.log(res.data)
                 },error=>{
                     this.$store.commit('showMessage', {
                         type: 'error',

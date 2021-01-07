@@ -4,7 +4,8 @@ const groupModules = {
   state: {
     groupList: [],
     currentMemberList: [],
-    createGroupModelVisible: false
+    createGroupModelVisible: false,
+    updateCurrentMemberCount:false
   },
   getters: {
     hasGroupList: state => state.groupList.length > 0
@@ -17,13 +18,19 @@ const groupModules = {
       state.createGroupModelVisible = visible
     },
     updateCurrentMemberList(state, memberList) {
+      state.updateCurrentMemberCount = true
       state.currentMemberList = [...state.currentMemberList, ...memberList]
     },
     deleteGroupMemeber(state, userID) {
+      state.updateCurrentMemberCount = true
       state.currentMemberList = state.currentMemberList.filter((member) => member.userID !== userID)
     },
     deleteGroupMemberList(state, userIDList) {
+      state.updateCurrentMemberCount = true
       state.currentMemberList = state.currentMemberList.filter((member) => !userIDList.includes(member.userID))
+    },
+    changeUpdateCount(state, update) {
+      state.updateCurrentMemberCount = update
     },
     resetCurrentMemberList(state) {
       state.currentMemberList = []

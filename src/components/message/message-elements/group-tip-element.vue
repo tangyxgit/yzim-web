@@ -56,7 +56,7 @@ export default {
             return '群公告：'+message.payload.newGroupProfile.notification
           }else if(message.payload.newGroupProfile.name) {
             return '群昵称修改：'+message.payload.newGroupProfile.name
-          }else if(message.payload.newGroupProfile.ownerID){
+          }else if(message.payload.newGroupProfile.ownerID) {
               return message.nick+' 已转让群主'
           }
           return '群资料更改'

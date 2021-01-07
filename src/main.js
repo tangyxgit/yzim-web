@@ -43,6 +43,12 @@ Vue.prototype.setUserToken = function (token) {
     }
 }
 
+Vue.prototype.setAppId = function(appId) {
+    if(appId) {
+        this.$root.appId = appId
+    }
+}
+
 Vue.prototype.token = function () {
     if (!this.$root.token) {
         let token = localStorage.getItem('token')
@@ -52,6 +58,10 @@ Vue.prototype.token = function () {
     }
     return this.$root.token
 }
+Vue.prototype.appId = function() {
+    return this.$root.appId
+}
+
 Vue.prototype.userApi = function () {
     if (!this.$root.userApi) {
         let userData = localStorage.getItem('userApi')
@@ -61,12 +71,14 @@ Vue.prototype.userApi = function () {
     }
     return this.$root.userApi
 }
+
 Vue.prototype.userLogout = function () {
     localStorage.removeItem('userApi')
     localStorage.removeItem('token')
     this.$root.userApi = null
     this.$root.token = null
 }
+
 Vue.prototype.getFriendList = function (callback) {
     this.requestPost('user/getFriend',{
         From_Account:this.userApi().userId,
@@ -106,7 +118,7 @@ Vue.prototype.requestPost = function (url, params, success, fail) {
         params.userId = this.userApi().userId
     }
     //加上headers
-    var headersval = {token: this.token(), platform: 'web'}
+    var headersval = {token: this.token(), platform: 'web',appid:this.appId()}
     Axios.post(url, params,{headers:headersval}).then(res => {
         let code = res.data.code
         if (code === 200) {
@@ -143,12 +155,25 @@ Vue.prototype.requestGet = function (url,success,fail) {
     })
 }
 
+Vue.prototype.getUrlKey = function (name) {
+    let key = (new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [''])[1]
+    if(key) {
+        return decodeURIComponent(key.replace(/\+/g, '%20')) || null
+    }
+    return ''
+}
+
+Vue.prototype.isYzApp = function () {
+    return this.appId() === 'de241446a50499bb77a8684cf610fd04'
+}
+
 new Vue({
     render: h => h(Index),
     data() {
         return {
             userApi: null,
-            token:null
+            token:null,
+            appId:'de241446a50499bb77a8684cf610fd04'
         }
     },
     created() {

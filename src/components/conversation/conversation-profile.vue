@@ -38,7 +38,7 @@ export default {
   background-color $white
   height 100%
   overflow-y scroll
-  /*overflow-x hidden*/
+  overflow-x hidden
 /* 设置滚动条的样式 */
 ::-webkit-scrollbar {
   width: 0;
