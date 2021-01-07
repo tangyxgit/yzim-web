@@ -127,17 +127,17 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <div v-if="isOwner" class="mx-3 mt-3">
+                    <div v-if="isSelfOwner" class="mx-3 mt-3">
                         <el-button class="w-100" @click="showGroupMember">转让群主</el-button>
                     </div>
-                    <div v-if="!isOwner" class="mx-3 mt-3">
+                    <div v-if="!isSelfOwner" class="mx-3 mt-3">
                         <el-popconfirm
                                 title="确认退出该群吗？"
                                 @onConfirm="quitGroup">
                             <el-button class="w-100" slot="reference">退出群聊</el-button>
                         </el-popconfirm>
                     </div>
-                    <div v-if="showDismissGroup" class="mx-3 mt-3">
+                    <div v-if="isSelfOwner" class="mx-3 mt-3">
                         <el-popconfirm
                                 title="确认解散该群吗？"
                                 @onConfirm="dismissGroup">
@@ -315,6 +315,9 @@
             },
             isAdmin() {
                 return this.groupProfile.selfInfo.role === this.TIM.TYPES.GRP_MBR_ROLE_ADMIN
+            },
+            isSelfOwner() {
+                return this.groupProfile.selfInfo.role === this.TIM.TYPES.GRP_MBR_ROLE_OWNER
             },
             showDismissGroup() {
                 // 好友工作群不能解散
@@ -665,6 +668,7 @@
                         this.$store.commit('showMessage', {
                             message: `转让群主成功，新群主：${this.selectMember.nick}`
                         })
+                        this.updateGroupProfile()
                         this.closeGroup()
                     })
                     .catch(error => {
