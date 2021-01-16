@@ -74,11 +74,11 @@
                 checkEmail:''
             }
         },
-        computed:{
-
+        mounted() {
         },
         methods: {
             close() {
+                this.keyword = ''
                 this.$emit('closeSearch')
             },
             closeSend() {

@@ -166,7 +166,7 @@
                         <div>
                             <avatar :src="ownerUserInfo.avatar" style="width:32px;height:32px;border-radius: 90%"/>
                         </div>
-                        <div class="ml-2 col align-items-center" style="font-size: 14px;width: 150px">
+                        <div class="ml-2 col align-items-center" style="font-size: 14px;width: 100px">
                             <span v-if="ownerUserInfo.nameCard" :title=ownerUserInfo.nameCard>{{ ownerUserInfo.nameCard }}</span>
                             <span v-else-if="ownerUserInfo.nick" :title=ownerUserInfo.nick>{{ ownerUserInfo.nick }}</span>
                         </div>
@@ -181,7 +181,7 @@
                             <div>
                                 <avatar :src="member.avatar" style="width:32px;height:32px;border-radius: 90%"/>
                             </div>
-                            <div class="ml-2 col align-items-center" style="font-size: 14px;width: 150px">
+                            <div class="ml-2 col align-items-center" style="font-size: 14px;width: 100px">
                                 <span v-if="member.nameCard" :title=member.nameCard>{{ member.nameCard }}</span>
                                 <span v-else-if="member.nick" :title=member.nick>{{ member.nick }}</span>
                             </div>
@@ -421,6 +421,13 @@
                 })
             },
             editName() {
+                if (this.name.length > 30) {
+                    this.$store.commit('showMessage', {
+                        type: 'error',
+                        message: '输入内容过长，请修改'
+                    })
+                    return
+                }
                 this.tim
                     .updateGroupProfile({
                         groupID: this.groupProfile.groupID,
@@ -613,6 +620,13 @@
                     this.$store.commit('showMessage', {
                         message: '不能设置空的群名片',
                         type: 'warning'
+                    })
+                    return
+                }
+                if (this.nameCard.length > 49) {
+                    this.$store.commit('showMessage', {
+                        type: 'error',
+                        message: '输入内容过长，请修改'
                     })
                     return
                 }

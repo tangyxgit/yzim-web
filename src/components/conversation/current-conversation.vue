@@ -249,7 +249,7 @@ export default {
   .message-list
     width: 100%;
     box-sizing: border-box;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding: 0 20px;
   .newMessageTips
     position: absolute
