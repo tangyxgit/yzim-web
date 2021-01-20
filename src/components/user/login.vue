@@ -151,6 +151,7 @@
                         this.setAppId('de241446a50499bb77a8684cf610fd04')
                         this.requestPost('user/login', this.params, res => {
                             let data = res.data
+                            data.mobile = this.params.mobile
                             data.appid = 'de241446a50499bb77a8684cf610fd04'
                             this.sysUser(data)
                             // this.setUserData(res.data)
